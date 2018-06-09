@@ -8,7 +8,6 @@ namespace GeorgRinger\NewsImporticsxml\Hooks\Backend\Element;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
 use TYPO3\CMS\Backend\Form\AbstractNode;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 
