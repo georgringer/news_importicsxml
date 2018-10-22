@@ -8,7 +8,6 @@ namespace GeorgRinger\NewsImporticsxml\Tasks;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
 use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
 use GeorgRinger\NewsImporticsxml\Jobs\ImportJob;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
