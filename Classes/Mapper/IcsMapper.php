@@ -53,7 +53,7 @@ class IcsMapper extends AbstractMapper implements MapperInterface
 
             $data[] = [
                 'import_source' => $this->getImportSource(),
-                'import_id' => $event['UID'] . '-'. $idCount[$event['UID']],
+                'import_id' => $event['UID'] . '-' . $idCount[$event['UID']],
                 'crdate' => $GLOBALS['EXEC_TIME'],
                 'cruser_id' => $GLOBALS['BE_USER']->user['uid'],
                 'type' => 0,
