@@ -36,11 +36,6 @@ class ImportJob
     protected $logger;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     */
-    protected $objectManager;
-
-    /**
      * @var \GeorgRinger\NewsImporticsxml\Mapper\XmlMapper
      */
     protected $xmlMapper;
@@ -56,12 +51,23 @@ class ImportJob
     protected $newsImportService;
 
     /**
+     * ImportJob constructor.
      * @param TaskConfiguration $configuration
+     * @param XmlMapper $xmlMapper
+     * @param IcsMapper $icsMapper
+     * @param NewsImportService $newsImportService
      */
-    public function __construct(TaskConfiguration $configuration)
-    {
+    public function __construct(
+        TaskConfiguration $configuration,
+        XmlMapper $xmlMapper,
+        IcsMapper $icsMapper,
+        NewsImportService $newsImportService
+    ) {
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
         $this->configuration = $configuration;
+        $this->xmlMapper = $xmlMapper;
+        $this->icsMapper = $icsMapper;
+        $this->newsImportService = $newsImportService;
     }
 
     /**
@@ -92,32 +98,12 @@ class ImportJob
     }
 
     /**
-     * @param array $data
+     * @param array|null $data
      */
     protected function import(array $data = null)
     {
         $this->logger->info(sprintf('Starting import of %s records', count($data)));
         $this->newsImportService->import($data);
-    }
-
-    public function injectObjectManager(ObjectManagerInterface $objectManager): void
-    {
-        $this->objectManager = $objectManager;
-    }
-
-    public function injectXmlMapper(XmlMapper $xmlMapper): void
-    {
-        $this->xmlMapper = $xmlMapper;
-    }
-
-    public function injectIcsMapper(IcsMapper $icsMapper): void
-    {
-        $this->icsMapper = $icsMapper;
-    }
-
-    public function injectNewsImportService(NewsImportService $newsImportService): void
-    {
-        $this->newsImportService = $newsImportService;
     }
 
 }
