@@ -7,6 +7,8 @@ use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
 use PicoFeed\Config\Config;
 use PicoFeed\Parser\Item;
 use PicoFeed\Reader\Reader;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use SimpleXMLElement;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -19,6 +21,23 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class XmlMapper extends AbstractMapper implements MapperInterface
 {
+    /**
+     * @var RequestFactoryInterface
+     */
+    protected $requestFactory;
+
+    /**
+     * @var ClientInterface
+     */
+    protected $client;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->requestFactory = GeneralUtility::makeInstance(RequestFactoryInterface::class);
+        $this->client = GeneralUtility::makeInstance(ClientInterface::class);
+    }
 
     /**
      * @param TaskConfiguration $configuration
@@ -98,12 +117,15 @@ class XmlMapper extends AbstractMapper implements MapperInterface
 
         $media = [];
         if (!empty($url) && isset($extensions[$mimeType])) {
+            $status = false;
             $file = 'uploads/tx_newsimporticsxml/' . $id . '_' . md5($url) . '.' . $extensions[$mimeType];
             if (is_file(Environment::getPublicPath() . '/' . $file)) {
                 $status = true;
             } else {
-                $content = GeneralUtility::getUrl($url);
-                $status = GeneralUtility::writeFile(Environment::getPublicPath() . '/' . $file, $content);
+                $imageContent = $this->getImage();
+                if ($imageContent !== '') {
+                    $status = GeneralUtility::writeFile(Environment::getPublicPath() . '/' . $file, $imageContent);
+                }
             }
 
             if ($status) {
@@ -165,5 +187,22 @@ class XmlMapper extends AbstractMapper implements MapperInterface
     public function getImportSource(): string
     {
         return 'newsimporticsxml_xml';
+    }
+
+    private function getImage(string $url): string
+    {
+        $allowedRetries = 5;
+        $currentRetries = 0;
+        $imageContent = '';
+
+        do {
+            $response = $this->client->sendRequest($this->requestFactory->createRequest('GET', $url));
+            $imageContent = (string) $response->getBody();
+
+            $expectedSize = intval($response->getHeader('Content-Length')[0] ?? 0);
+            $actualSize = strlen((string) $response->getBody());
+        } while($currentRetries++ < $allowedRetries && $expectedSize !== $actualSize);
+
+        return $imageContent;
     }
 }
