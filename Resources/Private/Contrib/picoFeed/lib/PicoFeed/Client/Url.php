@@ -141,7 +141,7 @@ class Url
     public function isRelativePath()
     {
         $path = $this->getPath();
-        return empty($path) || $path{0} !== '/';
+        return empty($path) || $path[0] !== '/';
     }
 
     /**
