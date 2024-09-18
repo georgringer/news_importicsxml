@@ -66,7 +66,7 @@ class IcsMapper extends AbstractMapper implements MapperInterface
                 'datetime' => $datetime,
                 'categories' => $this->getCategories((array)($event['CATEGORIES_array'] ?? []), $configuration),
                 '_dynamicData' => [
-                    'location' => $event['LOCATION'],
+                    'location' => (isset($event['LOCATION']) ? $event['LOCATION'] : ''),
                     'datetime_end' => (isset($event['DTEND']) ? $iCalService->iCalDateToUnixTimestamp($event['DTEND']) : ''),
                     'reference' => $event,
                     'news_importicsxml' => [
@@ -74,7 +74,7 @@ class IcsMapper extends AbstractMapper implements MapperInterface
                         'feed' => $configuration->getPath(),
                         'UID' => $event['UID'],
                         'VARIANT' => $idCount[$id],
-                        'LOCATION' => $event['LOCATION'],
+                        'LOCATION' => (isset($event['LOCATION']) ? $event['LOCATION'] : ''),
                         'DTSTART' => $event['DTSTART'] ?? '',
                         'DTSTAMP' => $event['DTSTAMP'] ?? '',
                         'DTEND' => $event['DTEND'] ?? '',
@@ -96,7 +96,7 @@ class IcsMapper extends AbstractMapper implements MapperInterface
         }
 
         if ($this->pathIsModified) {
-            unlink($path);
+            $success = unlink($path);
         }
 
         return $data;

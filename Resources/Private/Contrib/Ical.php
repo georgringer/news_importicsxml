@@ -247,7 +247,10 @@ class Ical
     public function process_recurrences()
     {
         $array = $this->cal;
-        $events = $array['VEVENT'];
+        if (array_key_exists('VEVENT',$array))
+        {
+            $events = $array['VEVENT'];
+        }
         if (empty($events)) {
             return false;
         }
@@ -470,7 +473,12 @@ class Ical
     public function events()
     {
         $array = $this->cal;
-        return $array['VEVENT'];
+        $events = [];
+        if (array_key_exists('VEVENT',$array))
+        {
+            $events = $array['VEVENT'];
+        }
+        return $events;
     }
 
     /**
