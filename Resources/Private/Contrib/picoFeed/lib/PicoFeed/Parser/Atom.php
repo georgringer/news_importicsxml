@@ -309,7 +309,8 @@ class Atom extends Parser
             }
             return (string)$entry->content;
 
-        } elseif (isset($entry->summary) && ! empty($entry->summary)) {
+        }
+        if (isset($entry->summary) && ! empty($entry->summary)) {
             return (string)$entry->summary;
         }
 
