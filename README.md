@@ -17,8 +17,8 @@ The import is done by the scheduler.
 - TUM (Technical University of Munich) https://www.tum.de/
 - Hochschule Darmstadt - University of Applied Sciences https://www.h-da.de/
 
-Screenshots
-^^^^^^^^^^^
+## Screenshots
+
 
 **Screenshot #1:** Creation of an import task
 
