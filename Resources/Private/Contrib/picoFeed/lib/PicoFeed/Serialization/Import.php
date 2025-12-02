@@ -138,7 +138,7 @@ class Import
      */
     public function findType(SimpleXmlElement $item)
     {
-        return isset($item['version']) ? (string)$item['version'] : isset($item['type']) ? (string)$item['type'] : 'rss';
+        return isset($item['version']) ? (string)$item['version'] : (isset($item['type']) ? (string)$item['type'] : 'rss');
     }
 
     /**
