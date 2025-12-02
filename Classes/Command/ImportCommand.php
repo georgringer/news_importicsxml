@@ -8,24 +8,20 @@ use GeorgRinger\News\Domain\Service\NewsImportService;
 use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
 use GeorgRinger\NewsImporticsxml\Jobs\ImportJob;
 use GeorgRinger\NewsImporticsxml\Mapper;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ImportCommand extends Command
 {
+    protected LoggerInterface $logger;
 
-    /**
-     * @var Logger
-     */
-    protected $logger;
-
-    public function __construct(string $name = null)
+    public function __construct(?string $name = null)
     {
         parent::__construct($name);
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
@@ -66,10 +62,10 @@ class ImportCommand extends Command
         $configuration = new TaskConfiguration();
         $configuration->setPath((string)$input->getArgument('path'));
         $configuration->setPid((int)$input->getArgument('pid'));
-        $configuration->setFormat($input->getArgument('format'));
+        $configuration->setFormat((string)$input->getArgument('format'));
         $configuration->setCleanBeforeImport((bool)$input->getArgument('cleanBeforeImport'));
         $configuration->setPersistAsExternalUrl((bool)$input->getArgument('persistAsExternalUrl'));
-        $configuration->setEmail($input->getArgument('email'));
+        $configuration->setEmail((string)$input->getArgument('email'));
         $configuration->setSetSlug((bool)$input->getArgument('slug'));
 
         $mapping = (string)$input->getArgument('mapping');

@@ -16,7 +16,6 @@ class Logger
      * List of messages
      *
      * @static
-     * @access private
      * @var array
      */
     private static $messages = [];
@@ -25,7 +24,6 @@ class Logger
      * Default timezone
      *
      * @static
-     * @access private
      * @var string
      */
     private static $timezone = 'UTC';
@@ -34,7 +32,6 @@ class Logger
      * Enable or disable logging
      *
      * @static
-     * @access public
      * @var bool
      */
     public static $enable = false;
@@ -43,7 +40,6 @@ class Logger
      * Enable logging
      *
      * @static
-     * @access public
      */
     public static function enable()
     {
@@ -54,7 +50,6 @@ class Logger
      * Add a new message
      *
      * @static
-     * @access public
      * @param  string   $message   Message
      */
     public static function setMessage($message)
@@ -69,7 +64,6 @@ class Logger
      * Get all logged messages
      *
      * @static
-     * @access public
      * @return array
      */
     public static function getMessages()
@@ -81,7 +75,6 @@ class Logger
      * Remove all logged messages
      *
      * @static
-     * @access public
      */
     public static function deleteMessages()
     {
@@ -93,7 +86,6 @@ class Logger
      *
      * @static
      * @see    http://php.net/manual/en/timezones.php
-     * @access public
      * @param  string   $timezone   Timezone
      */
     public static function setTimeZone($timezone)
@@ -105,7 +97,6 @@ class Logger
      * Get all messages serialized into a string
      *
      * @static
-     * @access public
      * @return string
      */
     public static function toString()

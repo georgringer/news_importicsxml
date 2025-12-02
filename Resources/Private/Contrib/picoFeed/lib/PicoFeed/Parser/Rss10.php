@@ -14,7 +14,6 @@ class Rss10 extends Rss20
     /**
      * Get the path to the items XML tree
      *
-     * @access public
      * @param  SimpleXMLElement   $xml   Feed xml
      * @return SimpleXMLElement
      */
@@ -26,7 +25,6 @@ class Rss10 extends Rss20
     /**
      * Find the feed date
      *
-     * @access public
      * @param  SimpleXMLElement   $xml     Feed xml
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
@@ -38,7 +36,6 @@ class Rss10 extends Rss20
     /**
      * Find the feed language
      *
-     * @access public
      * @param  SimpleXMLElement   $xml     Feed xml
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
@@ -50,7 +47,6 @@ class Rss10 extends Rss20
     /**
      * Genereate the item id
      *
-     * @access public
      * @param  SimpleXMLElement   $entry   Feed item
      * @param  \PicoFeed\Parser\Item     $item    Item object
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
@@ -58,19 +54,18 @@ class Rss10 extends Rss20
     public function findItemId(SimpleXMLElement $entry, Item $item, Feed $feed)
     {
         $item->id = $this->generateId(
-            $item->getTitle(), $item->getUrl(), $item->getContent()
+            $item->getTitle(),
+            $item->getUrl(),
+            $item->getContent()
         );
     }
 
     /**
      * Find the item enclosure
      *
-     * @access public
      * @param  SimpleXMLElement   $entry   Feed item
      * @param  \PicoFeed\Parser\Item     $item    Item object
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
-    public function findItemEnclosure(SimpleXMLElement $entry, Item $item, Feed $feed)
-    {
-    }
+    public function findItemEnclosure(SimpleXMLElement $entry, Item $item, Feed $feed) {}
 }

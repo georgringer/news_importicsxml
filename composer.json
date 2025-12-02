@@ -1,47 +1,71 @@
 {
-  "name": "georgringer/news-importicsxml",
-  "keywords": [
-    "TYPO3",
-    "extension",
-    "news",
-    "import",
-    "ics",
-    "xml"
-  ],
-  "authors": [
-    {
-      "name": "Georg Ringer",
-      "role": "Developer",
-      "homepage": "https://ringer.it"
-    }
-  ],
-  "type": "typo3-cms-extension",
-  "description": "Versatile news import from ICS + XML (local files or remote URLs) including images and category mapping",
-  "homepage": "https://ringer.it",
-  "license": [
-    "GPL-2.0-or-later"
-  ],
-  "require": {
-    "georgringer/news": "^11.4",
-    "typo3/cms-scheduler": "^11.5 || ^12.4",
-    "typo3/cms-core": "^11.5 || ^12.4"
-  },
-  "autoload": {
-    "psr-4": {
-      "GeorgRinger\\NewsImporticsxml\\": "Classes"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "GeorgRinger\\NewsImporticsxml\\Tests\\": "Tests"
-    }
-  },
-  "replace": {
-    "typo3-ter/news-importicsxml": "self.version"
-  },
-  "extra": {
-    "typo3/cms": {
-      "extension-key": "news_importicsxml"
-    }
-  }
+	"name": "georgringer/news-importicsxml",
+	"keywords": [
+		"TYPO3",
+		"extension",
+		"news",
+		"import",
+		"ics",
+		"xml"
+	],
+	"authors": [
+		{
+			"name": "Georg Ringer",
+			"role": "Developer",
+			"homepage": "https://ringer.it"
+		}
+	],
+	"type": "typo3-cms-extension",
+	"description": "Versatile news import from ICS + XML (local files or remote URLs) including images and category mapping",
+	"homepage": "https://ringer.it",
+	"license": [
+		"GPL-2.0-or-later"
+	],
+	"require": {
+		"georgringer/news": "^13.4 || ^14",
+		"typo3/cms-scheduler": "^13.4 || ^14",
+		"typo3/cms-core": "^13.4 || ^14"
+	},
+	"require-dev": {
+		"a9f/typo3-fractor": "@dev",
+		"friendsofphp/php-cs-fixer": "^3.89.2",
+		"phpstan/phpdoc-parser": "^1.33.0",
+		"phpunit/phpunit": "^10.5.58",
+		"ssch/typo3-rector": "^3.7",
+		"typo3/cms-seo": "^13.4.20 || ^14.0",
+		"typo3/coding-standards": "^0.8.0",
+		"typo3/testing-framework": "^8.3.1",
+		"webmozart/assert": "^1.12.1"
+	},
+	"config": {
+		"allow-plugins": {
+			"a9f/fractor-extension-installer": true,
+			"sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": true,
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true
+		},
+		"bin-dir": ".Build/bin",
+		"lock": false,
+		"sort-packages": true,
+		"vendor-dir": ".Build/vendor"
+	},
+	"autoload": {
+		"psr-4": {
+			"GeorgRinger\\NewsImporticsxml\\": "Classes"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"GeorgRinger\\NewsImporticsxml\\Tests\\": "Tests"
+		}
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "news_importicsxml"
+		}
+	},
+	"scripts": {
+		"cs": "PHP_CS_FIXER_IGNORE_ENV=1 php ./.Build/bin/php-cs-fixer fix  --dry-run -v --config ./Build/php-cs-fixer/php-cs-fixer.php ./",
+		"csfix": "PHP_CS_FIXER_IGNORE_ENV=1 php ./.Build/bin/php-cs-fixer fix  -v --config ./Build/php-cs-fixer/php-cs-fixer.php ./"
+	}
 }

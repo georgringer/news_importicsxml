@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -9,7 +10,7 @@ return [
                 '//div[@class="story-content"]',
             ],
             'strip' => [
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

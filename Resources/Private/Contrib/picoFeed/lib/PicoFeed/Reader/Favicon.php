@@ -22,7 +22,6 @@ class Favicon
     /**
      * Valid types for favicon (supported by browsers)
      *
-     * @access private
      * @var array
      */
     private $types = [
@@ -36,7 +35,6 @@ class Favicon
     /**
      * Config class instance
      *
-     * @access private
      * @var \PicoFeed\Config\Config
      */
     private $config;
@@ -44,7 +42,6 @@ class Favicon
     /**
      * Icon binary content
      *
-     * @access private
      * @var string
      */
     private $content = '';
@@ -52,7 +49,6 @@ class Favicon
     /**
      * Icon content type
      *
-     * @access private
      * @var string
      */
     private $content_type = '';
@@ -60,18 +56,16 @@ class Favicon
     /**
      * Constructor
      *
-     * @access public
      * @param  \PicoFeed\Config\Config   $config   Config class instance
      */
     public function __construct(Config $config = null)
     {
-        $this->config = $config ?: new Config;
+        $this->config = $config ?: new Config();
     }
 
     /**
      * Get the icon file content (available only after the download)
      *
-     * @access public
      * @return string
      */
     public function getContent()
@@ -82,7 +76,6 @@ class Favicon
     /**
      * Get the icon file type (available only after the download)
      *
-     * @access public
      * @return string
      */
     public function getType()
@@ -99,7 +92,6 @@ class Favicon
     /**
      * Get data URI (http://en.wikipedia.org/wiki/Data_URI_scheme)
      *
-     * @access public
      * @return string
      */
     public function getDataUri()
@@ -118,7 +110,6 @@ class Favicon
     /**
      * Download and check if a resource exists
      *
-     * @access public
      * @param  string               $url    URL
      * @return \PicoFeed\Client             Client instance
      */
@@ -141,7 +132,6 @@ class Favicon
     /**
      * Check if a remote file exists
      *
-     * @access public
      * @param  string    $url    URL
      * @return bool
      */
@@ -153,7 +143,6 @@ class Favicon
     /**
      * Get the icon link for a website
      *
-     * @access public
      * @param  string    $website_link    URL
      * @param  string    $favicon_link    optional URL
      * @return string
@@ -177,7 +166,8 @@ class Favicon
 
             if ($this->content !== '') {
                 return $icon_link;
-            } elseif ($favicon_link !== '') {
+            }
+            if ($favicon_link !== '') {
                 return $this->find($website_link);
             }
         }
@@ -188,7 +178,6 @@ class Favicon
     /**
      * Extract the icon links from the HTML
      *
-     * @access public
      * @param  string     $html     HTML
      * @return array
      */

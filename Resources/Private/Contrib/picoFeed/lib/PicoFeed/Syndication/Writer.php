@@ -14,7 +14,6 @@ abstract class Writer
     /**
      * Dom object
      *
-     * @access protected
      * @var \DomDocument
      */
     protected $dom;
@@ -22,7 +21,6 @@ abstract class Writer
     /**
      * Items
      *
-     * @access public
      * @var array
      */
     public $items = [];
@@ -30,7 +28,6 @@ abstract class Writer
     /**
      * Author
      *
-     * @access public
      * @var array
      */
     public $author = [];
@@ -38,7 +35,6 @@ abstract class Writer
     /**
      * Feed URL
      *
-     * @access public
      * @var string
      */
     public $feed_url = '';
@@ -46,7 +42,6 @@ abstract class Writer
     /**
      * Website URL
      *
-     * @access public
      * @var string
      */
     public $site_url = '';
@@ -54,7 +49,6 @@ abstract class Writer
     /**
      * Feed title
      *
-     * @access public
      * @var string
      */
     public $title = '';
@@ -62,7 +56,6 @@ abstract class Writer
     /**
      * Feed description
      *
-     * @access public
      * @var string
      */
     public $description = '';
@@ -70,7 +63,6 @@ abstract class Writer
     /**
      * Feed modification date (timestamp)
      *
-     * @access public
      * @var int
      */
     public $updated = 0;
@@ -79,7 +71,6 @@ abstract class Writer
      * Generate the XML document
      *
      * @abstract
-     * @access public
      * @param  string   $filename   Optional filename
      * @return string
      */
@@ -88,7 +79,6 @@ abstract class Writer
     /**
      * Check required properties to generate the output
      *
-     * @access public
      * @param  array     $properties    List of properties
      * @param  mixed     $container     Object or array container
      */

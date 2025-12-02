@@ -19,7 +19,6 @@ class Reader
     /**
      * Feed formats for detection
      *
-     * @access private
      * @var array
      */
     private $formats = [
@@ -33,7 +32,6 @@ class Reader
     /**
      * Config class instance
      *
-     * @access private
      * @var \PicoFeed\Config\Config
      */
     private $config;
@@ -41,19 +39,17 @@ class Reader
     /**
      * Constructor
      *
-     * @access public
      * @param  \PicoFeed\Config\Config   $config   Config class instance
      */
     public function __construct(Config $config = null)
     {
-        $this->config = $config ?: new Config;
+        $this->config = $config ?: new Config();
         Logger::setTimezone($this->config->getTimezone());
     }
 
     /**
      * Download a feed (no discovery)
      *
-     * @access public
      * @param  string            $url              Feed url
      * @param  string            $last_modified    Last modified HTTP header
      * @param  string            $etag             Etag HTTP header
@@ -77,7 +73,6 @@ class Reader
     /**
      * Discover and download a feed
      *
-     * @access public
      * @param  string            $url              Feed or website url
      * @param  string            $last_modified    Last modified HTTP header
      * @param  string            $etag             Etag HTTP header
@@ -107,7 +102,6 @@ class Reader
     /**
      * Find feed urls inside a HTML document
      *
-     * @access public
      * @param  string    $url        Website url
      * @param  string    $html       HTML content
      * @return array                 List of feed links
@@ -148,7 +142,6 @@ class Reader
     /**
      * Get a parser instance
      *
-     * @access public
      * @param  string                $url          Site url
      * @param  string                $content      Feed content
      * @param  string                $encoding     HTTP encoding
@@ -175,7 +168,6 @@ class Reader
     /**
      * Detect the feed format
      *
-     * @access public
      * @param  string    $content     Feed content
      * @return string
      */
@@ -198,7 +190,6 @@ class Reader
     /**
      * Add the prefix "http://" if the end-user just enter a domain name
      *
-     * @access public
      * @param  string    $url    Url
      * @retunr string
      */

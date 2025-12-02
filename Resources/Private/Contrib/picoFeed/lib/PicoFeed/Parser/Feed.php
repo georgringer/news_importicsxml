@@ -12,7 +12,6 @@ class Feed
     /**
      * Feed items
      *
-     * @access public
      * @var array
      */
     public $items = [];
@@ -20,7 +19,6 @@ class Feed
     /**
      * Feed id
      *
-     * @access public
      * @var string
      */
     public $id = '';
@@ -28,7 +26,6 @@ class Feed
     /**
      * Feed title
      *
-     * @access public
      * @var string
      */
     public $title = '';
@@ -36,7 +33,6 @@ class Feed
     /**
      * Feed description
      *
-     * @access public
      * @var string
      */
     public $description = '';
@@ -44,7 +40,6 @@ class Feed
     /**
      * Feed url
      *
-     * @access public
      * @var string
      */
     public $feed_url = '';
@@ -52,7 +47,6 @@ class Feed
     /**
      * Site url
      *
-     * @access public
      * @var string
      */
     public $site_url = '';
@@ -60,15 +54,13 @@ class Feed
     /**
      * Feed date
      *
-     * @access public
      * @var \DateTime
      */
-    public $date = null;
+    public $date;
 
     /**
      * Feed language
      *
-     * @access public
      * @var string
      */
     public $language = '';
@@ -76,7 +68,6 @@ class Feed
     /**
      * Feed logo URL
      *
-     * @access public
      * @var string
      */
     public $logo = '';
@@ -84,16 +75,12 @@ class Feed
     /**
      * Feed icon URL
      *
-     * @access public
      * @var string
      */
     public $icon = '';
 
     /**
      * Return feed information
-     *
-     * @access public
-     * $return string
      */
     public function __toString()
     {
@@ -117,9 +104,6 @@ class Feed
 
     /**
      * Get title
-     *
-     * @access public
-     * $return string
      */
     public function getTitle()
     {
@@ -128,9 +112,6 @@ class Feed
 
     /**
      * Get description
-     *
-     * @access public
-     * $return string
      */
     public function getDescription()
     {
@@ -139,9 +120,6 @@ class Feed
 
     /**
      * Get the logo url
-     *
-     * @access public
-     * $return string
      */
     public function getLogo()
     {
@@ -150,9 +128,6 @@ class Feed
 
     /**
      * Get the icon url
-     *
-     * @access public
-     * $return string
      */
     public function getIcon()
     {
@@ -161,9 +136,6 @@ class Feed
 
     /**
      * Get feed url
-     *
-     * @access public
-     * $return string
      */
     public function getFeedUrl()
     {
@@ -172,9 +144,6 @@ class Feed
 
     /**
      * Get site url
-     *
-     * @access public
-     * $return string
      */
     public function getSiteUrl()
     {
@@ -183,9 +152,6 @@ class Feed
 
     /**
      * Get date
-     *
-     * @access public
-     * $return integer
      */
     public function getDate()
     {
@@ -194,9 +160,6 @@ class Feed
 
     /**
      * Get language
-     *
-     * @access public
-     * $return string
      */
     public function getLanguage()
     {
@@ -205,9 +168,6 @@ class Feed
 
     /**
      * Get id
-     *
-     * @access public
-     * $return string
      */
     public function getId()
     {
@@ -216,9 +176,6 @@ class Feed
 
     /**
      * Get feed items
-     *
-     * @access public
-     * $return array
      */
     public function getItems()
     {
@@ -228,7 +185,6 @@ class Feed
     /**
      * Return true if the feed is "Right to Left"
      *
-     * @access public
      * @return bool
      */
     public function isRTL()

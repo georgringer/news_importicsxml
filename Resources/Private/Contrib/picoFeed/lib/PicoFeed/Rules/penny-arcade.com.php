@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%/news/.*%' => [
@@ -7,7 +8,7 @@ return [
                 '//*[@class="postBody"]/*',
             ],
             'strip' => [
-            ]
+            ],
         ],
         '%/comic/.*%' => [
             'test_url' => 'http://penny-arcade.com/comic/2015/04/15',
@@ -15,7 +16,7 @@ return [
                 '//*[@id="comicFrame"]/a/img',
             ],
             'strip' => [
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

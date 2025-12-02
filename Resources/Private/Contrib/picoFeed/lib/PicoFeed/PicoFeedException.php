@@ -9,6 +9,4 @@ use Exception;
  *
  * @author  Frederic Guillot
  */
-abstract class PicoFeedException extends Exception
-{
-}
+abstract class PicoFeedException extends Exception {}

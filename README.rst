@@ -5,8 +5,8 @@ The import is done by the scheduler.
 
 **Requirements**
 
-- TYPO3 CMS 10.4 LTS or 11.5 LTS
-- EXT:news 8.0.0+
+- TYPO3 CMS 13.4 LTS or 14 LTS
+- EXT:news 13 / 14
 
 **Sponsors**
 
@@ -147,15 +147,11 @@ Most likely, you will need the NewsImportPostHydrateEvent EventListener.
 
 .. tip::
 
-   Check the documentation of the news extension for a full list of available events: `https://docs.typo3.org/p/georgringer/news/main/en-us/Reference/Events/Index.html` 
+   Check the documentation of the news extension for a full list of available events: `https://docs.typo3.org/p/georgringer/news/main/en-us/Reference/Events/Index.html`
 
 .. tip::
 
-   Since TYPO3 v10, event dispatching is based on PSR-14 standard. See the core API docs to learn more details: `https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ApiOverview/Events/EventDispatcher/Index.html`
-
-.. tip::
-
-   An example on how to use the NewsImportPostHydrateEvent EventListener is available in `ext:eventnews` 
+   An example on how to use the NewsImportPostHydrateEvent EventListener is available in `ext:eventnews`
 
 
 

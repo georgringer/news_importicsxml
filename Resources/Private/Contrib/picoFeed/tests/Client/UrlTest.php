@@ -9,282 +9,282 @@ class UrlTest extends PHPUnit_Framework_TestCase
     public function testHasScheme()
     {
         $url = new Url('http://www.google.fr/');
-        $this->assertTrue($url->hasScheme());
+        self::assertTrue($url->hasScheme());
 
         $url = new Url('//www.google.fr/');
-        $this->assertFalse($url->hasScheme());
+        self::assertFalse($url->hasScheme());
 
         $url = new Url('/path');
-        $this->assertFalse($url->hasScheme());
+        self::assertFalse($url->hasScheme());
 
         $url = new Url('anything');
-        $this->assertFalse($url->hasScheme());
+        self::assertFalse($url->hasScheme());
     }
 
     public function testHasPort()
     {
         $url = new Url('http://127.0.0.1:8000/');
-        $this->assertTrue($url->hasPort());
+        self::assertTrue($url->hasPort());
 
         $url = new Url('http://127.0.0.1/');
-        $this->assertFalse($url->hasPort());
+        self::assertFalse($url->hasPort());
     }
 
     public function testIsProtocolRelative()
     {
         $url = new Url('http://www.google.fr/');
-        $this->assertFalse($url->isProtocolRelative());
+        self::assertFalse($url->isProtocolRelative());
 
         $url = new Url('//www.google.fr/');
-        $this->assertTrue($url->isProtocolRelative());
+        self::assertTrue($url->isProtocolRelative());
 
         $url = new Url('/path');
-        $this->assertFalse($url->isProtocolRelative());
+        self::assertFalse($url->isProtocolRelative());
 
         $url = new Url('anything');
-        $this->assertFalse($url->isProtocolRelative());
+        self::assertFalse($url->isProtocolRelative());
     }
 
     public function testBaseUrl()
     {
         $url = new Url('../bla');
-        $this->assertEquals('', $url->getBaseUrl());
+        self::assertEquals('', $url->getBaseUrl());
 
         $url = new Url('github.com');
-        $this->assertEquals('', $url->getBaseUrl());
+        self::assertEquals('', $url->getBaseUrl());
 
         $url = new Url('http://127.0.0.1:8000');
-        $this->assertEquals('http://127.0.0.1:8000', $url->getBaseUrl());
+        self::assertEquals('http://127.0.0.1:8000', $url->getBaseUrl());
 
         $url = new Url('http://127.0.0.1:8000/test?123');
-        $this->assertEquals('http://127.0.0.1:8000', $url->getBaseUrl());
+        self::assertEquals('http://127.0.0.1:8000', $url->getBaseUrl());
 
         $url = new Url('http://localhost/test');
-        $this->assertEquals('http://localhost', $url->getBaseUrl());
+        self::assertEquals('http://localhost', $url->getBaseUrl());
 
         $url = new Url('https://localhost/test');
-        $this->assertEquals('https://localhost', $url->getBaseUrl());
+        self::assertEquals('https://localhost', $url->getBaseUrl());
 
         $url = new Url('//localhost/test?truc');
-        $this->assertEquals('http://localhost', $url->getBaseUrl());
+        self::assertEquals('http://localhost', $url->getBaseUrl());
 
         $url = new Url('//localhost/test?truc');
-        $this->assertEquals('http://localhost', $url->getBaseUrl());
+        self::assertEquals('http://localhost', $url->getBaseUrl());
     }
 
     public function testIsRelativeUrl()
     {
         $url = new Url('http://www.google.fr/');
-        $this->assertFalse($url->isRelativeUrl());
+        self::assertFalse($url->isRelativeUrl());
 
         $url = new Url('//www.google.fr/');
-        $this->assertFalse($url->isRelativeUrl());
+        self::assertFalse($url->isRelativeUrl());
 
         $url = new Url('/path');
-        $this->assertTrue($url->isRelativeUrl());
+        self::assertTrue($url->isRelativeUrl());
 
         $url = new Url('../../path');
-        $this->assertTrue($url->isRelativeUrl());
+        self::assertTrue($url->isRelativeUrl());
 
         $url = new Url('anything');
-        $this->assertTrue($url->isRelativeUrl());
+        self::assertTrue($url->isRelativeUrl());
 
         $url = new Url('/2014/08/03/4668-noisettes');
-        $this->assertTrue($url->isRelativeUrl());
+        self::assertTrue($url->isRelativeUrl());
 
         $url = new Url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
 AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 9TXL0Y4OHwAAAABJRU5ErkJggg==');
-        $this->assertFalse($url->isRelativeUrl());
+        self::assertFalse($url->isRelativeUrl());
     }
 
     public function testGetFullPath()
     {
         $url = new Url('http://www.google.fr/');
-        $this->assertEquals('/', $url->getFullPath());
+        self::assertEquals('/', $url->getFullPath());
 
         $url = new Url('//www.google.fr/search');
-        $this->assertEquals('/search', $url->getFullPath());
+        self::assertEquals('/search', $url->getFullPath());
 
         $url = new Url('/path');
-        $this->assertEquals('/path', $url->getFullPath());
+        self::assertEquals('/path', $url->getFullPath());
 
         $url = new Url('/path#test');
-        $this->assertEquals('/path#test', $url->getFullPath());
+        self::assertEquals('/path#test', $url->getFullPath());
 
         $url = new Url('anything');
-        $this->assertEquals('/anything', $url->getFullPath());
+        self::assertEquals('/anything', $url->getFullPath());
 
         $url = new Url('foo/bar');
-        $this->assertEquals('/foo/bar', $url->getFullPath());
+        self::assertEquals('/foo/bar', $url->getFullPath());
 
         $url = new Url('index.php?foo=bar&test=1');
-        $this->assertEquals('/index.php?foo=bar&test=1', $url->getFullPath());
+        self::assertEquals('/index.php?foo=bar&test=1', $url->getFullPath());
     }
 
     public function testAbsoluteUrl()
     {
         $url = new Url('http://google.fr/');
-        $this->assertEquals('http://google.fr/', $url->getAbsoluteUrl());
+        self::assertEquals('http://google.fr/', $url->getAbsoluteUrl());
 
         $url = new Url('http://google.ca');
-        $this->assertEquals('http://google.ca/', $url->getAbsoluteUrl());
+        self::assertEquals('http://google.ca/', $url->getAbsoluteUrl());
 
         $url = new Url('../bla');
-        $this->assertEquals('', $url->getAbsoluteUrl(''));
+        self::assertEquals('', $url->getAbsoluteUrl(''));
 
         $url = new Url('/2014/08/03/4668-noisettes');
-        $this->assertEquals('http://www.la-grange.net/2014/08/03/4668-noisettes', $url->getAbsoluteUrl('http://www.la-grange.net/'));
+        self::assertEquals('http://www.la-grange.net/2014/08/03/4668-noisettes', $url->getAbsoluteUrl('http://www.la-grange.net/'));
 
         $url = new Url('http://www.google.fr/../bla');
-        $this->assertEquals('http://www.google.fr/../bla', $url->getAbsoluteUrl('http://www.google.fr/'));
+        self::assertEquals('http://www.google.fr/../bla', $url->getAbsoluteUrl('http://www.google.fr/'));
 
         $url = new Url('http://www.google.fr/');
-        $this->assertEquals('http://www.google.fr/', $url->getAbsoluteUrl('http://www.google.fr/'));
+        self::assertEquals('http://www.google.fr/', $url->getAbsoluteUrl('http://www.google.fr/'));
 
         $url = new Url('//www.google.fr/search');
-        $this->assertEquals('http://www.google.fr/search', $url->getAbsoluteUrl('//www.google.fr/'));
+        self::assertEquals('http://www.google.fr/search', $url->getAbsoluteUrl('//www.google.fr/'));
 
         $url = new Url('//www.google.fr/search');
-        $this->assertEquals('http://www.google.fr/search', $url->getAbsoluteUrl());
+        self::assertEquals('http://www.google.fr/search', $url->getAbsoluteUrl());
 
         $url = new Url('/path');
-        $this->assertEquals('http://www.google.fr/path', $url->getAbsoluteUrl('http://www.google.fr/'));
+        self::assertEquals('http://www.google.fr/path', $url->getAbsoluteUrl('http://www.google.fr/'));
 
         $url = new Url('/path#test');
-        $this->assertEquals('http://www.google.fr/path#test', $url->getAbsoluteUrl('http://www.google.fr/'));
+        self::assertEquals('http://www.google.fr/path#test', $url->getAbsoluteUrl('http://www.google.fr/'));
 
         $url = new Url('anything');
-        $this->assertEquals('http://www.google.fr/anything', $url->getAbsoluteUrl('http://www.google.fr/'));
+        self::assertEquals('http://www.google.fr/anything', $url->getAbsoluteUrl('http://www.google.fr/'));
 
         $url = new Url('index.php?foo=bar&test=1');
-        $this->assertEquals('http://www.google.fr/index.php?foo=bar&test=1', $url->getAbsoluteUrl('http://www.google.fr/'));
+        self::assertEquals('http://www.google.fr/index.php?foo=bar&test=1', $url->getAbsoluteUrl('http://www.google.fr/'));
 
         $url = new Url('index.php?foo=bar&test=1');
-        $this->assertEquals('', $url->getAbsoluteUrl());
+        self::assertEquals('', $url->getAbsoluteUrl());
 
         $url = new Url('https://127.0.0.1:8000/here/test?v=3');
-        $this->assertEquals('https://127.0.0.1:8000/here/test?v=3', $url->getAbsoluteUrl());
+        self::assertEquals('https://127.0.0.1:8000/here/test?v=3', $url->getAbsoluteUrl());
 
         $url = new Url('http://www.lofibucket.com/articles/oscilloscope_quake.html');
-        $this->assertEquals('http://www.lofibucket.com/articles/oscilloscope_quake.html', $url->getAbsoluteUrl());
+        self::assertEquals('http://www.lofibucket.com/articles/oscilloscope_quake.html', $url->getAbsoluteUrl());
 
         $url = new Url('test?v=3');
-        $this->assertEquals('https://127.0.0.1:8000/here/test?v=3', $url->getAbsoluteUrl('https://127.0.0.1:8000/here/'));
+        self::assertEquals('https://127.0.0.1:8000/here/test?v=3', $url->getAbsoluteUrl('https://127.0.0.1:8000/here/'));
     }
 
     public function testIsRelativePath()
     {
         $url = new Url('');
-        $this->assertTrue($url->isRelativePath());
+        self::assertTrue($url->isRelativePath());
 
         $url = new Url('http://google.fr');
-        $this->assertTrue($url->isRelativePath());
+        self::assertTrue($url->isRelativePath());
 
         $url = new Url('filename.json');
-        $this->assertTrue($url->isRelativePath());
+        self::assertTrue($url->isRelativePath());
 
         $url = new Url('folder/filename.json');
-        $this->assertTrue($url->isRelativePath());
+        self::assertTrue($url->isRelativePath());
 
         $url = new Url('/filename.json');
-        $this->assertFalse($url->isRelativePath());
+        self::assertFalse($url->isRelativePath());
 
         $url = new Url('/folder/filename.json');
-        $this->assertFalse($url->isRelativePath());
+        self::assertFalse($url->isRelativePath());
     }
 
     public function testGetBasePath()
     {
         $url = new Url('img/quakescope.jpg');
-        $this->assertEquals('/img/', $url->getBasePath());
+        self::assertEquals('/img/', $url->getBasePath());
 
         $url = new Url('http://foo/img/quakescope.jpg');
-        $this->assertEquals('/img/', $url->getBasePath());
+        self::assertEquals('/img/', $url->getBasePath());
 
         $url = new Url('http://foo/bar.html');
-        $this->assertEquals('/', $url->getBasePath());
+        self::assertEquals('/', $url->getBasePath());
 
         $url = new Url('http://foo/bar');
-        $this->assertEquals('/', $url->getBasePath());
+        self::assertEquals('/', $url->getBasePath());
 
         $url = new Url('http://foo/bar/');
-        $this->assertEquals('/bar/', $url->getBasePath());
+        self::assertEquals('/bar/', $url->getBasePath());
 
         $url = new Url('http://website/subfolder/img/foo.png');
-        $this->assertEquals('/subfolder/img/', $url->getBasePath());
+        self::assertEquals('/subfolder/img/', $url->getBasePath());
     }
 
     public function testResolve()
     {
         // relative link
-        $this->assertEquals(
+        self::assertEquals(
             'http://miniflux.net/assets/img/favicon.png',
             Url::resolve('assets/img/favicon.png', 'http://miniflux.net')
         );
 
         // relative link + HTTPS
-        $this->assertEquals(
+        self::assertEquals(
             'https://miniflux.net/assets/img/favicon.png',
             Url::resolve('assets/img/favicon.png', 'https://miniflux.net')
         );
 
         // absolute link
-        $this->assertEquals(
+        self::assertEquals(
             'http://miniflux.net/assets/img/favicon.png',
             Url::resolve('/assets/img/favicon.png', 'http://miniflux.net')
         );
 
         // absolute link + HTTPS
-        $this->assertEquals(
+        self::assertEquals(
             'https://miniflux.net/assets/img/favicon.png',
             Url::resolve('/assets/img/favicon.png', 'https://miniflux.net')
         );
 
         // Protocol relative link
-        $this->assertEquals(
+        self::assertEquals(
             'http://google.com/assets/img/favicon.png',
             Url::resolve('//google.com/assets/img/favicon.png', 'http://miniflux.net')
         );
 
         // Protocol relative link + HTTPS
-        $this->assertEquals(
+        self::assertEquals(
             'https://google.com/assets/img/favicon.png',
             Url::resolve('//google.com/assets/img/favicon.png', 'https://miniflux.net')
         );
 
         // URL same fqdn
-        $this->assertEquals(
+        self::assertEquals(
             'http://miniflux.net/assets/img/favicon.png',
             Url::resolve('http://miniflux.net/assets/img/favicon.png', 'https://miniflux.net')
         );
 
         // URL different fqdn
-        $this->assertEquals(
+        self::assertEquals(
             'https://www.google.com/assets/img/favicon.png',
             Url::resolve('https://www.google.com/assets/img/favicon.png', 'https://miniflux.net')
         );
 
         // HTTPS URL
-        $this->assertEquals(
+        self::assertEquals(
             'https://miniflux.net/assets/img/favicon.png',
             Url::resolve('https://miniflux.net/assets/img/favicon.png', 'https://miniflux.net')
         );
 
         // empty string on missing website parameter
-        $this->assertEquals(
+        self::assertEquals(
             '',
             Url::resolve('favicon.png', '')
         );
 
         // website only on missing icon parameter
-        $this->assertEquals(
+        self::assertEquals(
             'https://miniflux.net/',
             Url::resolve('', 'https://miniflux.net')
         );
 
         // empty string on missing website and icon parameter
-        $this->assertEquals(
+        self::assertEquals(
             '',
             Url::resolve('', '')
         );

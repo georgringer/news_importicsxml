@@ -12,7 +12,6 @@ class Url
     /**
      * URL
      *
-     * @access private
      * @var string
      */
     private $url = '';
@@ -20,7 +19,6 @@ class Url
     /**
      * URL components
      *
-     * @access private
      * @var array
      */
     private $components = [];
@@ -28,7 +26,6 @@ class Url
     /**
      * Constructor
      *
-     * @access public
      * @param  string   $url    URL
      */
     public function __construct($url)
@@ -53,7 +50,6 @@ class Url
      * Shortcut method to get an absolute url from relative url
      *
      * @static
-     * @access public
      * @param  mixed    $item_url      Unknown url (can be relative or not)
      * @param  mixed    $website_url   Website url
      * @return string
@@ -69,7 +65,8 @@ class Url
             }
 
             return $link->getAbsoluteUrl($website->getBaseUrl());
-        } elseif ($link->isProtocolRelative()) {
+        }
+        if ($link->isProtocolRelative()) {
             $link->setScheme($website->getScheme());
         }
 
@@ -80,7 +77,6 @@ class Url
      * Shortcut method to get a base url
      *
      * @static
-     * @access public
      * @param  string   $url
      * @return string
      */
@@ -93,7 +89,6 @@ class Url
     /**
      * Get the base URL
      *
-     * @access public
      * @param  string   $suffix    Add a suffix to the url
      * @return string
      */
@@ -105,7 +100,6 @@ class Url
     /**
      * Get the absolute URL
      *
-     * @access public
      * @param  string   $base_url    Use this url as base url
      * @return string
      */
@@ -124,7 +118,6 @@ class Url
     /**
      * Return true if the url is relative
      *
-     * @access public
      * @return bool
      */
     public function isRelativeUrl()
@@ -135,7 +128,6 @@ class Url
     /**
      * Return true if the path is relative
      *
-     * @access public
      * @return bool
      */
     public function isRelativePath()
@@ -147,7 +139,6 @@ class Url
     /**
      * Get the path
      *
-     * @access public
      * @return string
      */
     public function getPath()
@@ -158,7 +149,6 @@ class Url
     /**
      * Get the base path
      *
-     * @access public
      * @return string
      */
     public function getBasePath()
@@ -174,7 +164,6 @@ class Url
     /**
      * Get the full path (path + querystring + fragment)
      *
-     * @access public
      * @return string
      */
     public function getFullPath()
@@ -190,7 +179,6 @@ class Url
     /**
      * Get the hostname
      *
-     * @access public
      * @return string
      */
     public function getHost()
@@ -201,7 +189,6 @@ class Url
     /**
      * Return true if the url has a hostname
      *
-     * @access public
      * @return bool
      */
     public function hasHost()
@@ -212,7 +199,6 @@ class Url
     /**
      * Get the scheme
      *
-     * @access public
      * @param  string    $suffix   Suffix to add when there is a scheme
      * @return string
      */
@@ -224,7 +210,6 @@ class Url
     /**
      * Set the scheme
      *
-     * @access public
      * @param  string    $scheme    Set a scheme
      * @return string
      */
@@ -236,7 +221,6 @@ class Url
     /**
      * Return true if the url has a scheme
      *
-     * @access public
      * @return bool
      */
     public function hasScheme()
@@ -247,7 +231,6 @@ class Url
     /**
      * Get the port
      *
-     * @access public
      * @param  string    $prefix   Prefix to add when there is a port
      * @return string
      */
@@ -259,7 +242,6 @@ class Url
     /**
      * Return true if the url has a port
      *
-     * @access public
      * @return bool
      */
     public function hasPort()
@@ -270,7 +252,6 @@ class Url
     /**
      * Return true if the url is protocol relative (start with //)
      *
-     * @access public
      * @return bool
      */
     public function isProtocolRelative()

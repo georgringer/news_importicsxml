@@ -6,7 +6,7 @@ class Event
 {
     // phpcs:disable Generic.Arrays.DisallowLongArraySyntax
 
-    const HTML_TEMPLATE = '<p>%s: %s</p>';
+    public const HTML_TEMPLATE = '<p>%s: %s</p>';
 
     /**
      * https://www.kanzaki.com/docs/ical/summary.html
@@ -132,15 +132,14 @@ class Event
      *
      * @var array<string, mixed>
      */
-    public $additionalProperties = array();
+    public $additionalProperties = [];
 
     /**
      * Creates the Event object
      *
      * @param  array $data
-     * @return void
      */
-    public function __construct(array $data = array())
+    public function __construct(array $data = [])
     {
         foreach ($data as $key => $value) {
             $variable = self::snakeCase($key);
@@ -171,7 +170,7 @@ class Event
      * Magic isset method
      *
      * @param  string $name
-     * @return boolean
+     * @return bool
      */
     public function __isset($name)
     {
@@ -208,7 +207,7 @@ class Event
      */
     public function printData($html = self::HTML_TEMPLATE)
     {
-        $data = array(
+        $data = [
             'SUMMARY'       => $this->summary,
             'DTSTART'       => $this->dtstart,
             'DTEND'         => $this->dtend,
@@ -226,7 +225,7 @@ class Event
             'TRANSP'        => $this->transp,
             'ORGANISER'     => $this->organizer,
             'ATTENDEE(S)'   => $this->attendee,
-        );
+        ];
 
         // Remove any blank values
         $data = array_filter($data);

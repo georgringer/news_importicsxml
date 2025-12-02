@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%^/blog.*%' => [
@@ -10,6 +11,6 @@ return [
                 '//*[@class="post-data"]',
                 '//*[@id="author-meta"]',
             ],
-        ]
-    ]
+        ],
+    ],
 ];

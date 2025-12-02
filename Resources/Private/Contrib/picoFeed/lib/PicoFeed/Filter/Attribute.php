@@ -14,7 +14,6 @@ class Attribute
     /**
      * Image proxy url
      *
-     * @access private
      * @var string
      */
     private $image_proxy_url = '';
@@ -22,15 +21,13 @@ class Attribute
     /**
      * Image proxy callback
      *
-     * @access private
      * @var \Closure|null
      */
-    private $image_proxy_callback = null;
+    private $image_proxy_callback;
 
     /**
      * limits the image proxy usage to this protocol
      *
-     * @access private
      * @var string
      */
     private $image_proxy_limit_protocol = '';
@@ -38,7 +35,6 @@ class Attribute
     /**
      * Tags and attribute whitelist
      *
-     * @access private
      * @var array
      */
     private $attribute_whitelist = [
@@ -79,7 +75,7 @@ class Attribute
         'time' => ['datetime'],
         'abbr' => ['title'],
         'iframe' => ['width', 'height', 'frameborder', 'src'],
-        'q' => ['cite']
+        'q' => ['cite'],
     ];
 
     /**
@@ -87,7 +83,6 @@ class Attribute
      *
      * For a complete list go to http://en.wikipedia.org/wiki/URI_scheme
      *
-     * @access private
      * @var array
      */
     private $scheme_whitelist = [
@@ -125,7 +120,6 @@ class Attribute
     /**
      * Iframe source whitelist, everything else is ignored
      *
-     * @access private
      * @var array
      */
     private $iframe_whitelist = [
@@ -140,7 +134,6 @@ class Attribute
     /**
      * Blacklisted resources
      *
-     * @access private
      * @var array
      */
     private $media_blacklist = [
@@ -172,7 +165,6 @@ class Attribute
     /**
      * Attributes used for external resources
      *
-     * @access private
      * @var array
      */
     private $media_attributes = [
@@ -184,7 +176,6 @@ class Attribute
     /**
      * Attributes that must be integer
      *
-     * @access private
      * @var array
      */
     private $integer_attributes = [
@@ -196,7 +187,6 @@ class Attribute
     /**
      * Mandatory attributes for specified tags
      *
-     * @access private
      * @var array
      */
     private $required_attributes = [
@@ -210,7 +200,6 @@ class Attribute
     /**
      * Add attributes to specified tags
      *
-     * @access private
      * @var array
      */
     private $add_attributes = [
@@ -221,7 +210,6 @@ class Attribute
     /**
      * List of filters to apply
      *
-     * @access private
      * @var array
      */
     private $filters = [
@@ -234,13 +222,12 @@ class Attribute
         'filterProtocolUrlAttribute',
         'rewriteImageProxyUrl',
         'secureIframeSrc',
-        'removeYouTubeAutoplay'
+        'removeYouTubeAutoplay',
     ];
 
     /**
      * Add attributes to specified tags
      *
-     * @access private
      * @var \PicoFeed\Client\Url
      */
     private $website;
@@ -248,7 +235,6 @@ class Attribute
     /**
      * Constructor
      *
-     * @access public
      * @param  \PicoFeed\Client\Url    $website    Website url instance
      */
     public function __construct(Url $website)
@@ -259,7 +245,6 @@ class Attribute
     /**
      * Apply filters to the attributes list
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @param  array     $attributes    Attributes dictionary
      * @return array                    Filtered attributes
@@ -281,7 +266,6 @@ class Attribute
     /**
      * Return true if the value is not empty (remove empty attributes)
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @param  string    $attribute     Attribute name
      * @param  string    $value         Attribute value
@@ -295,7 +279,6 @@ class Attribute
     /**
      * Return true if the value is allowed (remove not allowed attributes)
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @param  string    $attribute     Attribute name
      * @param  string    $value         Attribute value
@@ -309,7 +292,6 @@ class Attribute
     /**
      * Return true if the value is not integer (remove attributes that should have an integer value)
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @param  string    $attribute     Attribute name
      * @param  string    $value         Attribute value
@@ -327,7 +309,6 @@ class Attribute
     /**
      * Return true if the iframe source is allowed (remove not allowed iframe)
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @param  string    $attribute     Attribute name
      * @param  string    $value         Attribute value
@@ -351,7 +332,6 @@ class Attribute
     /**
      * Return true if the resource is not blacklisted (remove blacklisted resource attributes)
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @param  string    $attribute     Attribute name
      * @param  string    $value         Attribute value
@@ -369,7 +349,6 @@ class Attribute
     /**
      * Convert all relative links to absolute url
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @param  string    $attribute     Attribute name
      * @param  string    $value         Attribute value
@@ -388,7 +367,6 @@ class Attribute
      * Turns iframes' src attribute from http to https to prevent
      * mixed active content
      *
-     * @access public
      * @param  string    $tag            Tag name
      * @param  array     $attribute      Atttributes name
      * @param  string    $value          Attribute value
@@ -406,7 +384,6 @@ class Attribute
     /**
      * Removes YouTube autoplay from iframes
      *
-     * @access public
      * @param  string    $tag            Tag name
      * @param  array     $attribute      Atttributes name
      * @param  string    $value          Attribute value
@@ -425,7 +402,6 @@ class Attribute
     /**
      * Rewrite image url to use with a proxy
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @param  string    $attribute     Attribute name
      * @param  string    $value         Attribute value
@@ -448,7 +424,6 @@ class Attribute
     /**
      * Return true if the scheme is authorized
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @param  string    $attribute     Attribute name
      * @param  string    $value         Attribute value
@@ -466,7 +441,6 @@ class Attribute
     /**
      * Automatically add/override some attributes for specific tags
      *
-     * @access public
      * @param  string    $tag            Tag name
      * @param  array     $attributes     Attributes list
      * @return array
@@ -483,7 +457,6 @@ class Attribute
     /**
      * Return true if all required attributes are present
      *
-     * @access public
      * @param  string    $tag            Tag name
      * @param  array     $attributes     Attributes list
      * @return bool
@@ -504,7 +477,6 @@ class Attribute
     /**
      * Check if an attribute name is an external resource
      *
-     * @access public
      * @param  string  $attribute  Attribute name
      * @return bool
      */
@@ -516,7 +488,6 @@ class Attribute
     /**
      * Detect if the protocol is allowed or not
      *
-     * @access public
      * @param  string  $value  Attribute value
      * @return bool
      */
@@ -534,7 +505,6 @@ class Attribute
     /**
      * Detect if an url is blacklisted
      *
-     * @access public
      * @param  string  $resource  Attribute value (URL)
      * @return bool
      */
@@ -552,7 +522,6 @@ class Attribute
     /**
      * Convert the attribute list to html
      *
-     * @access public
      * @param  array     $attributes    Attributes
      * @return string
      */
@@ -570,7 +539,6 @@ class Attribute
     /**
      * Set whitelisted tags and attributes for each tag
      *
-     * @access public
      * @param  array   $values   List of tags: ['video' => ['src', 'cover'], 'img' => ['src']]
      * @return Attribute
      */
@@ -583,7 +551,6 @@ class Attribute
     /**
      * Set scheme whitelist
      *
-     * @access public
      * @param  array   $values   List of scheme: ['http://', 'ftp://']
      * @return Attribute
      */
@@ -596,7 +563,6 @@ class Attribute
     /**
      * Set media attributes (used to load external resources)
      *
-     * @access public
      * @param  array   $values   List of values: ['src', 'href']
      * @return Attribute
      */
@@ -609,7 +575,6 @@ class Attribute
     /**
      * Set blacklisted external resources
      *
-     * @access public
      * @param  array   $values   List of tags: ['http://google.com/', '...']
      * @return Attribute
      */
@@ -622,7 +587,6 @@ class Attribute
     /**
      * Set mandatory attributes for whitelisted tags
      *
-     * @access public
      * @param  array   $values   List of tags: ['img' => 'src']
      * @return Attribute
      */
@@ -635,7 +599,6 @@ class Attribute
     /**
      * Set attributes to automatically to specific tags
      *
-     * @access public
      * @param  array   $values   List of tags: ['a' => 'target="_blank"']
      * @return Attribute
      */
@@ -648,7 +611,6 @@ class Attribute
     /**
      * Set attributes that must be an integer
      *
-     * @access public
      * @param  array   $values   List of tags: ['width', 'height']
      * @return Attribute
      */
@@ -661,7 +623,6 @@ class Attribute
     /**
      * Set allowed iframe resources
      *
-     * @access public
      * @param  array   $values   List of tags: ['http://www.youtube.com']
      * @return Attribute
      */
@@ -676,7 +637,6 @@ class Attribute
      *
      * The original image url will be urlencoded
      *
-     * @access public
      * @param  string    $url      Proxy URL
      * @return Attribute
      */
@@ -689,7 +649,6 @@ class Attribute
     /**
      * Set image proxy callback
      *
-     * @access public
      * @param  \Closure     $callback
      * @return Attribute
      */
@@ -702,7 +661,6 @@ class Attribute
     /**
      * Set image proxy protocol restriction
      *
-     * @access public
      * @param  string       $value
      * @return Attribute
      */

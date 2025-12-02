@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace GeorgRinger\NewsImporticsxml\Hooks\Backend\Element;
 
 /**
@@ -14,7 +16,7 @@ use TYPO3\CMS\Core\Utility\DebugUtility;
 
 class JsonElement extends AbstractNode
 {
-    public function render()
+    public function render(): array
     {
         $parameterArray = $this->data['parameterArray'];
         $resultArray = $this->initializeResultArray();

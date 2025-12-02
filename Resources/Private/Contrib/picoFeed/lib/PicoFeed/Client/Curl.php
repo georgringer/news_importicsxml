@@ -14,7 +14,6 @@ class Curl extends Client
     /**
      * HTTP response body
      *
-     * @access private
      * @var string
      */
     private $body = '';
@@ -22,7 +21,6 @@ class Curl extends Client
     /**
      * Body size
      *
-     * @access private
      * @var int
      */
     private $body_length = 0;
@@ -30,7 +28,6 @@ class Curl extends Client
     /**
      * HTTP response headers
      *
-     * @access private
      * @var array
      */
     private $response_headers = [];
@@ -38,7 +35,6 @@ class Curl extends Client
     /**
      * Counter on the number of header received
      *
-     * @access private
      * @var int
      */
     private $response_headers_count = 0;
@@ -48,7 +44,6 @@ class Curl extends Client
      *
      * If the function return -1, curl stop to read the HTTP response
      *
-     * @access public
      * @param  resource  $ch       cURL handler
      * @param  string    $buffer   Chunk of data
      * @return int   Length of the buffer
@@ -70,7 +65,6 @@ class Curl extends Client
     /**
      * cURL callback to read HTTP headers
      *
-     * @access public
      * @param  resource  $ch       cURL handler
      * @param  string    $buffer   Header line
      * @return int   Length of the buffer
@@ -95,7 +89,6 @@ class Curl extends Client
     /**
      * cURL callback to passthrough the HTTP status header to the client
      *
-     * @access public
      * @param  resource  $ch       cURL handler
      * @param  string    $buffer   Header line
      * @return int   Length of the buffer
@@ -118,7 +111,6 @@ class Curl extends Client
      *
      * If the function return -1, curl stop to read the HTTP response
      *
-     * @access public
      * @param  resource  $ch       cURL handler
      * @param  string    $buffer   Chunk of data
      * @return int   Length of the buffer
@@ -132,7 +124,6 @@ class Curl extends Client
     /**
      * Prepare HTTP headers
      *
-     * @access private
      * @return string[]
      */
     private function prepareHeaders()
@@ -157,7 +148,6 @@ class Curl extends Client
     /**
      * Prepare curl proxy context
      *
-     * @access private
      * @param  resource $ch
      * @return resource $ch
      */
@@ -184,7 +174,6 @@ class Curl extends Client
     /**
      * Prepare curl auth context
      *
-     * @access private
      * @param  resource $ch
      * @return resource $ch
      */
@@ -200,7 +189,6 @@ class Curl extends Client
     /**
      * Set write/header functions
      *
-     * @access private
      * @param  resource $ch
      * @return resource $ch
      */
@@ -223,7 +211,6 @@ class Curl extends Client
     /**
      * Prepare curl context
      *
-     * @access private
      * @return resource
      */
     private function prepareContext()
@@ -261,8 +248,6 @@ class Curl extends Client
 
     /**
      * Execute curl context
-     *
-     * @access private
      */
     private function executeContext()
     {
@@ -293,7 +278,6 @@ class Curl extends Client
     /**
      * Do the HTTP request
      *
-     * @access public
      * @param  bool    $follow_location    Flag used when there is an open_basedir restriction
      * @return array                       HTTP response ['body' => ..., 'status' => ..., 'headers' => ...]
      */
@@ -311,14 +295,13 @@ class Curl extends Client
         return [
             'status' => $status,
             'body' => $this->body,
-            'headers' => $headers
+            'headers' => $headers,
         ];
     }
 
     /**
      * Check if the redirection have to be handled manually
      *
-     * @access private
      * @param  bool    $follow_location    Flag
      * @param  int    $status             HTTP status code
      * @return bool
@@ -331,7 +314,6 @@ class Curl extends Client
     /**
      * Handle manually redirections when there is an open base dir restriction
      *
-     * @access private
      * @param  string     $location       Redirected URL
      * @return array
      */
@@ -375,7 +357,6 @@ class Curl extends Client
      * (depends of the version of libcurl linked to php)
      *
      * @see    http://curl.haxx.se/libcurl/c/libcurl-errors.html
-     * @access private
      * @param  int     $errno    cURL error code
      */
     private function handleError($errno)

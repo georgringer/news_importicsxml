@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsImporticsxml\Mapper;
@@ -19,12 +20,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class XmlMapper extends AbstractMapper implements MapperInterface
 {
-
-    /**
-     * @param TaskConfiguration $configuration
-     * @return array
-     */
-    public function map(TaskConfiguration $configuration)
+    public function map(TaskConfiguration $configuration): array
     {
         if ($configuration->getCleanBeforeImport()) {
             $this->removeImportedRecordsFromPid($configuration->getPid(), $this->getImportSource());
@@ -48,7 +44,6 @@ class XmlMapper extends AbstractMapper implements MapperInterface
         foreach ($items as $item) {
             $id = strlen($item->getId()) > 100 ? md5($item->getId()) : $item->getId();
             /** @var Item $item */
-
             $singleItem = [
                 'import_source' => $this->getImportSource(),
                 'import_id' => $id,
@@ -165,20 +160,13 @@ class XmlMapper extends AbstractMapper implements MapperInterface
         return $categoryIds;
     }
 
-    /**
-     * @param string $content
-     * @return string
-     */
-    protected function cleanup($content): string
+    protected function cleanup(string $content): string
     {
         $search = ['<br />', '<br>', '<br/>', LF . LF];
         $replace = [LF, LF, LF, LF];
         return str_replace($search, $replace, $content);
     }
 
-    /**
-     * @return string
-     */
     public function getImportSource(): string
     {
         return 'newsimporticsxml_xml';

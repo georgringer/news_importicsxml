@@ -12,7 +12,6 @@ class Item
     /**
      * List of known RTL languages
      *
-     * @access public
      * @var public
      */
     public $rtl = [
@@ -29,7 +28,6 @@ class Item
     /**
      * Item id
      *
-     * @access public
      * @var string
      */
     public $id = '';
@@ -37,7 +35,6 @@ class Item
     /**
      * Item title
      *
-     * @access public
      * @var string
      */
     public $title = '';
@@ -45,7 +42,6 @@ class Item
     /**
      * Item url
      *
-     * @access public
      * @var string
      */
     public $url = '';
@@ -53,23 +49,20 @@ class Item
     /**
      * Item author
      *
-     * @access public
      * @var string
      */
-    public $author= '';
+    public $author = '';
 
     /**
      * Item date
      *
-     * @access public
      * @var \DateTime
      */
-    public $date = null;
+    public $date;
 
     /**
      * Item content
      *
-     * @access public
      * @var string
      */
     public $content = '';
@@ -77,7 +70,6 @@ class Item
     /**
      * Item enclosure url
      *
-     * @access public
      * @var string
      */
     public $enclosure_url = '';
@@ -85,7 +77,6 @@ class Item
     /**
      * Item enclusure type
      *
-     * @access public
      * @var string
      */
     public $enclosure_type = '';
@@ -93,7 +84,6 @@ class Item
     /**
      * Item language
      *
-     * @access public
      * @var string
      */
     public $language = '';
@@ -101,7 +91,6 @@ class Item
     /**
      * Raw XML
      *
-     * @access public
      * @var \SimpleXMLElement
      */
     public $xml;
@@ -109,7 +98,6 @@ class Item
     /**
      * List of namespaces
      *
-     * @access public
      * @var array
      */
     public $namespaces = [];
@@ -117,7 +105,6 @@ class Item
     /**
      * Get specific XML tag or attribute value
      *
-     * @access public
      * @param  string  $tag           Tag name (examples: guid, media:content)
      * @param  string  $attribute     Tag attribute
      * @return string
@@ -132,18 +119,15 @@ class Item
 
         // Return attribute value
         if (! empty($attribute)) {
-            return (string) $this->xml->{$tag}[$attribute];
+            return (string)$this->xml->{$tag}[$attribute];
         }
 
         // Return tag content
-        return (string) $this->xml->$tag;
+        return (string)$this->xml->$tag;
     }
 
     /**
      * Return item information
-     *
-     * @access public
-     * $return string
      */
     public function __toString()
     {
@@ -162,9 +146,6 @@ class Item
 
     /**
      * Get title
-     *
-     * @access public
-     * $return string
      */
     public function getTitle()
     {
@@ -173,9 +154,6 @@ class Item
 
     /**
      * Get url
-     *
-     * @access public
-     * $return string
      */
     public function getUrl()
     {
@@ -184,9 +162,6 @@ class Item
 
     /**
      * Get id
-     *
-     * @access public
-     * $return string
      */
     public function getId()
     {
@@ -195,9 +170,6 @@ class Item
 
     /**
      * Get date
-     *
-     * @access public
-     * $return integer
      */
     public function getDate()
     {
@@ -206,9 +178,6 @@ class Item
 
     /**
      * Get content
-     *
-     * @access public
-     * $return string
      */
     public function getContent()
     {
@@ -217,9 +186,6 @@ class Item
 
     /**
      * Get enclosure url
-     *
-     * @access public
-     * $return string
      */
     public function getEnclosureUrl()
     {
@@ -228,9 +194,6 @@ class Item
 
     /**
      * Get enclosure type
-     *
-     * @access public
-     * $return string
      */
     public function getEnclosureType()
     {
@@ -239,9 +202,6 @@ class Item
 
     /**
      * Get language
-     *
-     * @access public
-     * $return string
      */
     public function getLanguage()
     {
@@ -250,9 +210,6 @@ class Item
 
     /**
      * Get author
-     *
-     * @access public
-     * $return string
      */
     public function getAuthor()
     {
@@ -262,7 +219,6 @@ class Item
     /**
      * Return true if the item is "Right to Left"
      *
-     * @access public
      * @return bool
      */
     public function isRTL()

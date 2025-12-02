@@ -15,7 +15,6 @@ class DateParser
     /**
      * Timezone used to parse feed dates
      *
-     * @access public
      * @var string
      */
     public $timezone = 'UTC';
@@ -23,7 +22,6 @@ class DateParser
     /**
      * Supported formats [ 'format' => length ]
      *
-     * @access public
      * @var array
      */
     public $formats = [
@@ -57,7 +55,6 @@ class DateParser
     /**
      * Try to parse all date format for broken feeds
      *
-     * @access public
      * @param  string  $value  Original date format
      * @return DateTime
      */
@@ -83,7 +80,6 @@ class DateParser
     /**
      * Get a valid date from a given format
      *
-     * @access public
      * @param  string  $format   Date format
      * @param  string  $value    Original date value
      * @return DateTime|bool
@@ -106,7 +102,6 @@ class DateParser
     /**
      * Get the current datetime
      *
-     * @access public
      * @return DateTime
      */
     public function getCurrentDateTime()

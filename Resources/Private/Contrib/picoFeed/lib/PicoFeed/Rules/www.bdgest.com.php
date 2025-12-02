@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -10,6 +11,6 @@ return [
                 '//*[contains(@class, "post-review")]',
                 '//*[contains(@class, "footer-review")]',
             ],
-        ]
-    ]
+        ],
+    ],
 ];

@@ -7,6 +7,4 @@ namespace PicoFeed\Client;
  *
  * @author  Frederic Guillot
  */
-class MaxSizeException extends ClientException
-{
-}
+class MaxSizeException extends ClientException {}

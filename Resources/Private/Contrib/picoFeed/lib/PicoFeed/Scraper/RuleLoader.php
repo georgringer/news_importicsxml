@@ -16,7 +16,6 @@ class RuleLoader
     /**
      * Config object
      *
-     * @access private
      * @var \PicoFeed\Config\Config
      */
     private $config;
@@ -24,7 +23,6 @@ class RuleLoader
     /**
      * Constructor
      *
-     * @access public
      * @param  \PicoFeed\Config\Config   $config   Config class instance
      */
     public function __construct(Config $config)
@@ -35,7 +33,6 @@ class RuleLoader
     /**
      * Get the rules for an URL
      *
-     * @access public
      * @param string $url the URL that should be looked up
      * @return array the array containing the rules
      */
@@ -61,7 +58,6 @@ class RuleLoader
     /**
      * Get the list of possible rules file names for a given hostname
      *
-     * @access public
      * @param  string  $hostname  Hostname
      * @return array
      */
@@ -87,7 +83,6 @@ class RuleLoader
     /**
      * Load a rule file from the defined folder
      *
-     * @access public
      * @param  string   $folder     Rule directory
      * @param  array    $files      List of possible file names
      * @return array
@@ -108,7 +103,6 @@ class RuleLoader
     /**
      * Get the list of folders that contains rules
      *
-     * @access public
      * @return array
      */
     public function getRulesFolders()

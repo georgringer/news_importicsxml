@@ -14,7 +14,6 @@ class Export
     /**
      * List of feeds to exports
      *
-     * @access private
      * @var array
      */
     private $content = [];
@@ -22,7 +21,6 @@ class Export
     /**
      * List of required properties for each feed
      *
-     * @access private
      * @var array
      */
     private $required_fields = [
@@ -34,7 +32,6 @@ class Export
     /**
      * Constructor
      *
-     * @access public
      * @param  array   $content   List of feeds
      */
     public function __construct(array $content)
@@ -45,7 +42,6 @@ class Export
     /**
      * Get the OPML document
      *
-     * @access public
      * @return string
      */
     public function execute()
@@ -71,7 +67,6 @@ class Export
     /**
      * Create a feed entry
      *
-     * @access public
      * @param  SimpleXMLElement    $parent      Parent Element
      * @param  array               $feed        Feed properties
      */
@@ -101,7 +96,6 @@ class Export
     /**
      * Create entries for a feed list
      *
-     * @access public
      * @param  SimpleXMLElement    $parent      Parent Element
      * @param  array               $feeds       Feed list
      */
@@ -115,7 +109,6 @@ class Export
     /**
      * Create a category entry
      *
-     * @access public
      * @param  SimpleXMLElement    $parent      Parent Element
      * @param  string              $category    Category
      * @param  array               $feeds       Feed properties

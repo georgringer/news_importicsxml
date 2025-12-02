@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -9,7 +10,7 @@ return [
             'strip' => [
                 '//div[@class="news_social"]',
                 '//div[@id="newssuiv"]',
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

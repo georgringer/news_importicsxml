@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeorgRinger\NewsImporticsxml\Domain\Model\Dto;
 
 /**
@@ -8,6 +10,7 @@ namespace GeorgRinger\NewsImporticsxml\Domain\Model\Dto;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -15,170 +18,101 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class TaskConfiguration
 {
+    protected string $email = '';
+    protected string $path = '';
+    protected string $mapping = '';
+    protected string $format = '';
+    protected int $pid = 0;
+    protected bool $persistAsExternalUrl = false;
+    protected bool $cleanBeforeImport = false;
+    protected bool $setSlug = false;
 
-    /** @var string */
-    protected $email;
-
-    /** @var string */
-    protected $path;
-
-    /** @var string */
-    protected $mapping;
-
-    /** @var string */
-    protected $format;
-
-    /** @var int */
-    protected $pid;
-
-    /** @var bool */
-    protected $persistAsExternalUrl = false;
-
-    /** @var bool */
-    protected $cleanBeforeImport = false;
-
-    /** @var bool */
-    protected $setSlug = false;
-
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * @param string $path
-     */
-    public function setPath($path)
+    public function setPath(string $path): void
     {
         $this->path = $path;
     }
 
-    /**
-     * @return string
-     */
-    public function getMapping()
+    public function getMapping(): string
     {
         return $this->mapping;
     }
 
-    /**
-     * @param string $mapping
-     */
-    public function setMapping($mapping)
+    public function setMapping(string $mapping): void
     {
         $this->mapping = $mapping;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormat()
+    public function getFormat(): string
     {
         return $this->format;
     }
 
-    /**
-     * @param string $format
-     */
-    public function setFormat($format)
+    public function setFormat(string $format): void
     {
         $this->format = $format;
     }
 
-    /**
-     * @return int
-     */
-    public function getPid()
+    public function getPid(): int
     {
         return $this->pid;
     }
 
-    /**
-     * @param int $pid
-     */
-    public function setPid($pid)
+    public function setPid(int $pid): void
     {
         $this->pid = $pid;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPersistAsExternalUrl()
+    public function isPersistAsExternalUrl(): bool
     {
         return $this->persistAsExternalUrl;
     }
 
-    /**
-     * @param bool $persistAsExternalUrl
-     */
-    public function setPersistAsExternalUrl($persistAsExternalUrl)
+    public function setPersistAsExternalUrl(bool $persistAsExternalUrl): void
     {
-        $this->persistAsExternalUrl = (bool)$persistAsExternalUrl;
+        $this->persistAsExternalUrl = $persistAsExternalUrl;
     }
 
-    /**
-     * @return bool
-     */
-    public function getCleanBeforeImport()
+    public function getCleanBeforeImport(): bool
     {
         return $this->cleanBeforeImport;
     }
 
-    /**
-     * @param bool $cleanBeforeImport
-     */
-    public function setCleanBeforeImport($cleanBeforeImport)
+    public function setCleanBeforeImport(bool $cleanBeforeImport): void
     {
         $this->cleanBeforeImport = $cleanBeforeImport;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSetSlug()
+    public function isSetSlug(): bool
     {
         return $this->setSlug;
     }
 
-    /**
-     * @param bool $setSlug
-     * @return TaskConfiguration
-     */
-    public function setSetSlug(bool $setSlug)
+    public function setSetSlug(bool $setSlug): void
     {
         $this->setSlug = $setSlug;
     }
-
-
 
     /**
      * Split the configuration from multiline to array
      * 123:This is a category title
      * 345:And another one
-     *
-     * @return array
      */
-    public function getMappingConfigured()
+    public function getMappingConfigured(): array
     {
         $out = [];
         $lines = GeneralUtility::trimExplode('|', $this->mapping, true);

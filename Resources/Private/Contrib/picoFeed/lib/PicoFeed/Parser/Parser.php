@@ -19,7 +19,6 @@ abstract class Parser
     /**
      * Config object
      *
-     * @access private
      * @var \PicoFeed\Config\Config
      */
     private $config;
@@ -27,7 +26,6 @@ abstract class Parser
     /**
      * DateParser object
      *
-     * @access protected
      * @var \PicoFeed\Parser\DateParser
      */
     protected $date;
@@ -35,7 +33,6 @@ abstract class Parser
     /**
      * Hash algorithm used to generate item id, any value supported by PHP, see hash_algos()
      *
-     * @access private
      * @var string
      */
     private $hash_algo = 'sha256';
@@ -43,7 +40,6 @@ abstract class Parser
     /**
      * Feed content (XML data)
      *
-     * @access protected
      * @var string
      */
     protected $content = '';
@@ -51,7 +47,6 @@ abstract class Parser
     /**
      * Fallback url
      *
-     * @access protected
      * @var string
      */
     protected $fallback_url = '';
@@ -59,7 +54,6 @@ abstract class Parser
     /**
      * XML namespaces
      *
-     * @access protected
      * @var array
      */
     protected $namespaces = [];
@@ -67,7 +61,6 @@ abstract class Parser
     /**
      * Enable the content filtering
      *
-     * @access private
      * @var bool
      */
     private $enable_filter = true;
@@ -75,7 +68,6 @@ abstract class Parser
     /**
      * Enable the content grabber
      *
-     * @access private
      * @var bool
      */
     private $enable_grabber = false;
@@ -83,7 +75,6 @@ abstract class Parser
     /**
      * Enable the content grabber on all pages
      *
-     * @access private
      * @var bool
      */
     private $grabber_needs_rule_file = false;
@@ -91,7 +82,6 @@ abstract class Parser
     /**
      * Ignore those urls for the content scraper
      *
-     * @access private
      * @var array
      */
     private $grabber_ignore_urls = [];
@@ -99,14 +89,13 @@ abstract class Parser
     /**
      * Constructor
      *
-     * @access public
      * @param  string  $content          Feed content
      * @param  string  $http_encoding    HTTP encoding (headers)
      * @param  string  $fallback_url     Fallback url when the feed provide relative or broken url
      */
     public function __construct($content, $http_encoding = '', $fallback_url = '')
     {
-        $this->date = new DateParser;
+        $this->date = new DateParser();
         $this->fallback_url = $fallback_url;
         $xml_encoding = XmlParser::getEncodingFromXmlTag($content);
 
@@ -121,7 +110,6 @@ abstract class Parser
     /**
      * Parse the document
      *
-     * @access public
      * @return \PicoFeed\Parser\Feed
      */
     public function execute()
@@ -144,7 +132,7 @@ abstract class Parser
 
         $this->namespaces = $xml->getNamespaces(true);
 
-        $feed = new Feed;
+        $feed = new Feed();
 
         $this->findFeedUrl($xml, $feed);
         $this->checkFeedUrl($feed);
@@ -161,7 +149,7 @@ abstract class Parser
         $this->findFeedIcon($xml, $feed);
 
         foreach ($this->getItemsTree($xml) as $entry) {
-            $item = new Item;
+            $item = new Item();
             $item->xml = $entry;
             $item->namespaces = $this->namespaces;
 
@@ -195,7 +183,6 @@ abstract class Parser
     /**
      * Check if the feed url is correct
      *
-     * @access public
      * @param  Feed    $feed          Feed object
      */
     public function checkFeedUrl(Feed $feed)
@@ -210,7 +197,6 @@ abstract class Parser
     /**
      * Check if the site url is correct
      *
-     * @access public
      * @param  Feed    $feed          Feed object
      */
     public function checkSiteUrl(Feed $feed)
@@ -225,7 +211,6 @@ abstract class Parser
     /**
      * Check if the item url is correct
      *
-     * @access public
      * @param  Feed    $feed          Feed object
      * @param  Item    $item          Item object
      */
@@ -237,7 +222,6 @@ abstract class Parser
     /**
      * Fetch item content with the content grabber
      *
-     * @access public
      * @param  Item    $item          Item object
      */
     public function scrapWebsite(Item $item)
@@ -261,7 +245,6 @@ abstract class Parser
     /**
      * Filter HTML for entry content
      *
-     * @access public
      * @param  Feed    $feed          Feed object
      * @param  Item    $item          Item object
      */
@@ -279,7 +262,6 @@ abstract class Parser
     /**
      * Generate a unique id for an entry (hash all arguments)
      *
-     * @access public
      * @return string
      */
     public function generateId()
@@ -291,7 +273,6 @@ abstract class Parser
      * Return true if the given language is "Right to Left"
      *
      * @static
-     * @access public
      * @param  string  $language  Language: fr-FR, en-US
      * @return bool
      */
@@ -322,7 +303,6 @@ abstract class Parser
     /**
      * Set Hash algorithm used for id generation
      *
-     * @access public
      * @param  string   $algo   Algorithm name
      * @return \PicoFeed\Parser\Parser
      */
@@ -336,7 +316,6 @@ abstract class Parser
      * Set a different timezone
      *
      * @see    http://php.net/manual/en/timezones.php
-     * @access public
      * @param  string   $timezone   Timezone
      * @return \PicoFeed\Parser\Parser
      */
@@ -352,7 +331,6 @@ abstract class Parser
     /**
      * Set config object
      *
-     * @access public
      * @param  \PicoFeed\Config\Config  $config   Config instance
      * @return \PicoFeed\Parser\Parser
      */
@@ -365,7 +343,6 @@ abstract class Parser
     /**
      * Enable the content grabber
      *
-     * @access public
      * @return \PicoFeed\Parser\Parser
      */
     public function disableContentFiltering()
@@ -376,7 +353,6 @@ abstract class Parser
     /**
      * Return true if the content filtering is enabled
      *
-     * @access public
      * @return bool
      */
     public function isFilteringEnabled()
@@ -391,7 +367,6 @@ abstract class Parser
     /**
      * Enable the content grabber
      *
-     * @access public
      * @param bool $needs_rule_file true if only pages with rule files should be
      * scraped
      * @return \PicoFeed\Parser\Parser
@@ -405,7 +380,6 @@ abstract class Parser
     /**
      * Set ignored URLs for the content grabber
      *
-     * @access public
      * @param  array   $urls   URLs
      * @return \PicoFeed\Parser\Parser
      */
@@ -417,7 +391,6 @@ abstract class Parser
     /**
      * Find the feed url
      *
-     * @access public
      * @param  SimpleXMLElement          $xml     Feed xml
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
@@ -426,7 +399,6 @@ abstract class Parser
     /**
      * Find the site url
      *
-     * @access public
      * @param  SimpleXMLElement          $xml     Feed xml
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
@@ -435,7 +407,6 @@ abstract class Parser
     /**
      * Find the feed title
      *
-     * @access public
      * @param  SimpleXMLElement          $xml     Feed xml
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
@@ -444,7 +415,6 @@ abstract class Parser
     /**
      * Find the feed description
      *
-     * @access public
      * @param  SimpleXMLElement          $xml     Feed xml
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
@@ -453,7 +423,6 @@ abstract class Parser
     /**
      * Find the feed language
      *
-     * @access public
      * @param  SimpleXMLElement          $xml     Feed xml
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
@@ -462,7 +431,6 @@ abstract class Parser
     /**
      * Find the feed id
      *
-     * @access public
      * @param  SimpleXMLElement          $xml     Feed xml
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
@@ -471,7 +439,6 @@ abstract class Parser
     /**
      * Find the feed date
      *
-     * @access public
      * @param  SimpleXMLElement          $xml     Feed xml
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
@@ -480,7 +447,6 @@ abstract class Parser
     /**
      * Find the feed logo url
      *
-     * @access public
      * @param  SimpleXMLElement          $xml     Feed xml
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
@@ -489,7 +455,6 @@ abstract class Parser
     /**
      * Find the feed icon
      *
-     * @access public
      * @param  SimpleXMLElement          $xml     Feed xml
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
      */
@@ -498,7 +463,6 @@ abstract class Parser
     /**
      * Get the path to the items XML tree
      *
-     * @access public
      * @param  SimpleXMLElement   $xml   Feed xml
      * @return SimpleXMLElement
      */
@@ -507,7 +471,6 @@ abstract class Parser
     /**
      * Find the item author
      *
-     * @access public
      * @param  SimpleXMLElement          $xml     Feed
      * @param  SimpleXMLElement          $entry   Feed item
      * @param  \PicoFeed\Parser\Item     $item    Item object
@@ -517,7 +480,6 @@ abstract class Parser
     /**
      * Find the item URL
      *
-     * @access public
      * @param  SimpleXMLElement          $entry   Feed item
      * @param  \PicoFeed\Parser\Item     $item    Item object
      */
@@ -526,7 +488,6 @@ abstract class Parser
     /**
      * Find the item title
      *
-     * @access public
      * @param  SimpleXMLElement          $entry   Feed item
      * @param  \PicoFeed\Parser\Item     $item    Item object
      */
@@ -535,7 +496,6 @@ abstract class Parser
     /**
      * Genereate the item id
      *
-     * @access public
      * @param  SimpleXMLElement          $entry   Feed item
      * @param  \PicoFeed\Parser\Item     $item    Item object
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
@@ -545,7 +505,6 @@ abstract class Parser
     /**
      * Find the item date
      *
-     * @access public
      * @param  SimpleXMLElement          $entry   Feed item
      * @param  Item                      $item    Item object
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
@@ -555,7 +514,6 @@ abstract class Parser
     /**
      * Find the item content
      *
-     * @access public
      * @param  SimpleXMLElement          $entry   Feed item
      * @param  \PicoFeed\Parser\Item     $item    Item object
      */
@@ -564,7 +522,6 @@ abstract class Parser
     /**
      * Find the item enclosure
      *
-     * @access public
      * @param  SimpleXMLElement          $entry   Feed item
      * @param  \PicoFeed\Parser\Item     $item    Item object
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object
@@ -574,7 +531,6 @@ abstract class Parser
     /**
      * Find the item language
      *
-     * @access public
      * @param  SimpleXMLElement          $entry   Feed item
      * @param  \PicoFeed\Parser\Item     $item    Item object
      * @param  \PicoFeed\Parser\Feed     $feed    Feed object

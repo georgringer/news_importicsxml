@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsImporticsxml\Mapper;
@@ -18,15 +19,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class IcsMapper extends AbstractMapper implements MapperInterface
 {
+    protected bool $pathIsModified = false;
 
-    /** @var bool */
-    protected $pathIsModified = false;
-
-    /**
-     * @param TaskConfiguration $configuration
-     * @return array
-     */
-    public function map(TaskConfiguration $configuration)
+    public function map(TaskConfiguration $configuration): array
     {
         if ($configuration->getCleanBeforeImport()) {
             $this->removeImportedRecordsFromPid($configuration->getPid(), $this->getImportSource());
@@ -38,12 +33,12 @@ class IcsMapper extends AbstractMapper implements MapperInterface
         $idCount = [];
 
         require_once(ExtensionManagementUtility::extPath('news_importicsxml') . 'Resources/Private/Contrib/ICal.php');
-	require_once(ExtensionManagementUtility::extPath('news_importicsxml') . 'Resources/Private/Contrib/Event.php');
+        require_once(ExtensionManagementUtility::extPath('news_importicsxml') . 'Resources/Private/Contrib/Event.php');
         $iCalService = new ICal($path);
         $events = $iCalService->events();
 
         foreach ($events as $event) {
-            $id = strlen($event->uid) < 90 ? $event->uid : md5($event>uid);
+            $id = strlen($event->uid) < 90 ? $event->uid : md5($event > uid);
             if (!isset($idCount[$id])) {
                 $idCount[$id] = 1;
             } else {
@@ -65,7 +60,7 @@ class IcsMapper extends AbstractMapper implements MapperInterface
                 'title' => $this->cleanup((string)$event->summary),
                 'bodytext' => $this->cleanup((string)$event->description),
                 'datetime' => $datetime,
-                'archive' =>  (isset($event->dtend) ? $iCalService->iCalDateToUnixTimestamp($event->dtend)+86400 : ''),
+                'archive' => (isset($event->dtend) ? $iCalService->iCalDateToUnixTimestamp($event->dtend) + 86400 : ''),
                 'categories' => $this->getCategories((array)($event->categories_array ?? []), $configuration),
                 '_dynamicData' => [
                     'location' => (isset($event->location) ? $event->location : ''),
@@ -87,7 +82,7 @@ class IcsMapper extends AbstractMapper implements MapperInterface
                         'URL' => $event->url ?? '',
                         'ATTACH' => $event->attach ?? '',
                         'SUMMARY' => $event->summary ?? '',
-                    ]
+                    ],
                 ],
             ];
 
@@ -104,11 +99,6 @@ class IcsMapper extends AbstractMapper implements MapperInterface
         return $data;
     }
 
-    /**
-     * @param array $categoryTitles
-     * @param TaskConfiguration $configuration
-     * @return array
-     */
     protected function getCategories(array $categoryTitles, TaskConfiguration $configuration): array
     {
         $categoryIds = [];
@@ -135,10 +125,6 @@ class IcsMapper extends AbstractMapper implements MapperInterface
         return $categoryIds;
     }
 
-    /**
-     * @param string $content
-     * @return string
-     */
     protected function cleanup(string $content): string
     {
         $search = ['\\,', '\\n'];
@@ -147,10 +133,6 @@ class IcsMapper extends AbstractMapper implements MapperInterface
         return str_replace($search, $replace, $content);
     }
 
-    /**
-     * @param TaskConfiguration $configuration
-     * @return string
-     */
     protected function getFileContent(TaskConfiguration $configuration)
     {
         $path = $configuration->getPath();
@@ -171,7 +153,7 @@ class IcsMapper extends AbstractMapper implements MapperInterface
         return $temporaryCopyPath;
     }
 
-    protected function getContentOfFile($url)
+    protected function getContentOfFile(string $url)
     {
         $response = GeneralUtility::getUrl($url);
 
@@ -183,9 +165,6 @@ class IcsMapper extends AbstractMapper implements MapperInterface
         return $response;
     }
 
-    /**
-     * @return string
-     */
     public function getImportSource(): string
     {
         return 'newsimporticsxml_ics';

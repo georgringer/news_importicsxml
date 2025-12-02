@@ -20,7 +20,6 @@ class CandidateParser implements ParserInterface
     /**
      * List of attributes to try to get the content, order is important, generic terms at the end
      *
-     * @access private
      * @var array
      */
     private $candidatesAttributes = [
@@ -50,7 +49,6 @@ class CandidateParser implements ParserInterface
     /**
      * List of attributes to strip
      *
-     * @access private
      * @var array
      */
     private $stripAttributes = [
@@ -80,7 +78,6 @@ class CandidateParser implements ParserInterface
     /**
      * Tags to remove
      *
-     * @access private
      * @var array
      */
     private $stripTags = [
@@ -94,7 +91,6 @@ class CandidateParser implements ParserInterface
     /**
      * Constructor
      *
-     * @access public
      * @param  string   $html
      */
     public function __construct($html)
@@ -106,7 +102,6 @@ class CandidateParser implements ParserInterface
     /**
      * Get the relevant content with the list of potential attributes
      *
-     * @access public
      * @return string
      */
     public function execute()
@@ -127,7 +122,6 @@ class CandidateParser implements ParserInterface
     /**
      * Find content based on the list of tag candidates
      *
-     * @access public
      * @return string
      */
     public function findContentWithCandidates()
@@ -149,7 +143,6 @@ class CandidateParser implements ParserInterface
     /**
      * Find <article/> tag
      *
-     * @access public
      * @return string
      */
     public function findContentWithArticle()
@@ -167,7 +160,6 @@ class CandidateParser implements ParserInterface
     /**
      * Find <body/> tag
      *
-     * @access public
      * @return string
      */
     public function findContentWithBody()
@@ -185,7 +177,6 @@ class CandidateParser implements ParserInterface
     /**
      * Strip useless tags
      *
-     * @access public
      * @param  string  $content
      * @return string
      */
@@ -208,7 +199,6 @@ class CandidateParser implements ParserInterface
     /**
      * Remove blacklisted tags
      *
-     * @access public
      * @param  DOMXPath     $xpath
      */
     public function stripTags(DOMXPath $xpath)
@@ -229,7 +219,6 @@ class CandidateParser implements ParserInterface
     /**
      * Remove blacklisted attributes
      *
-     * @access public
      * @param  DomDocument  $dom
      * @param  DOMXPath     $xpath
      */
@@ -253,7 +242,6 @@ class CandidateParser implements ParserInterface
     /**
      * Return false if the node should not be removed
      *
-     * @access public
      * @param  DomDocument  $dom
      * @param  DomNode      $node
      * @return bool
