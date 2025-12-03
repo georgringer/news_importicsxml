@@ -1,12 +1,15 @@
-TYPO3 CMS Extension "news_importicsxml"
-=======================================
-This extensions provides an import interface for `xml` and `ics` files which can either be located on the same server or reached via URL.
+# TYPO3 CMS Extension `news_importicsxml`
+
+[![core 13](https://github.com/georgringer/news_importicsxml/actions/workflows/core13.yml/badge.svg)](https://github.com/georgringer/news_importicsxml/actions/workflows/core13.yml)
+[![core 14](https://github.com/georgringer/news_importicsxml/actions/workflows/core14.yml/badge.svg)](https://github.com/georgringer/news_importicsxml/actions/workflows/core14.yml)
+
+This extension provides an import interface for `xml` and `ics` files which can either be located on the same server or reached via URL.
 The import is done by the scheduler.
 
 **Requirements**
 
-- TYPO3 CMS 10.4 LTS or 11.5 LTS
-- EXT:news 8.0.0+
+- TYPO3 CMS 13.4 LTS or 14 LTS
+- EXT:news 13 / 14
 
 **Sponsors**
 
@@ -14,26 +17,18 @@ The import is done by the scheduler.
 - TUM (Technical University of Munich) https://www.tum.de/
 - Hochschule Darmstadt - University of Applied Sciences https://www.h-da.de/
 
-Screenshots
-^^^^^^^^^^^
+## Screenshots
+
 
 **Screenshot #1:** Creation of an import task
 
-.. figure:: Resources/Public/Documentation/screenshot-task.png
-		:alt: Creation of an import task
+![screenshot-task.png](Resources/Public/Documentation/screenshot-task.png)
 
 **Screenshot #2:** Metadata of an imported ICS item
 
-.. figure:: Resources/Public/Documentation/screenshot-import-ics.png
-		:alt: Metadata of an imported ics item
+![screenshot-import-ics.png](Resources/Public/Documentation/screenshot-import-ics.png)
 
-Important information for Upgrade from 6.0 to 7.0
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The auto-generated ID for identifying an imported source has been changed for ICS files.
-If you import existing items again, those will be duplicated one time.
-
-Installation
-------------
+## Installation
 
 **Installation using Composer**
 
@@ -43,29 +38,22 @@ The recommended way to install the extension is by using composer. In your compo
 
 Download and install the extension with the extension manager module.
 
-Configuration
--------------
+## Configuration
+
 After installing the extension, switch to the module **scheduler** and create a new task **Import news**.
 These additional fields are available:
 
-Format
-""""""
-Select either *XML* or *ICS* to import an ICS file or an XML file.
+- Format: Select either *XML* or *ICS* to import an ICS file or an XML file.
+- Path: Define a local path like `fileadmin/data.xml` or any URL like `https://typo3.org/xml-feeds/rss.xml`.
+- Page ID: Define a page id where the new records will be saved.
 
-Path
-""""
-Define a local path like `fileadmin/data.xml` or any URL like `https://typo3.org/xml-feeds/rss.xml`.
+### Category mapping
 
-Page ID
-"""""""
-Define a page id where the new records will be saved.
-
-Category mapping
-"""""""""""""""""""""""""""
 A category mapping can be used to add categories to the news records based on categories found in the feed.
 
-A typical feed item can look like this: ::
+A typical feed item can look like this:
 
+```xml
 	<item>
 		<title>A possible title</title>
 		<link>http://www.examle.com/feed.xml</link>
@@ -76,9 +64,11 @@ A typical feed item can look like this: ::
 		<category>Information</category>
 		<pubDate>Tue, 02 Jun 2015 16:54:00 +0200</pubDate>
 	</item>
+```
 
-An ICS entry with a category can look like this: ::
+An ICS entry with a category can look like this:
 
+```
 	BEGIN:VCALENDAR
 	PRODID:QIS-LSF HIS eG
 	VERSION:2.0
@@ -114,48 +104,38 @@ An ICS entry with a category can look like this: ::
 	CATEGORIES:Praktikum
 	END:VEVENT
 	END:VCALENDAR
+```
 
-A possible category mapping would look like this: ::
+A possible category mapping would look like this:
 
+```
 	5:Sports
 	17:Tech
 	17:Information
-
+```
 As a result, the imported news record will belong to the categories of the IDs *5 & 17*.
 
-Email notification
-""""""""""""""""""
+### Email notification
 Add an email address which will get notified after each run.
 
 **Important**: This feature is not yet implemented!
 
-Persist article with type external page
-"""""""""""""""""""""""""""""""""""""""
+### Persist article with type external page
 If set, the news article is saved with the type "External Url".
 
-Further information
-^^^^^^^^^^^^^^^^^^^
+## Further information
 
-Debugging
----------
-This extensions used the logging API of TYPO3 CMS. You can find some basic information in the log files (default `typo3temp/var/logs/typo3_****.log`).
+### Debugging
+This extension uses the logging API of TYPO3 CMS. You can find some basic information in the log files (default `typo3temp/var/logs/typo3_****.log`).
 
-Extending the import
---------------------
+### Extending the import
+
 If you need to import additional data from a feed or ics item or you need to modify the data, use the Event Dispatching of the extension *news*.
 Most likely, you will need the NewsImportPostHydrateEvent EventListener.
 
-.. tip::
 
-   Check the documentation of the news extension for a full list of available events: `https://docs.typo3.org/p/georgringer/news/main/en-us/Reference/Events/Index.html` 
-
-.. tip::
-
-   Since TYPO3 v10, event dispatching is based on PSR-14 standard. See the core API docs to learn more details: `https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ApiOverview/Events/EventDispatcher/Index.html`
-
-.. tip::
-
-   An example on how to use the NewsImportPostHydrateEvent EventListener is available in `ext:eventnews` 
+- Check the documentation of the news extension for a full list of available events: `https://docs.typo3.org/p/georgringer/news/main/en-us/Reference/Events/Index.html`
+- An example on how to use the NewsImportPostHydrateEvent EventListener is available in `ext:eventnews`
 
 
 

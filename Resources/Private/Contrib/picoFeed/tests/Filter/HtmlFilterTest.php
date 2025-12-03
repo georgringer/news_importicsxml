@@ -9,7 +9,7 @@ class HtmlFilterTest extends PHPUnit_Framework_TestCase
     public function testEmpty()
     {
         $filter = new Html('', 'http://www.google.ca/');
-        $this->assertEquals('', $filter->execute());
+        self::assertEquals('', $filter->execute());
     }
 
     public function testExecute()
@@ -20,22 +20,22 @@ class HtmlFilterTest extends PHPUnit_Framework_TestCase
 
         $filter = new Html($html, 'http://www.google.ca/');
 
-        $this->assertEquals('<p>boo<br/><strong>foo</strong>.</p>', $filter->execute());
+        self::assertEquals('<p>boo<br/><strong>foo</strong>.</p>', $filter->execute());
     }
 
     public function testFilterRules()
     {
-        $html = '<p><a href="http://www.twogag.com/archives/3455" title="559 &#8211; The Cookie">' .
-                '<img src="http://www.twogag.com/comics-rss/2015-04-17-TGAG_559_The_Cookie.jpg" alt="559 &#8211; The Cookie" class="comicthumbnail" title="559 &#8211; The Cookie" /></a></p>' .
-                'I always throw up in hindsight if I find out something I ate was vegan. Twogag&#8217;s super free but if you want to support the comic look no further than the Twogag patreon!';
+        $html = '<p><a href="http://www.twogag.com/archives/3455" title="559 &#8211; The Cookie">'
+                . '<img src="http://www.twogag.com/comics-rss/2015-04-17-TGAG_559_The_Cookie.jpg" alt="559 &#8211; The Cookie" class="comicthumbnail" title="559 &#8211; The Cookie" /></a></p>'
+                . 'I always throw up in hindsight if I find out something I ate was vegan. Twogag&#8217;s super free but if you want to support the comic look no further than the Twogag patreon!';
 
         $filter = new Html($html, 'http://www.twogag.com/');
 
-        $expected = '<p><a href="http://www.twogag.com/archives/3455" rel="noreferrer" target="_blank">' .
-                '<img src="http://www.twogag.com/comics/2015-04-17-TGAG_559_The_Cookie.jpg" alt="559 – The Cookie" title="559 – The Cookie"/></a></p>' .
-                'I always throw up in hindsight if I find out something I ate was vegan. Twogag’s super free but if you want to support the comic look no further than the Twogag patreon!';
+        $expected = '<p><a href="http://www.twogag.com/archives/3455" rel="noreferrer" target="_blank">'
+                . '<img src="http://www.twogag.com/comics/2015-04-17-TGAG_559_The_Cookie.jpg" alt="559 – The Cookie" title="559 – The Cookie"/></a></p>'
+                . 'I always throw up in hindsight if I find out something I ate was vegan. Twogag’s super free but if you want to support the comic look no further than the Twogag patreon!';
 
-        $this->assertEquals($expected, $filter->execute());
+        self::assertEquals($expected, $filter->execute());
     }
 
     public function testIframe()
@@ -43,13 +43,13 @@ class HtmlFilterTest extends PHPUnit_Framework_TestCase
         $data = '<iframe src="http://www.kickstarter.com/projects/lefnire/habitrpg-mobile/widget/video.html" height="480" width="640" frameborder="0"></iframe>';
 
         $f = new Html($data, 'http://blabla');
-        $this->assertEmpty($f->execute());
+        self::assertEmpty($f->execute());
 
         $data = '<iframe src="http://www.youtube.com/bla" height="480" width="640" frameborder="0"></iframe>';
         $expected = '<iframe src="https://www.youtube.com/bla" height="480" width="640" frameborder="0"></iframe>';
 
         $f = new Html($data, 'http://blabla');
-        $this->assertEquals($expected, $f->execute());
+        self::assertEquals($expected, $f->execute());
     }
 
     public function testClearScriptAttributes()
@@ -58,7 +58,7 @@ class HtmlFilterTest extends PHPUnit_Framework_TestCase
 
         $f = new Html($data, 'http://blabla');
         $expected = '<p>something</p><p>hi</p>';
-        $this->assertEquals($expected, $f->execute());
+        self::assertEquals($expected, $f->execute());
     }
 
     public function testClearStyleAttributes()
@@ -67,7 +67,7 @@ class HtmlFilterTest extends PHPUnit_Framework_TestCase
 
         $f = new Html($data, 'http://blabla');
         $expected = '<p>something</p><p>hi</p>';
-        $this->assertEquals($expected, $f->execute());
+        self::assertEquals($expected, $f->execute());
     }
 
     public function testEmptyTags()
@@ -82,7 +82,7 @@ EOD;
         $f = new Html($data, 'http://blabla');
         $output = $f->execute();
 
-        $this->assertEquals('<img src="http://example.com/image.png"/>', $output);
+        self::assertEquals('<img src="http://example.com/image.png"/>', $output);
     }
 
     public function testBadAttributes()
@@ -90,25 +90,25 @@ EOD;
         $data = '<iframe src="http://www.youtube.com/bla" height="480px" width="100%" frameborder="0"></iframe>';
 
         $f = new Html($data, 'http://blabla');
-        $this->assertEquals('<iframe src="https://www.youtube.com/bla" frameborder="0"></iframe>', $f->execute());
+        self::assertEquals('<iframe src="https://www.youtube.com/bla" frameborder="0"></iframe>', $f->execute());
     }
 
     public function testRelativeScheme()
     {
         $f = new Html('<a href="//linuxfr.org">link</a>', 'http://blabla');
-        $this->assertEquals('<a href="http://linuxfr.org/" rel="noreferrer" target="_blank">link</a>', $f->execute());
+        self::assertEquals('<a href="http://linuxfr.org/" rel="noreferrer" target="_blank">link</a>', $f->execute());
     }
 
     public function testAttributes()
     {
         $f = new Html('<img src="foo" title="\'quote" alt="\'quote" data-src="bar" data-truc="boo"/>', 'http://blabla');
-        $this->assertEquals('<img src="http://blabla/foo" title="&#039;quote" alt="&#039;quote"/>', $f->execute());
+        self::assertEquals('<img src="http://blabla/foo" title="&#039;quote" alt="&#039;quote"/>', $f->execute());
 
         $f = new Html('<img src="foo&bar=\'quote"/>', 'http://blabla');
-        $this->assertEquals('<img src="http://blabla/foo&amp;bar=&#039;quote"/>', $f->execute());
+        self::assertEquals('<img src="http://blabla/foo&amp;bar=&#039;quote"/>', $f->execute());
 
         $f = new Html("<time datetime='quote\"here'>bla</time>", 'http://blabla');
-        $this->assertEquals('<time datetime="quote&quot;here">bla</time>', $f->execute());
+        self::assertEquals('<time datetime="quote&quot;here">bla</time>', $f->execute());
     }
 
     public function testCode()
@@ -134,39 +134,39 @@ x-amz-id-2: DDjqfqz2ZJufzqRAcj1mh+9XvSogrPohKHwXlo8IlkzH67G6w4wnjn9HYgbs4uI0
 </code></pre>';
 
         $f = new Html($data, 'http://blabla');
-        $this->assertEquals($data, $f->execute());
+        self::assertEquals($data, $f->execute());
     }
 
     public function testRemoveNoBreakingSpace()
     {
         $f = new Html('<p>&nbsp;&nbsp;truc</p>', 'http://blabla');
-        $this->assertEquals('<p>  truc</p>', $f->execute());
+        self::assertEquals('<p>  truc</p>', $f->execute());
     }
 
     public function testRemoveEmptyTags()
     {
         $f = new Html('<p>toto</p><p></p><br/>', 'http://blabla');
-        $this->assertEquals('<p>toto</p><br/>', $f->execute());
+        self::assertEquals('<p>toto</p><br/>', $f->execute());
 
         $f = new Html('<p> </p>', 'http://blabla');
-        $this->assertEquals('', $f->execute());
+        self::assertEquals('', $f->execute());
 
         $f = new Html('<p>&nbsp;</p>', 'http://blabla');
-        $this->assertEquals('', $f->execute());
+        self::assertEquals('', $f->execute());
     }
 
     public function testRemoveEmptyTable()
     {
         $f = new Html('<table><tr><td>    </td></tr></table>', 'http://blabla');
-        $this->assertEquals('', $f->execute());
+        self::assertEquals('', $f->execute());
 
         $f = new Html('<table><tr></tr></table>', 'http://blabla');
-        $this->assertEquals('', $f->execute());
+        self::assertEquals('', $f->execute());
     }
 
     public function testRemoveMultipleTags()
     {
         $f = new Html('<br/><br/><p>toto</p><br/><br/><br/><p>momo</p><br/><br/><br/><br/>', 'http://blabla');
-        $this->assertEquals('<br/><p>toto</p><br/><p>momo</p><br/>', $f->execute());
+        self::assertEquals('<br/><p>toto</p><br/><p>momo</p><br/>', $f->execute());
     }
 }

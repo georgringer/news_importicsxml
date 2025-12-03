@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsImporticsxml\EventListener;
@@ -17,11 +18,10 @@ use GeorgRinger\News\Event\NewsImportPostHydrateEvent;
  */
 class NewsImportListener
 {
-
     public function __invoke(NewsImportPostHydrateEvent $event)
     {
         $importData = $event->getImportItem();
-        if (is_array($importData['_dynamicData']['news_importicsxml'] ?? null)) {
+        if (is_array($importData['_dynamicData']['news_importicsxml'] ?? null) && method_exists($event->getNews(), 'setNewsImportData')) {
             $event->getNews()->setNewsImportData(json_encode($importData['_dynamicData']['news_importicsxml']));
         }
     }

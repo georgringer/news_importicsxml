@@ -7,6 +7,4 @@ namespace PicoFeed\Client;
  *
  * @author  Frederic Guillot
  */
-class InvalidUrlException extends ClientException
-{
-}
+class InvalidUrlException extends ClientException {}

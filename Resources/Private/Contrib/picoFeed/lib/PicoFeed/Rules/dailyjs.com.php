@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -13,7 +14,7 @@ return [
                 '//*[contains(@class, "addthis_default_style")]',
                 '//*[@class="navigation small"]',
                 '//*[@id="related"]',
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

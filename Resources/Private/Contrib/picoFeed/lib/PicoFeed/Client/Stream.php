@@ -14,7 +14,6 @@ class Stream extends Client
     /**
      * Prepare HTTP headers
      *
-     * @access private
      * @return string[]
      */
     private function prepareHeaders()
@@ -54,7 +53,6 @@ class Stream extends Client
     /**
      * Construct the final URL from location headers
      *
-     * @access private
      * @param  array $headers List of HTTP response header
      */
     private function setEffectiveUrl($headers)
@@ -71,7 +69,6 @@ class Stream extends Client
     /**
      * Prepare stream context
      *
-     * @access private
      * @return array
      */
     private function prepareContext()
@@ -82,7 +79,7 @@ class Stream extends Client
                 'protocol_version' => 1.1,
                 'timeout' => $this->timeout,
                 'max_redirects' => $this->max_redirects,
-            ]
+            ],
         ];
 
         if ($this->proxy_hostname) {
@@ -106,7 +103,6 @@ class Stream extends Client
     /**
      * Do the HTTP request
      *
-     * @access public
      * @return array   HTTP response ['body' => ..., 'status' => ..., 'headers' => ...]
      */
     public function doRequest()
@@ -155,14 +151,13 @@ class Stream extends Client
         return [
             'status' => $status,
             'body' => $this->decodeBody($body, $headers),
-            'headers' => $headers
+            'headers' => $headers,
         ];
     }
 
     /**
      * Decode body response according to the HTTP headers
      *
-     * @access public
      * @param  string          $body      Raw body
      * @param  HttpHeaders     $headers   HTTP headers
      * @return string
@@ -183,7 +178,6 @@ class Stream extends Client
     /**
      * Decode a chunked body
      *
-     * @access public
      * @param  string $str Raw body
      * @return string      Decoded body
      */

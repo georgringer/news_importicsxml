@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -13,7 +14,7 @@ return [
                 '//div[contains(@id, "reseaux")]',
                 '//*[contains(@class, "smart") or contains(@class, "article_tags") or contains(@class, "article_reactions")]',
                 '//*[contains(@class, "OUTBRAIN") or contains(@class, "related_item") or contains(@class, "share")]',
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

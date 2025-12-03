@@ -17,20 +17,39 @@ namespace GeorgRinger\NewsImporticsxml\Tests\Unit\Jobs;
 
 use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
 use GeorgRinger\NewsImporticsxml\Jobs\ImportJob;
-use TYPO3\CMS\Core\Log\Logger;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use GeorgRinger\NewsImporticsxml\Mapper\IcsMapper;
+use GeorgRinger\NewsImporticsxml\Mapper\XmlMapper;
+use Psr\Log\NullLogger;
+use TYPO3\CMS\Core\DataHandling\SlugHelper;
+use TYPO3\TestingFramework\Core\BaseTestCase;
 
-class ImportJobTest extends UnitTestCase
+class ImportJobTest extends BaseTestCase
 {
     protected $mockedJob;
+    protected $mockedSlugHelper;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $logger = $this->getAccessibleMock(Logger::class, ['dummy'], [], '', false);
+        $logger = new NullLogger();
 
-        $this->mockedJob = $this->getAccessibleMock(ImportJob::class, ['import'],
-            [], '', false);
+        $this->mockedJob = $this->getAccessibleMock(
+            ImportJob::class,
+            ['import'],
+            [],
+            '',
+            false
+        );
         $this->mockedJob->_set('logger', $logger);
+
+        $this->mockedSlugHelper = $this->getAccessibleMock(
+            SlugHelper::class,
+            null,
+            [],
+            '',
+            false
+        );
+
+        parent::setUp();
     }
 
     /**
@@ -42,10 +61,11 @@ class ImportJobTest extends UnitTestCase
         $configuration->setFormat('xml');
         $this->mockedJob->_set('configuration', $configuration);
 
-        $xmlMapper = $this->getAccessibleMock('GeorgRinger\NewsImporticsxml\Mapper\XmlMapper', ['map']);
+        $xmlMapper = $this->getAccessibleMock(XmlMapper::class, ['map'], [], '', false);
+        $xmlMapper->_set('slugHelper', $this->mockedSlugHelper);
         $this->mockedJob->_set('xmlMapper', $xmlMapper);
 
-        $xmlMapper->expects($this->once())->method('map');
+        $xmlMapper->expects(self::once())->method('map');
 
         $this->mockedJob->_call('run');
     }
@@ -59,20 +79,21 @@ class ImportJobTest extends UnitTestCase
         $configuration->setFormat('ics');
         $this->mockedJob->_set('configuration', $configuration);
 
-        $icsMapper = $this->getAccessibleMock('GeorgRinger\NewsImporticsxml\Mapper\IcsMapper', ['map']);
+        $icsMapper = $this->getAccessibleMock(IcsMapper::class, ['map'], [], '', false);
+        $icsMapper->_set('slugHelper', $this->mockedSlugHelper);
         $this->mockedJob->_set('icsMapper', $icsMapper);
 
-        $icsMapper->expects($this->once())->method('map');
+        $icsMapper->expects(self::once())->method('map');
 
         $this->mockedJob->_call('run');
     }
 
     /**
      * @test
-     * @expectedException \UnexpectedValueException
      */
     public function nonSupportedMapperThrowsException()
     {
+        $this->expectException(\UnexpectedValueException::class);
         $configuration = new TaskConfiguration();
         $configuration->setFormat('fo');
         $this->mockedJob->_set('configuration', $configuration);

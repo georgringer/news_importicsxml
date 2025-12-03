@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -8,7 +9,7 @@ return [
                 '//div[contains(@id, "entry-body")]',
             ],
             'strip' => [
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

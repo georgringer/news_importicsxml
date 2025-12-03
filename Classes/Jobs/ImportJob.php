@@ -2,10 +2,11 @@
 
 namespace GeorgRinger\NewsImporticsxml\Jobs;
 
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
-use GeorgRinger\NewsImporticsxml\Mapper\XmlMapper;
-use GeorgRinger\NewsImporticsxml\Mapper\IcsMapper;
 use GeorgRinger\News\Domain\Service\NewsImportService;
+use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
+use GeorgRinger\NewsImporticsxml\Mapper\IcsMapper;
+use GeorgRinger\NewsImporticsxml\Mapper\XmlMapper;
+
 /**
  * This file is part of the "news_importicsxml" Extension for TYPO3 CMS.
  *
@@ -13,8 +14,7 @@ use GeorgRinger\News\Domain\Service\NewsImportService;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
-use TYPO3\CMS\Core\Log\Logger;
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UnexpectedValueException;
@@ -24,39 +24,12 @@ use UnexpectedValueException;
  */
 class ImportJob
 {
+    protected TaskConfiguration $configuration;
+    protected LoggerInterface $logger;
+    protected XmlMapper $xmlMapper;
+    protected IcsMapper $icsMapper;
+    protected NewsImportService $newsImportService;
 
-    /**
-     * @var TaskConfiguration
-     */
-    protected $configuration;
-
-    /**
-     * @var Logger
-     */
-    protected $logger;
-
-    /**
-     * @var \GeorgRinger\NewsImporticsxml\Mapper\XmlMapper
-     */
-    protected $xmlMapper;
-
-    /**
-     * @var \GeorgRinger\NewsImporticsxml\Mapper\IcsMapper
-     */
-    protected $icsMapper;
-
-    /**
-     * @var \GeorgRinger\News\Domain\Service\NewsImportService
-     */
-    protected $newsImportService;
-
-    /**
-     * ImportJob constructor.
-     * @param TaskConfiguration $configuration
-     * @param XmlMapper $xmlMapper
-     * @param IcsMapper $icsMapper
-     * @param NewsImportService $newsImportService
-     */
     public function __construct(
         XmlMapper $xmlMapper,
         IcsMapper $icsMapper,
@@ -68,24 +41,19 @@ class ImportJob
         $this->newsImportService = $newsImportService;
     }
 
-    /**
-     * @param TaskConfiguration $configuration
-     */
     public function setConfiguration(TaskConfiguration $configuration): void
     {
         $this->configuration = $configuration;
     }
 
-    /**
-     * Import remote content
-     */
     public function run()
     {
         $this->logger->info(sprintf(
             'Starting import of "%s" (%s), reporting to "%s"',
             $this->configuration->getPath(),
             strtoupper($this->configuration->getFormat()),
-            $this->configuration->getEmail()));
+            $this->configuration->getEmail()
+        ));
 
         switch (strtolower($this->configuration->getFormat())) {
             case 'xml':
@@ -103,10 +71,7 @@ class ImportJob
         $this->import($data);
     }
 
-    /**
-     * @param array|null $data
-     */
-    protected function import(array $data = null)
+    protected function import(?array $data = null): void
     {
         $this->logger->info(sprintf('Starting import of %s records', count($data)));
         $this->newsImportService->import($data);

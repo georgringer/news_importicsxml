@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -12,7 +13,7 @@ return [
                 '//*[contains(@class, "entete2_article")]',
                 '//*[contains(@class, "signature_article")]',
                 '//*[contains(@id, "share")]',
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

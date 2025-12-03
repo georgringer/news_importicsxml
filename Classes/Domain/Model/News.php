@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace GeorgRinger\NewsImporticsxml\Domain\Model;
 
 /**
@@ -10,7 +12,6 @@ namespace GeorgRinger\NewsImporticsxml\Domain\Model;
  */
 class News extends \GeorgRinger\News\Domain\Model\News
 {
-
     /** @var string */
     protected $newsImportData;
 

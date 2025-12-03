@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -6,7 +7,7 @@ return [
             'body' => [
                 '//section[contains(@class, "teaser")]',
                 '//section[contains(@class, "body")]',
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

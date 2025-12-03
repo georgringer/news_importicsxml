@@ -17,7 +17,6 @@ class Html
     /**
      * Config object
      *
-     * @access private
      * @var \PicoFeed\Config\Config
      */
     private $config;
@@ -25,7 +24,6 @@ class Html
     /**
      * Unfiltered XML data
      *
-     * @access private
      * @var string
      */
     private $input = '';
@@ -33,7 +31,6 @@ class Html
     /**
      * Filtered XML data
      *
-     * @access private
      * @var string
      */
     private $output = '';
@@ -41,7 +38,6 @@ class Html
     /**
      * List of empty tags
      *
-     * @access private
      * @var array
      */
     private $empty_tags = [];
@@ -49,7 +45,6 @@ class Html
     /**
      * Empty flag
      *
-     * @access private
      * @var bool
      */
     private $empty = true;
@@ -57,7 +52,6 @@ class Html
     /**
      * Tag instance
      *
-     * @access public
      * @var \PicoFeed\Filter\Tag
      */
     public $tag = '';
@@ -65,7 +59,6 @@ class Html
     /**
      * Attribute instance
      *
-     * @access public
      * @var \PicoFeed\Filter\Attribute
      */
     public $attribute = '';
@@ -73,7 +66,6 @@ class Html
     /**
      * The website to filter
      *
-     * @access private
      * @var string
      */
     private $website;
@@ -81,7 +73,6 @@ class Html
     /**
      * Initialize the filter, all inputs data must be encoded in UTF-8 before
      *
-     * @access public
      * @param  string  $html      HTML content
      * @param  string  $website   Site URL (used to build absolute URL)
      */
@@ -89,7 +80,7 @@ class Html
     {
         $this->input = XmlParser::HtmlToXml($html);
         $this->output = '';
-        $this->tag = new Tag;
+        $this->tag = new Tag();
         $this->website = $website;
         $this->attribute = new Attribute(new Url($website));
     }
@@ -97,7 +88,6 @@ class Html
     /**
      * Set config object
      *
-     * @access public
      * @param  \PicoFeed\Config\Config  $config   Config instance
      * @return \PicoFeed\Filter\Html
      */
@@ -126,7 +116,6 @@ class Html
     /**
      * Run tags/attributes filtering
      *
-     * @access public
      * @return string
      */
     public function execute()
@@ -149,8 +138,6 @@ class Html
 
     /**
      * Called before XML parsing
-     *
-     * @access public
      */
     public function preFilter()
     {
@@ -159,8 +146,6 @@ class Html
 
     /**
      * Called after XML parsing
-     *
-     * @access public
      */
     public function postFilter()
     {
@@ -173,14 +158,12 @@ class Html
     /**
      * Called after XML parsing
      * @param string $content the content that should be filtered
-     *
-     * @access public
      */
     public function filterRules($content)
     {
         // the constructor should require a config, then this if can be removed
         if ($this->config === null) {
-            $config = new Config;
+            $config = new Config();
         } else {
             $config = $this->config;
         }
@@ -207,7 +190,6 @@ class Html
     /**
      * Parse opening tag
      *
-     * @access public
      * @param  resource  $parser       XML parser
      * @param  string    $tag          Tag name
      * @param  array     $attributes   Tag attributes
@@ -233,7 +215,6 @@ class Html
     /**
      * Parse closing tag
      *
-     * @access public
      * @param  resource  $parser    XML parser
      * @param  string    $tag       Tag name
      */
@@ -247,7 +228,6 @@ class Html
     /**
      * Parse tag content
      *
-     * @access public
      * @param  resource  $parser    XML parser
      * @param  string    $content   Tag content
      */

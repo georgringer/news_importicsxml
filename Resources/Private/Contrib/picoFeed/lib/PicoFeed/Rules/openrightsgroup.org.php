@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -15,6 +16,6 @@ return [
                 '//h1[@class="pageTitle"]',
                 '//p[@class="bookmarkThis"]',
             ],
-        ]
-    ]
+        ],
+    ],
 ];

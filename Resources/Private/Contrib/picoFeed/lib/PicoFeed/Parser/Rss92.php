@@ -7,6 +7,4 @@ namespace PicoFeed\Parser;
  *
  * @author  Frederic Guillot
  */
-class Rss92 extends Rss20
-{
-}
+class Rss92 extends Rss20 {}

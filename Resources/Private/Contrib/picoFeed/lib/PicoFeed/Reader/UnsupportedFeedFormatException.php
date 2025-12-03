@@ -7,6 +7,4 @@ namespace PicoFeed\Reader;
  *
  * @author  Frederic Guillot
  */
-class UnsupportedFeedFormatException extends ReaderException
-{
-}
+class UnsupportedFeedFormatException extends ReaderException {}

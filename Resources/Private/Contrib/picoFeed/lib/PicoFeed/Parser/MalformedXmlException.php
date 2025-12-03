@@ -7,6 +7,4 @@ namespace PicoFeed\Parser;
  *
  * @author  Frederic Guillot
  */
-class MalformedXmlException extends ParserException
-{
-}
+class MalformedXmlException extends ParserException {}

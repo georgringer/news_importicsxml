@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -7,6 +8,6 @@ return [
                 '//div[@align]/a/img',
             ],
             'strip' => [],
-        ]
-    ]
+        ],
+    ],
 ];

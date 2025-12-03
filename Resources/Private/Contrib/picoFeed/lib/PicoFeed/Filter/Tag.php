@@ -15,7 +15,6 @@ class Tag
     /**
      * Tags blacklist (Xpath expressions)
      *
-     * @access private
      * @var array
      */
     private $tag_blacklist = [
@@ -26,7 +25,6 @@ class Tag
     /**
      * Tags whitelist
      *
-     * @access private
      * @var array
      */
     private $tag_whitelist = [
@@ -73,7 +71,6 @@ class Tag
     /**
      * Check if the tag is allowed and is not a pixel tracker
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @param  array     $attributes    Attributes dictionary
      * @return bool
@@ -86,7 +83,6 @@ class Tag
     /**
      * Return the HTML opening tag
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @param  string    $attributes    Attributes converted in html
      * @return string
@@ -99,7 +95,6 @@ class Tag
     /**
      * Return the HTML closing tag
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @return string
      */
@@ -111,7 +106,6 @@ class Tag
     /**
      * Return true is the tag is self-closing
      *
-     * @access public
      * @param  string    $tag           Tag name
      * @return bool
      */
@@ -123,7 +117,6 @@ class Tag
     /**
      * Check if a tag is on the whitelist
      *
-     * @access public
      * @param  string     $tag    Tag name
      * @return bool
      */
@@ -135,22 +128,20 @@ class Tag
     /**
      * Detect if an image tag is a pixel tracker
      *
-     * @access public
      * @param  string  $tag         Tag name
      * @param  array   $attributes  Tag attributes
      * @return bool
      */
     public function isPixelTracker($tag, array $attributes)
     {
-        return $tag === 'img' &&
-                isset($attributes['height']) && isset($attributes['width']) &&
-                $attributes['height'] == 1 && $attributes['width'] == 1;
+        return $tag === 'img'
+                && isset($attributes['height']) && isset($attributes['width'])
+                && $attributes['height'] == 1 && $attributes['width'] == 1;
     }
 
     /**
      * Remove script tags
      *
-     * @access public
      * @param  string  $data  Input data
      * @return string
      */
@@ -176,7 +167,6 @@ class Tag
     /**
      * Remove empty tags
      *
-     * @access public
      * @param  string  $data  Input data
      * @return string
      */
@@ -188,7 +178,6 @@ class Tag
     /**
      * Replace <br/><br/> by only one
      *
-     * @access public
      * @param  string  $data  Input data
      * @return string
      */
@@ -200,7 +189,6 @@ class Tag
     /**
      * Set whitelisted tags adn attributes for each tag
      *
-     * @access public
      * @param  array   $values   List of tags: ['video' => ['src', 'cover'], 'img' => ['src']]
      * @return Tag
      */

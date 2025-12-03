@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -7,7 +8,7 @@ return [
                 '//div[@class="news_body"]',
             ],
             'strip' => [
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

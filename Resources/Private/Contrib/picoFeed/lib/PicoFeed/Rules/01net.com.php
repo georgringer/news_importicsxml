@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -11,8 +12,8 @@ return [
                 '//*[contains(@class, "article_navigation")]',
                 '//h1',
                 '//*[contains(@class, "article_toolbarMain")]',
-                '//*[contains(@class, "article_imagehaute_box")]'
-            ]
-        ]
-    ]
+                '//*[contains(@class, "article_imagehaute_box")]',
+            ],
+        ],
+    ],
 ];

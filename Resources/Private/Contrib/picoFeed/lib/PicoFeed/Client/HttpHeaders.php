@@ -50,7 +50,6 @@ class HttpHeaders implements ArrayAccess
      * Parse HTTP headers
      *
      * @static
-     * @access public
      * @param  array   $lines   List of headers
      * @return array
      */
@@ -62,7 +61,7 @@ class HttpHeaders implements ArrayAccess
         foreach ($lines as $line) {
             if (strpos($line, 'HTTP') === 0) {
                 $headers = [];
-                $status = (int) substr($line, 9, 3);
+                $status = (int)substr($line, 9, 3);
             } elseif (strpos($line, ':') !== false) {
                 @list($name, $value) = explode(': ', $line);
                 if ($value) {

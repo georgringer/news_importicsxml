@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -11,6 +12,6 @@ return [
                 '//div[@id="art_chapo"]',
                 '//img[@class="puce"]',
             ],
-        ]
-    ]
+        ],
+    ],
 ];

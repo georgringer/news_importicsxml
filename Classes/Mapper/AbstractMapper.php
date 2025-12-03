@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsImporticsxml\Mapper;
@@ -10,29 +11,24 @@ namespace GeorgRinger\NewsImporticsxml\Mapper;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
-use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AbstractMapper
 {
-
-    /** @var $logger Logger */
-    protected $logger;
-
-    /** @var SlugHelper */
-    protected $slugHelper;
+    protected LoggerInterface $logger;
+    protected SlugHelper $slugHelper;
 
     protected array $extensionConfiguration = [];
 
     public function __construct()
     {
         $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
-        $fieldConfig = $GLOBALS['TCA']['tx_news_domain_model_news']['columns']['path_segment']['config'];
+        $fieldConfig = $GLOBALS['TCA']['tx_news_domain_model_news']['columns']['path_segment']['config'] ?? [];
         $this->slugHelper = GeneralUtility::makeInstance(SlugHelper::class, 'tx_news_domain_model_news', 'path_segment', $fieldConfig);
 
         try {

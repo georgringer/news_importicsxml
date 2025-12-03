@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsImporticsxml\Mapper;
@@ -14,17 +15,7 @@ use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
 
 interface MapperInterface
 {
+    public function map(TaskConfiguration $configuration): array;
 
-    /**
-     * @param TaskConfiguration $configuration
-     * @return array
-     */
-    public function map(TaskConfiguration $configuration);
-
-    /**
-     * Get the import source identifier
-     *
-     * @return string
-     */
     public function getImportSource(): string;
 }

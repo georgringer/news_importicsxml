@@ -10,8 +10,8 @@ $fields = [
             'rows' => 20,
             'readOnly' => true,
             'renderType' => 'json',
-        ]
-    ]
+        ],
+    ],
 ];
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tx_news_domain_model_news', $fields);

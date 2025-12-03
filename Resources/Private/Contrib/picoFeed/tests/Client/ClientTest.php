@@ -15,10 +15,10 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $client->setUrl('http://php.net/robots.txt');
         $client->execute();
 
-        $this->assertTrue($client->isModified());
-        $this->assertNotEmpty($client->getContent());
-        $this->assertNotEmpty($client->getEtag());
-        $this->assertNotEmpty($client->getLastModified());
+        self::assertTrue($client->isModified());
+        self::assertNotEmpty($client->getContent());
+        self::assertNotEmpty($client->getEtag());
+        self::assertNotEmpty($client->getLastModified());
     }
 
     /**
@@ -50,7 +50,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $client->setEtag($etag);
         $client->execute();
 
-        $this->assertTrue($client->isModified());
+        self::assertTrue($client->isModified());
     }
 
     /**
@@ -70,7 +70,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $client->setLastModified($lastModified);
         $client->execute();
 
-        $this->assertFalse($client->isModified());
+        self::assertFalse($client->isModified());
     }
 
     /**
@@ -88,7 +88,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $client->setLastModified($lastmod);
         $client->execute();
 
-        $this->assertFalse($client->isModified());
+        self::assertFalse($client->isModified());
     }
 
     /**
@@ -108,7 +108,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $client->setEtag($etag);
         $client->execute();
 
-        $this->assertFalse($client->isModified());
+        self::assertFalse($client->isModified());
     }
 
     /**
@@ -119,12 +119,12 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $client = Client::getInstance();
         $client->setUrl('http://php.net/');
         $client->execute();
-        $this->assertEquals('utf-8', $client->getEncoding());
+        self::assertEquals('utf-8', $client->getEncoding());
 
         $client = Client::getInstance();
         $client->setUrl('http://php.net/robots.txt');
         $client->execute();
-        $this->assertEquals('', $client->getEncoding());
+        self::assertEquals('', $client->getEncoding());
     }
 
     /**
@@ -135,11 +135,11 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $client = Client::getInstance();
         $client->setUrl('http://miniflux.net/assets/img/favicon.png');
         $client->execute();
-        $this->assertEquals('image/png', $client->getContentType());
+        self::assertEquals('image/png', $client->getContentType());
 
         $client = Client::getInstance();
         $client->setUrl('http://miniflux.net/');
         $client->execute();
-        $this->assertEquals('text/html; charset=utf-8', $client->getContentType());
+        self::assertEquals('text/html; charset=utf-8', $client->getContentType());
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace GeorgRinger\NewsImporticsxml\Tests\Unit\Domain\Model\Dto;
 
 /*
@@ -15,22 +16,19 @@ namespace GeorgRinger\NewsImporticsxml\Tests\Unit\Domain\Model\Dto;
  */
 
 use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\TestingFramework\Core\BaseTestCase;
 
-class TaskConfigurationTest extends UnitTestCase
+class TaskConfigurationTest extends BaseTestCase
 {
-
-    /**
-     * @var TaskConfiguration
-     */
-    protected $instance;
+    protected TaskConfiguration $instance;
 
     /**
      * Setup
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->instance = new TaskConfiguration();
+        parent::setUp();
     }
 
     /**
@@ -40,7 +38,7 @@ class TaskConfigurationTest extends UnitTestCase
     {
         $value = 'fo@bar.com';
         $this->instance->setEmail($value);
-        $this->assertEquals($value, $this->instance->getEmail());
+        self::assertEquals($value, $this->instance->getEmail());
     }
 
     /**
@@ -50,7 +48,7 @@ class TaskConfigurationTest extends UnitTestCase
     {
         $value = 'fileadmin/123.xml';
         $this->instance->setPath($value);
-        $this->assertEquals($value, $this->instance->getPath());
+        self::assertEquals($value, $this->instance->getPath());
     }
 
     /**
@@ -60,7 +58,7 @@ class TaskConfigurationTest extends UnitTestCase
     {
         $value = 'xml';
         $this->instance->setFormat($value);
-        $this->assertEquals($value, $this->instance->getFormat());
+        self::assertEquals($value, $this->instance->getFormat());
     }
 
     /**
@@ -70,7 +68,7 @@ class TaskConfigurationTest extends UnitTestCase
     {
         $value = '456';
         $this->instance->setPid($value);
-        $this->assertEquals($value, $this->instance->getPid());
+        self::assertEquals($value, $this->instance->getPid());
     }
 
     /**
@@ -80,6 +78,6 @@ class TaskConfigurationTest extends UnitTestCase
     {
         $value = 'fo:bar';
         $this->instance->setMapping($value);
-        $this->assertEquals($value, $this->instance->getMapping());
+        self::assertEquals($value, $this->instance->getMapping());
     }
 }

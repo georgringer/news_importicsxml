@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -14,7 +15,7 @@ return [
                 '//div[contains(@id, "comment")]',
                 '//div[contains(@class, "widget")]',
                 '//div[contains(@class, "pagination")]',
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

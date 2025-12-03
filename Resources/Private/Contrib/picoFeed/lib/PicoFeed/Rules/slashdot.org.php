@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -6,6 +7,6 @@ return [
             'body' => [
                 '//article/div[@class="body"] | //article[@class="layout-article"]/div[@class="elips"]'],
             'strip' => [],
-        ]
-    ]
+        ],
+    ],
 ];

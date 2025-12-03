@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%/comics.*%' => [
@@ -10,6 +11,6 @@ return [
             'test_url' => 'http://www.vgcats.com/super/?strip_id=84',
             'body' => ['//*[@align="center"]/p/img'],
             'strip' => [],
-        ]
-    ]
+        ],
+    ],
 ];

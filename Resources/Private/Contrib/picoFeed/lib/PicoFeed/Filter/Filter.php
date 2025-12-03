@@ -13,7 +13,6 @@ class Filter
      * Get the Html filter instance
      *
      * @static
-     * @access public
      * @param  string  $html      HTML content
      * @param  string  $website   Site URL (used to build absolute URL)
      * @return Html
@@ -28,7 +27,6 @@ class Filter
      * Escape HTML content
      *
      * @static
-     * @access public
      * @return string
      */
     public static function escape($content)
@@ -39,7 +37,6 @@ class Filter
     /**
      * Remove HTML tags
      *
-     * @access public
      * @param  string  $data  Input data
      * @return string
      */
@@ -52,7 +49,6 @@ class Filter
      * Remove the XML tag from a document
      *
      * @static
-     * @access public
      * @param  string  $data  Input data
      * @return string
      */
@@ -77,7 +73,6 @@ class Filter
      * Strip head tag from the HTML content
      *
      * @static
-     * @access public
      * @param  string  $data  Input data
      * @return string
      */
@@ -90,7 +85,6 @@ class Filter
      * Trim whitespace from the begining, the end and inside a string and don't break utf-8 string
      *
      * @static
-     * @access public
      * @param  string  $value  Raw data
      * @return string          Normalized data
      */
@@ -107,7 +101,6 @@ class Filter
      * Fixes before XML parsing
      *
      * @static
-     * @access public
      * @param  string  $data Raw data
      * @return string        Normalized data
      */
@@ -127,7 +120,7 @@ class Filter
                 $code_point = hexdec($code_point);
             }
 
-            $code_point = (int) $code_point;
+            $code_point = (int)$code_point;
 
             // replace invalid characters
             if ($code_point < 9
@@ -144,6 +137,6 @@ class Filter
         }, $data);
 
         // strip every utf-8 character than isn't in the range of valid XML 1.0 characters
-        return (string) preg_replace('/[^\x{0009}\x{000A}\x{000D}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', '', $data);
+        return (string)preg_replace('/[^\x{0009}\x{000A}\x{000D}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', '', $data);
     }
 }

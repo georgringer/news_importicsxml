@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -7,8 +8,8 @@ return [
                 '//div[@class="contenu"]',
             ],
             'strip' => [
-                '//div[contains(@class, "a2a")]'
+                '//div[contains(@class, "a2a")]',
             ],
-        ]
-    ]
+        ],
+    ],
 ];

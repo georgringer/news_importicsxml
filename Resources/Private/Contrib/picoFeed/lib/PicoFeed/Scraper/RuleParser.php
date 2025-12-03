@@ -19,7 +19,6 @@ class RuleParser implements ParserInterface
     /**
      * Constructor
      *
-     * @access public
      * @param  string   $html
      * @param  array    $rules
      */
@@ -33,7 +32,6 @@ class RuleParser implements ParserInterface
     /**
      * Get the relevant content with predefined rules
      *
-     * @access public
      * @return string
      */
     public function execute()
@@ -44,8 +42,6 @@ class RuleParser implements ParserInterface
 
     /**
      * Remove HTML tags
-     *
-     * @access public
      */
     public function stripTags()
     {
@@ -64,8 +60,6 @@ class RuleParser implements ParserInterface
 
     /**
      * Fetch content based on Xpath rules
-     *
-     * @access public
      */
     public function findContent()
     {

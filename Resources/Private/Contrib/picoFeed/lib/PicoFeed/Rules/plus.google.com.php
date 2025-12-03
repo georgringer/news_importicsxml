@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -6,6 +7,6 @@ return [
             'body' => [
                 '//div[@role="article"]/div[contains(@class, "eE")]',
             ],
-        ]
-    ]
+        ],
+    ],
 ];

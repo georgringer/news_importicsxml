@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -7,7 +8,7 @@ return [
                 '//*[@id="article"]/div[contains(@class, "content")]',
             ],
             'strip' => [
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

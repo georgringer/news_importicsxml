@@ -9,6 +9,4 @@ use PicoFeed\PicoFeedException;
  *
  * @author  Frederic Guillot
  */
-abstract class ReaderException extends PicoFeedException
-{
-}
+abstract class ReaderException extends PicoFeedException {}

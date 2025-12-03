@@ -17,49 +17,49 @@ class ICal
 {
     // phpcs:disable Generic.Arrays.DisallowLongArraySyntax
 
-    const DATE_TIME_FORMAT        = 'Ymd\THis';
-    const DATE_TIME_FORMAT_PRETTY = 'F Y H:i:s';
-    const ICAL_DATE_TIME_TEMPLATE = 'TZID=%s:';
-    const ISO_8601_WEEK_START     = 'MO';
-    const RECURRENCE_EVENT        = 'Generated recurrence event';
-    const SECONDS_IN_A_WEEK       = 604800;
-    const TIME_FORMAT             = 'His';
-    const TIME_ZONE_UTC           = 'UTC';
-    const UNIX_FORMAT             = 'U';
-    const UNIX_MIN_YEAR           = 1970;
+    public const DATE_TIME_FORMAT        = 'Ymd\THis';
+    public const DATE_TIME_FORMAT_PRETTY = 'F Y H:i:s';
+    public const ICAL_DATE_TIME_TEMPLATE = 'TZID=%s:';
+    public const ISO_8601_WEEK_START     = 'MO';
+    public const RECURRENCE_EVENT        = 'Generated recurrence event';
+    public const SECONDS_IN_A_WEEK       = 604800;
+    public const TIME_FORMAT             = 'His';
+    public const TIME_ZONE_UTC           = 'UTC';
+    public const UNIX_FORMAT             = 'U';
+    public const UNIX_MIN_YEAR           = 1970;
 
     /**
      * Tracks the number of alarms in the current iCal feed
      *
-     * @var integer
+     * @var int
      */
     public $alarmCount = 0;
 
     /**
      * Tracks the number of events in the current iCal feed
      *
-     * @var integer
+     * @var int
      */
     public $eventCount = 0;
 
     /**
      * Tracks the free/busy count in the current iCal feed
      *
-     * @var integer
+     * @var int
      */
     public $freeBusyCount = 0;
 
     /**
      * Tracks the number of todos in the current iCal feed
      *
-     * @var integer
+     * @var int
      */
     public $todoCount = 0;
 
     /**
      * The value in years to use for indefinite, recurring events
      *
-     * @var integer
+     * @var int
      */
     public $defaultSpan = 2;
 
@@ -80,14 +80,14 @@ class ICal
     /**
      * Toggles whether to skip the parsing of recurrence rules
      *
-     * @var boolean
+     * @var bool
      */
     public $skipRecurrence = false;
 
     /**
      * Toggles whether to disable all character replacement.
      *
-     * @var boolean
+     * @var bool
      */
     public $disableCharacterReplacement = false;
 
@@ -95,7 +95,7 @@ class ICal
      * If this value is an integer, the parser will ignore all events more than roughly this many days before now.
      * If this value is a date, the parser will ignore all events occurring before this date.
      *
-     * @var \DateTimeInterface|integer|null
+     * @var \DateTimeInterface|int|null
      */
     public $filterDaysBefore;
 
@@ -103,7 +103,7 @@ class ICal
      * If this value is an integer, the parser will ignore all events more than roughly this many days after now.
      * If this value is a date, the parser will ignore all events occurring after this date.
      *
-     * @var \DateTimeInterface|integer|null
+     * @var \DateTimeInterface|int|null
      */
     public $filterDaysAfter;
 
@@ -112,12 +112,12 @@ class ICal
      *
      * @var array
      */
-    public $cal = array();
+    public $cal = [];
 
     /**
      * Tracks the VFREEBUSY component
      *
-     * @var integer
+     * @var int
      */
     protected $freeBusyIndex = 0;
 
@@ -133,14 +133,14 @@ class ICal
      *
      * @var array
      */
-    protected $validIanaTimeZones = array();
+    protected $validIanaTimeZones = [];
 
     /**
      * Event recurrence instances that have been altered
      *
      * @var array
      */
-    protected $alteredRecurrenceInstances = array();
+    protected $alteredRecurrenceInstances = [];
 
     /**
      * An associative array containing weekday conversion data
@@ -149,7 +149,7 @@ class ICal
      *
      * @var array
      */
-    protected $weekdays = array(
+    protected $weekdays = [
         'MO' => 'monday',
         'TU' => 'tuesday',
         'WE' => 'wednesday',
@@ -157,26 +157,26 @@ class ICal
         'FR' => 'friday',
         'SA' => 'saturday',
         'SU' => 'sunday',
-    );
+    ];
 
     /**
      * An associative array containing frequency conversion terms
      *
      * @var array
      */
-    protected $frequencyConversion = array(
+    protected $frequencyConversion = [
         'DAILY'   => 'day',
         'WEEKLY'  => 'week',
         'MONTHLY' => 'month',
         'YEARLY'  => 'year',
-    );
+    ];
 
     /**
      * Holds the username and password for HTTP basic authentication
      *
      * @var array
      */
-    protected $httpBasicAuth = array();
+    protected $httpBasicAuth = [];
 
     /**
      * Holds the custom User Agent string header
@@ -204,7 +204,7 @@ class ICal
      *
      * @var array
      */
-    private static $configurableOptions = array(
+    private static $configurableOptions = [
         'defaultSpan',
         'defaultTimeZone',
         'defaultWeekStart',
@@ -213,14 +213,14 @@ class ICal
         'filterDaysBefore',
         'httpUserAgent',
         'skipRecurrence',
-    );
+    ];
 
     /**
      * CLDR time zones mapped to IANA time zones.
      *
      * @var array
      */
-    private static $cldrTimeZonesMap = array(
+    private static $cldrTimeZonesMap = [
         '(UTC-12:00) International Date Line West'                      => 'Etc/GMT+12',
         '(UTC-11:00) Coordinated Universal Time-11'                     => 'Etc/GMT+11',
         '(UTC-10:00) Hawaii'                                            => 'Pacific/Honolulu',
@@ -327,7 +327,7 @@ class ICal
         "(UTC+13:00) Nuku'alofa"                                        => 'Pacific/Tongatapu',
         '(UTC+13:00) Samoa'                                             => 'Pacific/Apia',
         '(UTC+14:00) Kiritimati Island'                                 => 'Pacific/Kiritimati',
-    );
+    ];
 
     /**
      * Maps Windows (non-CLDR) time zone ID to IANA ID. This is pragmatic but not 100% precise as one Windows zone ID
@@ -337,7 +337,7 @@ class ICal
      *
      * @var array
      */
-    private static $windowsTimeZonesMap = array(
+    private static $windowsTimeZonesMap = [
         'AUS Central Standard Time'       => 'Australia/Darwin',
         'AUS Eastern Standard Time'       => 'Australia/Sydney',
         'Afghanistan Standard Time'       => 'Asia/Kabul',
@@ -473,13 +473,13 @@ class ICal
         'West Bank Standard Time'         => 'Asia/Hebron',
         'West Pacific Standard Time'      => 'Pacific/Port_Moresby',
         'Yakutsk Standard Time'           => 'Asia/Yakutsk',
-    );
+    ];
 
     /**
      * If `$filterDaysBefore` or `$filterDaysAfter` are set then the events are filtered according to the window defined
      * by this field and `$windowMaxTimestamp`.
      *
-     * @var integer
+     * @var int
      */
     private $windowMinTimestamp;
 
@@ -487,14 +487,14 @@ class ICal
      * If `$filterDaysBefore` or `$filterDaysAfter` are set then the events are filtered according to the window defined
      * by this field and `$windowMinTimestamp`.
      *
-     * @var integer
+     * @var int
      */
     private $windowMaxTimestamp;
 
     /**
      * `true` if either `$filterDaysBefore` or `$filterDaysAfter` are set.
      *
-     * @var boolean
+     * @var bool
      */
     private $shouldFilterByWindow = false;
 
@@ -503,9 +503,8 @@ class ICal
      *
      * @param  mixed $files
      * @param  array $options
-     * @return void
      */
-    public function __construct($files = false, array $options = array())
+    public function __construct($files = false, array $options = [])
     {
         if (\PHP_VERSION_ID < 80100) {
             ini_set('auto_detect_line_endings', '1');
@@ -556,13 +555,13 @@ class ICal
         $this->shouldFilterByWindow = !is_null($this->filterDaysBefore) || !is_null($this->filterDaysAfter);
 
         if ($files !== false) {
-            $files = is_array($files) ? $files : array($files);
+            $files = is_array($files) ? $files : [$files];
 
             foreach ($files as $file) {
                 if (!is_array($file) && $this->isFileOrUrl($file)) {
                     $lines = $this->fileOrUrl($file);
                 } else {
-                    $lines = is_array($file) ? $file : array($file);
+                    $lines = is_array($file) ? $file : [$file];
                 }
 
                 $this->initLines($lines);
@@ -578,9 +577,9 @@ class ICal
      */
     public function initString($string)
     {
-        $string = str_replace(array("\r\n", "\n\r", "\r"), "\n", $string);
+        $string = str_replace(["\r\n", "\n\r", "\r"], "\n", $string);
 
-        if ($this->cal === array()) {
+        if ($this->cal === []) {
             $lines = explode("\n", $string);
 
             $this->initLines($lines);
@@ -599,7 +598,7 @@ class ICal
      */
     public function initFile($file)
     {
-        if ($this->cal === array()) {
+        if ($this->cal === []) {
             $lines = $this->fileOrUrl($file);
 
             $this->initLines($lines);
@@ -650,7 +649,6 @@ class ICal
      * containing each line of iCal content
      *
      * @param  array $lines
-     * @return void
      */
     protected function initLines(array $lines)
     {
@@ -667,11 +665,11 @@ class ICal
                 }
 
                 if (!$this->disableCharacterReplacement) {
-                    $line = str_replace(array(
+                    $line = str_replace([
                         '&nbsp;',
                         "\t",
                         "\xc2\xa0", // Non-breaking space
-                    ), ' ', $line);
+                    ], ' ', $line);
 
                     $line = $this->cleanCharacters($line);
                 }
@@ -682,14 +680,14 @@ class ICal
 
                 if (!is_array($values)) {
                     if (!empty($values)) {
-                        $values     = array($values); // Make an array as not one already
-                        $blankArray = array(); // Empty placeholder array
+                        $values     = [$values]; // Make an array as not one already
+                        $blankArray = []; // Empty placeholder array
                         $values[]   = $blankArray;
                     } else {
-                        $values = array(); // Use blank array to ignore this line
+                        $values = []; // Use blank array to ignore this line
                     }
                 } elseif (empty($values[0])) {
-                    $values = array(); // Use blank array to ignore this line
+                    $values = []; // Use blank array to ignore this line
                 }
 
                 // Reverse so that our array of properties is processed first
@@ -782,7 +780,7 @@ class ICal
                 $this->processRecurrences();
 
                 // Apply changes to altered recurrence instances
-                if ($this->alteredRecurrenceInstances !== array()) {
+                if ($this->alteredRecurrenceInstances !== []) {
                     $events = $this->cal['VEVENT'];
 
                     foreach ($this->alteredRecurrenceInstances as $alteredRecurrenceInstance) {
@@ -808,14 +806,12 @@ class ICal
     /**
      * Removes the last event (i.e. most recently parsed) if its start date is outside the window spanned by
      * `$windowMinTimestamp` / `$windowMaxTimestamp`.
-     *
-     * @return void
      */
     protected function removeLastEventIfOutsideWindowAndNonRecurring()
     {
         $events = $this->cal['VEVENT'];
 
-        if ($events !== array()) {
+        if ($events !== []) {
             $lastIndex = count($events) - 1;
             $lastEvent = $events[$lastIndex];
 
@@ -831,14 +827,12 @@ class ICal
 
     /**
      * Reduces the number of events to the defined minimum and maximum range
-     *
-     * @return void
      */
     protected function reduceEventsToMinMaxRange()
     {
-        $events = (isset($this->cal['VEVENT'])) ? $this->cal['VEVENT'] : array();
+        $events = (isset($this->cal['VEVENT'])) ? $this->cal['VEVENT'] : [];
 
-        if ($events !== array()) {
+        if ($events !== []) {
             foreach ($events as $key => $anEvent) {
                 if ($anEvent === null) {
                     unset($events[$key]);
@@ -864,7 +858,7 @@ class ICal
      * Returns `true` for invalid dates.
      *
      * @param  array $event
-     * @return boolean
+     * @return bool
      */
     protected function doesEventStartOutsideWindow(array $event)
     {
@@ -875,9 +869,9 @@ class ICal
      * Determines whether a valid iCalendar date is within a given range
      *
      * @param  string  $calendarDate
-     * @param  integer $minTimestamp
-     * @param  integer $maxTimestamp
-     * @return boolean
+     * @param  int $minTimestamp
+     * @param  int $maxTimestamp
+     * @return bool
      */
     protected function isOutOfRange($calendarDate, $minTimestamp, $maxTimestamp)
     {
@@ -909,9 +903,8 @@ class ICal
      * Add one key and value pair to the `$this->cal` array
      *
      * @param  string         $component
-     * @param  string|boolean $keyword
+     * @param  string|bool $keyword
      * @param  string|array   $value
-     * @return void
      */
     protected function addCalendarComponentWithKeyAndValue($component, $keyword, $value)
     {
@@ -926,7 +919,7 @@ class ICal
                 $key3 = $component;
 
                 if (!isset($this->cal[$key1][$key2][$key3]["{$keyword}_array"])) {
-                    $this->cal[$key1][$key2][$key3]["{$keyword}_array"] = array();
+                    $this->cal[$key1][$key2][$key3]["{$keyword}_array"] = [];
                 }
 
                 if (is_array($value)) {
@@ -948,7 +941,7 @@ class ICal
                 $key2 = ($this->eventCount - 1);
 
                 if (!isset($this->cal[$key1][$key2]["{$keyword}_array"])) {
-                    $this->cal[$key1][$key2]["{$keyword}_array"] = array();
+                    $this->cal[$key1][$key2]["{$keyword}_array"] = [];
                 }
 
                 if (is_array($value)) {
@@ -1029,8 +1022,8 @@ class ICal
     public function keyValueFromString($text)
     {
         $splitLine = $this->parseLine($text);
-        $object    = array();
-        $paramObj  = array();
+        $object    = [];
+        $paramObj  = [];
         $valueObj  = '';
         $i         = 0;
 
@@ -1048,7 +1041,7 @@ class ICal
                 $i++;
                 $paramName = $splitLine[$i];
                 $i += 2;
-                $paramValue = array();
+                $paramValue = [];
                 $multiValue = false;
                 // A parameter can have multiple values separated by a comma
                 while ($i + 1 < count($splitLine) && $splitLine[$i + 1] === ',') {
@@ -1081,7 +1074,7 @@ class ICal
         }
 
         // Object construction
-        if ($paramObj !== array()) {
+        if ($paramObj !== []) {
             $object[1][0] = $valueObj;
             $object[1][1] = $paramObj;
         } else {
@@ -1099,7 +1092,7 @@ class ICal
      */
     protected function parseLine($line)
     {
-        $words = array();
+        $words = [];
         $word  = '';
         // The use of str_split is not a problem here even if the character set is in utf8
         // Indeed we only compare the characters , ; : = " which are on a single byte
@@ -1115,7 +1108,7 @@ class ICal
 
                 $word = '';
                 $inDoubleQuotes = !$inDoubleQuotes;
-            } elseif (!in_array($char, array(';', ':', ',', '=')) || $inDoubleQuotes) {
+            } elseif (!in_array($char, [';', ':', ',', '=']) || $inDoubleQuotes) {
                 $word .= $char;
             } else {
                 if ($word !== '') {
@@ -1136,7 +1129,7 @@ class ICal
      * Returns the default time zone if set.
      * Falls back to the system default if not set.
      *
-     * @param  boolean $forceReturnSystemDefault
+     * @param  bool $forceReturnSystemDefault
      * @return string
      */
     private function getDefaultTimeZone($forceReturnSystemDefault = false)
@@ -1178,7 +1171,7 @@ class ICal
 
         preg_match($pattern, $icalDate, $date);
 
-        if ($date === array()) {
+        if ($date === []) {
             throw new \Exception('Invalid iCal date format.');
         }
 
@@ -1211,7 +1204,7 @@ class ICal
      * Returns a Unix timestamp from an iCal date time format
      *
      * @param  string $icalDate
-     * @return integer
+     * @return int
      */
     public function iCalDateToUnixTimestamp($icalDate)
     {
@@ -1232,7 +1225,7 @@ class ICal
      * @param  array       $event
      * @param  string      $key
      * @param  string|null $format
-     * @return string|integer|boolean|\DateTime
+     * @return string|int|bool|\DateTime
      */
     public function iCalDateWithTimeZone(array $event, $key, $format = self::DATE_TIME_FORMAT)
     {
@@ -1273,17 +1266,15 @@ class ICal
      * Performs admin tasks on all events as read from the iCal file.
      * Adds a Unix timestamp to all `{DTSTART|DTEND|RECURRENCE-ID}_array` arrays
      * Tracks modified recurrence instances
-     *
-     * @return void
      */
     protected function processEvents()
     {
         $checks = null;
-        $events = (isset($this->cal['VEVENT'])) ? $this->cal['VEVENT'] : array();
+        $events = (isset($this->cal['VEVENT'])) ? $this->cal['VEVENT'] : [];
 
-        if ($events !== array()) {
+        if ($events !== []) {
             foreach ($events as $key => $anEvent) {
-                foreach (array('DTSTART', 'DTEND', 'RECURRENCE-ID') as $type) {
+                foreach (['DTSTART', 'DTEND', 'RECURRENCE-ID'] as $type) {
                     if (isset($anEvent[$type])) {
                         $date = $anEvent["{$type}_array"][1];
 
@@ -1301,7 +1292,7 @@ class ICal
                     $uid = $anEvent['UID'];
 
                     if (!isset($this->alteredRecurrenceInstances[$uid])) {
-                        $this->alteredRecurrenceInstances[$uid] = array();
+                        $this->alteredRecurrenceInstances[$uid] = [];
                     }
 
                     $recurrenceDateUtc = $this->iCalDateToUnixTimestamp($anEvent['RECURRENCE-ID_array'][3]);
@@ -1311,14 +1302,14 @@ class ICal
                 $events[$key] = $anEvent;
             }
 
-            $eventKeysToRemove = array();
+            $eventKeysToRemove = [];
 
             foreach ($events as $key => $event) {
                 $checks[] = !isset($event['RECURRENCE-ID']);
                 $checks[] = isset($event['UID']);
                 $checks[] = isset($event['UID']) && isset($this->alteredRecurrenceInstances[$event['UID']]);
 
-                if ((bool) array_product($checks)) {
+                if ((bool)array_product($checks)) {
                     $eventDtstartUnix = $this->iCalDateToUnixTimestamp($event['DTSTART_array'][3]);
 
                     // phpcs:ignore CustomPHPCS.ControlStructures.AssignmentInCondition
@@ -1326,7 +1317,7 @@ class ICal
                         $eventKeysToRemove[] = $alteredEventKey;
 
                         $alteredEvent = array_replace_recursive($events[$key], $events[$alteredEventKey]);
-                        $this->alteredRecurrenceInstances[$event['UID']]['altered-event'] = array($key => $alteredEvent);
+                        $this->alteredRecurrenceInstances[$event['UID']]['altered-event'] = [$key => $alteredEvent];
                     }
                 }
 
@@ -1343,20 +1334,18 @@ class ICal
 
     /**
      * Processes recurrence rules
-     *
-     * @return void
      */
     protected function processRecurrences()
     {
-        $events = (isset($this->cal['VEVENT'])) ? $this->cal['VEVENT'] : array();
+        $events = (isset($this->cal['VEVENT'])) ? $this->cal['VEVENT'] : [];
 
         // If there are no events, then we have nothing to process.
-        if ($events === array()) {
+        if ($events === []) {
             return;
         }
 
-        $allEventRecurrences = array();
-        $eventKeysToRemove = array();
+        $allEventRecurrences = [];
+        $eventKeysToRemove = [];
 
         foreach ($events as $key => $anEvent) {
             if (!isset($anEvent['RRULE']) || $anEvent['RRULE'] === '') {
@@ -1376,10 +1365,10 @@ class ICal
             }
 
             // Separate the RRULE stanzas, and explode the values that are lists.
-            $rrules = array();
+            $rrules = [];
             foreach (array_filter(explode(';', $anEvent['RRULE'])) as $s) {
                 list($k, $v) = explode('=', $s);
-                if (in_array($k, array('BYSETPOS', 'BYDAY', 'BYMONTHDAY', 'BYMONTH', 'BYYEARDAY', 'BYWEEKNO'))) {
+                if (in_array($k, ['BYSETPOS', 'BYDAY', 'BYMONTHDAY', 'BYMONTH', 'BYYEARDAY', 'BYWEEKNO'])) {
                     $rrules[$k] = explode(',', $v);
                 } else {
                     $rrules[$k] = $v;
@@ -1404,13 +1393,13 @@ class ICal
                 $checkByDays = function ($carry, $weekday) {
                     return $carry && substr($weekday, -2) === $weekday;
                 };
-                if (!in_array($frequency, array('MONTHLY', 'YEARLY'))) {
+                if (!in_array($frequency, ['MONTHLY', 'YEARLY'])) {
                     if (is_array($rrules['BYDAY']) && !array_reduce($rrules['BYDAY'], $checkByDays, true)) {
                         trigger_error("ICal::processRecurrences: A {$frequency} RRULE may not contain BYDAY values with numeric prefixes", E_USER_NOTICE);
 
                         continue;
                     }
-                } elseif ($frequency === 'YEARLY' && (isset($rrules['BYWEEKNO']) && ($rrules['BYWEEKNO'] !== '' && $rrules['BYWEEKNO'] !== array()))) {
+                } elseif ($frequency === 'YEARLY' && (isset($rrules['BYWEEKNO']) && ($rrules['BYWEEKNO'] !== '' && $rrules['BYWEEKNO'] !== []))) {
                     if (is_array($rrules['BYDAY']) && !array_reduce($rrules['BYDAY'], $checkByDays, true)) {
                         trigger_error('ICal::processRecurrences: A YEARLY RRULE with a BYWEEKNO part may not contain BYDAY values with numeric prefixes', E_USER_NOTICE);
 
@@ -1419,7 +1408,7 @@ class ICal
                 }
             }
 
-            $interval = (empty($rrules['INTERVAL'])) ? 1 : (int) $rrules['INTERVAL'];
+            $interval = (empty($rrules['INTERVAL'])) ? 1 : (int)$rrules['INTERVAL'];
 
             // Throw an error if this isn't an integer.
             if (!is_int($this->defaultSpan)) {
@@ -1454,7 +1443,7 @@ class ICal
              *   enddate = <icalDate> || <icalDateTime>
              */
             $count      = 1;
-            $countLimit = (isset($rrules['COUNT'])) ? intval($rrules['COUNT']) : PHP_INT_MAX;
+            $countLimit = (isset($rrules['COUNT'])) ? (int)($rrules['COUNT']) : PHP_INT_MAX;
             $now        = date_create();
 
             $until = $now === false
@@ -1484,16 +1473,16 @@ class ICal
                 $untilWhile = min($untilWhile, ($untilDT === false) ? $untilWhile : $untilDT->modify("+1 {$this->frequencyConversion[$frequency]}")->getTimestamp());
             }
 
-            $eventRecurrences = array();
+            $eventRecurrences = [];
 
             $frequencyRecurringDateTime = clone $initialEventDate;
             while ($frequencyRecurringDateTime->getTimestamp() <= $untilWhile && $count < $countLimit) {
-                $candidateDateTimes = array();
+                $candidateDateTimes = [];
 
                 // phpcs:ignore Squiz.ControlStructures.SwitchDeclaration.MissingDefault
                 switch ($frequency) {
                     case 'DAILY':
-                        if (isset($rrules['BYMONTHDAY']) && (is_array($rrules['BYMONTHDAY']) && $rrules['BYMONTHDAY'] !== array())) {
+                        if (isset($rrules['BYMONTHDAY']) && (is_array($rrules['BYMONTHDAY']) && $rrules['BYMONTHDAY'] !== [])) {
                             if (!isset($monthDays)) {
                                 // This variable is unset when we change months (see below)
                                 $monthDays = $this->getDaysOfMonthMatchingByMonthDayRRule($rrules['BYMONTHDAY'], $frequencyRecurringDateTime);
@@ -1510,9 +1499,9 @@ class ICal
 
                     case 'WEEKLY':
                         $initialDayOfWeek = $frequencyRecurringDateTime->format('N');
-                        $matchingDays     = array($initialDayOfWeek);
+                        $matchingDays     = [$initialDayOfWeek];
 
-                        if (isset($rrules['BYDAY']) && (is_array($rrules['BYDAY']) && $rrules['BYDAY'] !== array())) {
+                        if (isset($rrules['BYDAY']) && (is_array($rrules['BYDAY']) && $rrules['BYDAY'] !== [])) {
                             // setISODate() below uses the ISO-8601 specification of weeks: start on
                             // a Monday, end on a Sunday. However, RRULEs (or the caller of the
                             // parser) may state an alternate WeeKSTart.
@@ -1555,19 +1544,19 @@ class ICal
                         foreach ($matchingDays as $day) {
                             $clonedDateTime = clone $frequencyRecurringDateTime;
                             $candidateDateTimes[] = $clonedDateTime->setISODate(
-                                (int) $frequencyRecurringDateTime->format('o'),
-                                (int) $frequencyRecurringDateTime->format('W'),
-                                (int) $day
+                                (int)$frequencyRecurringDateTime->format('o'),
+                                (int)$frequencyRecurringDateTime->format('W'),
+                                (int)$day
                             );
                         }
                         break;
 
                     case 'MONTHLY':
-                        $matchingDays = array();
+                        $matchingDays = [];
 
-                        if (isset($rrules['BYMONTHDAY']) && (is_array($rrules['BYMONTHDAY']) && $rrules['BYMONTHDAY'] !== array())) {
+                        if (isset($rrules['BYMONTHDAY']) && (is_array($rrules['BYMONTHDAY']) && $rrules['BYMONTHDAY'] !== [])) {
                             $matchingDays = $this->getDaysOfMonthMatchingByMonthDayRRule($rrules['BYMONTHDAY'], $frequencyRecurringDateTime);
-                            if (isset($rrules['BYDAY']) && (is_array($rrules['BYDAY']) && $rrules['BYDAY'] !== array())) {
+                            if (isset($rrules['BYDAY']) && (is_array($rrules['BYDAY']) && $rrules['BYDAY'] !== [])) {
                                 $matchingDays = array_filter(
                                     $this->getDaysOfMonthMatchingByDayRRule($rrules['BYDAY'], $frequencyRecurringDateTime),
                                     function ($monthDay) use ($matchingDays) {
@@ -1575,13 +1564,13 @@ class ICal
                                     }
                                 );
                             }
-                        } elseif (isset($rrules['BYDAY']) && (is_array($rrules['BYDAY']) && $rrules['BYDAY'] !== array())) {
+                        } elseif (isset($rrules['BYDAY']) && (is_array($rrules['BYDAY']) && $rrules['BYDAY'] !== [])) {
                             $matchingDays = $this->getDaysOfMonthMatchingByDayRRule($rrules['BYDAY'], $frequencyRecurringDateTime);
                         } else {
                             $matchingDays[] = $frequencyRecurringDateTime->format('d');
                         }
 
-                        if (isset($rrules['BYSETPOS']) && (is_array($rrules['BYSETPOS']) && $rrules['BYSETPOS'] !== array())) {
+                        if (isset($rrules['BYSETPOS']) && (is_array($rrules['BYSETPOS']) && $rrules['BYSETPOS'] !== [])) {
                             $matchingDays = $this->filterValuesUsingBySetPosRRule($rrules['BYSETPOS'], $matchingDays);
                         }
 
@@ -1593,31 +1582,31 @@ class ICal
 
                             $clonedDateTime = clone $frequencyRecurringDateTime;
                             $candidateDateTimes[] = $clonedDateTime->setDate(
-                                (int) $frequencyRecurringDateTime->format('Y'),
-                                (int) $frequencyRecurringDateTime->format('m'),
+                                (int)$frequencyRecurringDateTime->format('Y'),
+                                (int)$frequencyRecurringDateTime->format('m'),
                                 $day
                             );
                         }
                         break;
 
                     case 'YEARLY':
-                        $matchingDays = array();
+                        $matchingDays = [];
 
-                        if (isset($rrules['BYMONTH']) && (is_array($rrules['BYMONTH']) && $rrules['BYMONTH'] !== array())) {
+                        if (isset($rrules['BYMONTH']) && (is_array($rrules['BYMONTH']) && $rrules['BYMONTH'] !== [])) {
                             $bymonthRecurringDatetime = clone $frequencyRecurringDateTime;
                             foreach ($rrules['BYMONTH'] as $byMonth) {
                                 $bymonthRecurringDatetime->setDate(
-                                    (int) $frequencyRecurringDateTime->format('Y'),
-                                    (int) $byMonth,
-                                    (int) $frequencyRecurringDateTime->format('d')
+                                    (int)$frequencyRecurringDateTime->format('Y'),
+                                    (int)$byMonth,
+                                    (int)$frequencyRecurringDateTime->format('d')
                                 );
 
                                 // Determine the days of the month affected
                                 // (The interaction between BYMONTHDAY and BYDAY is resolved later.)
-                                $monthDays = array();
-                                if (isset($rrules['BYMONTHDAY']) && (is_array($rrules['BYMONTHDAY']) && $rrules['BYMONTHDAY'] !== array())) {
+                                $monthDays = [];
+                                if (isset($rrules['BYMONTHDAY']) && (is_array($rrules['BYMONTHDAY']) && $rrules['BYMONTHDAY'] !== [])) {
                                     $monthDays = $this->getDaysOfMonthMatchingByMonthDayRRule($rrules['BYMONTHDAY'], $bymonthRecurringDatetime);
-                                } elseif (isset($rrules['BYDAY']) && (is_array($rrules['BYDAY']) && $rrules['BYDAY'] !== array())) {
+                                } elseif (isset($rrules['BYDAY']) && (is_array($rrules['BYDAY']) && $rrules['BYDAY'] !== [])) {
                                     $monthDays = $this->getDaysOfMonthMatchingByDayRRule($rrules['BYDAY'], $bymonthRecurringDatetime);
                                 } else {
                                     $monthDays[] = $bymonthRecurringDatetime->format('d');
@@ -1626,47 +1615,47 @@ class ICal
                                 // And add each of them to the list of recurrences
                                 foreach ($monthDays as $day) {
                                     $matchingDays[] = $bymonthRecurringDatetime->setDate(
-                                        (int) $frequencyRecurringDateTime->format('Y'),
-                                        (int) $bymonthRecurringDatetime->format('m'),
+                                        (int)$frequencyRecurringDateTime->format('Y'),
+                                        (int)$bymonthRecurringDatetime->format('m'),
                                         $day
                                     )->format('z') + 1;
                                 }
                             }
-                        } elseif (isset($rrules['BYWEEKNO']) && (is_array($rrules['BYWEEKNO']) && $rrules['BYWEEKNO'] !== array())) {
+                        } elseif (isset($rrules['BYWEEKNO']) && (is_array($rrules['BYWEEKNO']) && $rrules['BYWEEKNO'] !== [])) {
                             $matchingDays = $this->getDaysOfYearMatchingByWeekNoRRule($rrules['BYWEEKNO'], $frequencyRecurringDateTime);
-                        } elseif (isset($rrules['BYYEARDAY']) && (is_array($rrules['BYYEARDAY']) && $rrules['BYYEARDAY'] !== array())) {
+                        } elseif (isset($rrules['BYYEARDAY']) && (is_array($rrules['BYYEARDAY']) && $rrules['BYYEARDAY'] !== [])) {
                             $matchingDays = $this->getDaysOfYearMatchingByYearDayRRule($rrules['BYYEARDAY'], $frequencyRecurringDateTime);
-                        } elseif (isset($rrules['BYMONTHDAY']) && (is_array($rrules['BYMONTHDAY']) && $rrules['BYMONTHDAY'] !== array())) {
+                        } elseif (isset($rrules['BYMONTHDAY']) && (is_array($rrules['BYMONTHDAY']) && $rrules['BYMONTHDAY'] !== [])) {
                             $matchingDays = $this->getDaysOfYearMatchingByMonthDayRRule($rrules['BYMONTHDAY'], $frequencyRecurringDateTime);
                         }
 
-                        if (isset($rrules['BYDAY']) && (is_array($rrules['BYDAY']) && $rrules['BYDAY'] !== array())) {
-                            if (isset($rrules['BYYEARDAY']) && ($rrules['BYYEARDAY'] !== '' && $rrules['BYYEARDAY'] !== array()) || isset($rrules['BYMONTHDAY']) && ($rrules['BYMONTHDAY'] !== '' && $rrules['BYMONTHDAY'] !== array()) || isset($rrules['BYWEEKNO']) && ($rrules['BYWEEKNO'] !== '' && $rrules['BYWEEKNO'] !== array())) {
+                        if (isset($rrules['BYDAY']) && (is_array($rrules['BYDAY']) && $rrules['BYDAY'] !== [])) {
+                            if (isset($rrules['BYYEARDAY']) && ($rrules['BYYEARDAY'] !== '' && $rrules['BYYEARDAY'] !== []) || isset($rrules['BYMONTHDAY']) && ($rrules['BYMONTHDAY'] !== '' && $rrules['BYMONTHDAY'] !== []) || isset($rrules['BYWEEKNO']) && ($rrules['BYWEEKNO'] !== '' && $rrules['BYWEEKNO'] !== [])) {
                                 $matchingDays = array_filter(
                                     $this->getDaysOfYearMatchingByDayRRule($rrules['BYDAY'], $frequencyRecurringDateTime),
                                     function ($yearDay) use ($matchingDays) {
                                         return in_array($yearDay, $matchingDays);
                                     }
                                 );
-                            } elseif ($matchingDays === array()) {
+                            } elseif ($matchingDays === []) {
                                 $matchingDays = $this->getDaysOfYearMatchingByDayRRule($rrules['BYDAY'], $frequencyRecurringDateTime);
                             }
                         }
 
-                        if ($matchingDays === array()) {
-                            $matchingDays = array($frequencyRecurringDateTime->format('z') + 1);
+                        if ($matchingDays === []) {
+                            $matchingDays = [$frequencyRecurringDateTime->format('z') + 1];
                         } else {
                             sort($matchingDays);
                         }
 
-                        if (isset($rrules['BYSETPOS']) && (is_array($rrules['BYSETPOS']) && $rrules['BYSETPOS'] !== array())) {
+                        if (isset($rrules['BYSETPOS']) && (is_array($rrules['BYSETPOS']) && $rrules['BYSETPOS'] !== [])) {
                             $matchingDays = $this->filterValuesUsingBySetPosRRule($rrules['BYSETPOS'], $matchingDays);
                         }
 
                         foreach ($matchingDays as $day) {
                             $clonedDateTime = clone $frequencyRecurringDateTime;
                             $candidateDateTimes[] = $clonedDateTime->setDate(
-                                (int) $frequencyRecurringDateTime->format('Y'),
+                                (int)$frequencyRecurringDateTime->format('Y'),
                                 1,
                                 $day
                             );
@@ -1748,7 +1737,7 @@ class ICal
             $initialDateWasUTC = substr($anEvent['DTSTART'], -1) === 'Z';
 
             // Build the param array
-            $dateParamArray = array();
+            $dateParamArray = [];
             if (
                 !$initialDateWasUTC
                 && isset($anEvent['DTSTART_array'][0]['TZID'])
@@ -1762,15 +1751,15 @@ class ICal
                 function ($recurringDatetime) use ($anEvent, $eventLength, $initialDateWasUTC, $dateParamArray) {
                     $tzidPrefix = (isset($dateParamArray['TZID'])) ? 'TZID=' . $this->escapeParamText($dateParamArray['TZID']) . ':' : '';
 
-                    foreach (array('DTSTART', 'DTEND') as $dtkey) {
+                    foreach (['DTSTART', 'DTEND'] as $dtkey) {
                         $anEvent[$dtkey] = $recurringDatetime->format(self::DATE_TIME_FORMAT) . (($initialDateWasUTC) ? 'Z' : '');
 
-                        $anEvent["{$dtkey}_array"] = array(
+                        $anEvent["{$dtkey}_array"] = [
                             $dateParamArray,                    // [0] Array of params (incl. TZID)
                             $anEvent[$dtkey],                   // [1] ICalDateTime string w/o TZID
                             $recurringDatetime->getTimestamp(), // [2] Unix Timestamp
                             "{$tzidPrefix}{$anEvent[$dtkey]}",  // [3] Full ICalDateTime string
-                        );
+                        ];
 
                         if ($dtkey !== 'DTEND') {
                             $recurringDatetime->modify("{$eventLength} seconds");
@@ -1801,12 +1790,12 @@ class ICal
      * For instance, if passed [1, 4, -16] and 28, this will return [1, 4, 13].
      *
      * @param  array   $indexes
-     * @param  integer $limit
+     * @param  int $limit
      * @return array
      */
     protected function resolveIndicesOfRange(array $indexes, $limit)
     {
-        $matching = array();
+        $matching = [];
         foreach ($indexes as $index) {
             if ($index > 0 && $index <= $limit) {
                 $matching[] = $index;
@@ -1847,22 +1836,22 @@ class ICal
      */
     protected function getDaysOfMonthMatchingByDayRRule(array $byDays, $initialDateTime)
     {
-        $matchingDays = array();
+        $matchingDays = [];
         $currentMonth = $initialDateTime->format('n');
 
         foreach ($byDays as $weekday) {
             $bydayDateTime = clone $initialDateTime;
 
-            $ordwk = intval(substr($weekday, 0, -2));
+            $ordwk = (int)(substr($weekday, 0, -2));
 
             // Quantise the date to the first instance of the requested day in a month
             // (Or last if we have a -ve {ordwk})
             $bydayDateTime->modify(
-                (($ordwk < 0) ? 'Last' : 'First') .
-                ' ' .
-                $this->weekdays[substr($weekday, -2)] . // e.g. "Monday"
-                ' of ' .
-                $initialDateTime->format('F') // e.g. "June"
+                (($ordwk < 0) ? 'Last' : 'First')
+                . ' '
+                . $this->weekdays[substr($weekday, -2)] // e.g. "Monday"
+                . ' of '
+                . $initialDateTime->format('F') // e.g. "June"
             );
 
             if ($ordwk < 0) { // -ve {ordwk}
@@ -1906,7 +1895,7 @@ class ICal
      */
     protected function getDaysOfMonthMatchingByMonthDayRRule(array $byMonthDays, $initialDateTime)
     {
-        return $this->resolveIndicesOfRange($byMonthDays, (int) $initialDateTime->format('t'));
+        return $this->resolveIndicesOfRange($byMonthDays, (int)$initialDateTime->format('t'));
     }
 
     /**
@@ -1936,21 +1925,21 @@ class ICal
      */
     protected function getDaysOfYearMatchingByDayRRule(array $byDays, $initialDateTime)
     {
-        $matchingDays = array();
+        $matchingDays = [];
 
         foreach ($byDays as $weekday) {
             $bydayDateTime = clone $initialDateTime;
 
-            $ordwk = intval(substr($weekday, 0, -2));
+            $ordwk = (int)(substr($weekday, 0, -2));
 
             // Quantise the date to the first instance of the requested day in a year
             // (Or last if we have a -ve {ordwk})
             $bydayDateTime->modify(
-                (($ordwk < 0) ? 'Last' : 'First') .
-                ' ' .
-                $this->weekdays[substr($weekday, -2)] . // e.g. "Monday"
-                ' of ' . (($ordwk < 0) ? 'December' : 'January') .
-                ' ' . $initialDateTime->format('Y') // e.g. "2018"
+                (($ordwk < 0) ? 'Last' : 'First')
+                . ' '
+                . $this->weekdays[substr($weekday, -2)] // e.g. "Monday"
+                . ' of ' . (($ordwk < 0) ? 'December' : 'January')
+                . ' ' . $initialDateTime->format('Y') // e.g. "2018"
             );
 
             if ($ordwk < 0) { // -ve {ordwk}
@@ -2029,11 +2018,11 @@ class ICal
         $weeksInThisYear   = ($firstDayOfTheYear === 'Thu' || $isLeapYear && $firstDayOfTheYear === 'Wed') ? 53 : 52;
 
         $matchingWeeks = $this->resolveIndicesOfRange($byWeekNums, $weeksInThisYear);
-        $matchingDays = array();
+        $matchingDays = [];
         $byweekDateTime = clone $initialDateTime;
         foreach ($matchingWeeks as $weekNum) {
             $dayNum = $byweekDateTime->setISODate(
-                (int) $initialDateTime->format('Y'),
+                (int)$initialDateTime->format('Y'),
                 $weekNum,
                 1
             )->format('z') + 1;
@@ -2064,11 +2053,11 @@ class ICal
      */
     protected function getDaysOfYearMatchingByMonthDayRRule(array $byMonthDays, $initialDateTime)
     {
-        $matchingDays = array();
+        $matchingDays = [];
         $monthDateTime = clone $initialDateTime;
         for ($month = 1; $month < 13; $month++) {
             $monthDateTime->setDate(
-                (int) $initialDateTime->format('Y'),
+                (int)$initialDateTime->format('Y'),
                 $month,
                 1
             );
@@ -2076,8 +2065,8 @@ class ICal
             $monthDays = $this->getDaysOfMonthMatchingByMonthDayRRule($byMonthDays, $monthDateTime);
             foreach ($monthDays as $day) {
                 $matchingDays[] = $monthDateTime->setDate(
-                    (int) $initialDateTime->format('Y'),
-                    (int) $monthDateTime->format('m'),
+                    (int)$initialDateTime->format('Y'),
+                    (int)$monthDateTime->format('m'),
                     $day
                 )->format('z') + 1;
             }
@@ -2110,7 +2099,7 @@ class ICal
      */
     protected function filterValuesUsingBySetPosRRule(array $bySetPos, array $valuesList)
     {
-        $filteredMatches = array();
+        $filteredMatches = [];
 
         foreach ($bySetPos as $setPosition) {
             if ($setPosition < 0) {
@@ -2133,14 +2122,13 @@ class ICal
      * These keys contain dates adapted to the calendar
      * time zone depending on the event `TZID`.
      *
-     * @return void
      * @throws \Exception
      */
     protected function processDateConversions()
     {
-        $events = (isset($this->cal['VEVENT'])) ? $this->cal['VEVENT'] : array();
+        $events = (isset($this->cal['VEVENT'])) ? $this->cal['VEVENT'] : [];
 
-        if ($events !== array()) {
+        if ($events !== []) {
             foreach ($events as $key => $anEvent) {
                 if (is_null($anEvent) || !$this->isValidDate($anEvent['DTSTART'])) {
                     unset($events[$key]);
@@ -2174,9 +2162,9 @@ class ICal
     public function events()
     {
         $array = $this->cal;
-        $array = isset($array['VEVENT']) ? $array['VEVENT'] : array();
+        $array = isset($array['VEVENT']) ? $array['VEVENT'] : [];
 
-        $events = array();
+        $events = [];
 
         foreach ($array as $event) {
             $events[] = new Event($event);
@@ -2208,7 +2196,7 @@ class ICal
     /**
      * Returns the calendar time zone
      *
-     * @param  boolean $ignoreUtc
+     * @param  bool $ignoreUtc
      * @return string|null
      */
     public function calendarTimeZone($ignoreUtc = false)
@@ -2242,18 +2230,18 @@ class ICal
     {
         $array = $this->cal;
 
-        return isset($array['VFREEBUSY']) ? $array['VFREEBUSY'] : array();
+        return isset($array['VFREEBUSY']) ? $array['VFREEBUSY'] : [];
     }
 
     /**
      * Returns a boolean value whether the
      * current calendar has events or not
      *
-     * @return boolean
+     * @return bool
      */
     public function hasEvents()
     {
-        return ($this->events() !== array()) ?: false;
+        return ($this->events() !== []) ?: false;
     }
 
     /**
@@ -2284,11 +2272,11 @@ class ICal
         // Sort events before processing range
         $events = $this->sortEventsWithOrder($this->events());
 
-        if ($events === array()) {
-            return array();
+        if ($events === []) {
+            return [];
         }
 
-        $extendedEvents = array();
+        $extendedEvents = [];
 
         if (!is_null($rangeStart)) {
             try {
@@ -2369,13 +2357,13 @@ class ICal
      * Sorts events based on a given sort order
      *
      * @param  array   $events
-     * @param  integer $sortOrder Either SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
+     * @param  int $sortOrder Either SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
      * @return array
      */
     public function sortEventsWithOrder(array $events, $sortOrder = SORT_ASC)
     {
-        $extendedEvents = array();
-        $timestamp      = array();
+        $extendedEvents = [];
+        $timestamp      = [];
 
         foreach ($events as $key => $anEvent) {
             $extendedEvents[] = $anEvent;
@@ -2391,7 +2379,7 @@ class ICal
      * Checks if a time zone is valid (IANA, CLDR, or Windows)
      *
      * @param  string $timeZone
-     * @return boolean
+     * @return bool
      */
     protected function isValidTimeZoneId($timeZone)
     {
@@ -2404,7 +2392,7 @@ class ICal
      * Checks if a time zone is a valid IANA time zone
      *
      * @param  string $timeZone
-     * @return boolean
+     * @return bool
      */
     protected function isValidIanaTimeZoneId($timeZone)
     {
@@ -2412,7 +2400,7 @@ class ICal
             return true;
         }
 
-        $valid = array();
+        $valid = [];
         $tza   = timezone_abbreviations_list();
 
         foreach ($tza as $zone) {
@@ -2436,7 +2424,7 @@ class ICal
      * Checks if a time zone is a valid CLDR time zone
      *
      * @param  string $timeZone
-     * @return boolean
+     * @return bool
      */
     public function isValidCldrTimeZoneId($timeZone)
     {
@@ -2447,7 +2435,7 @@ class ICal
      * Checks if a time zone is a recognised Windows (non-CLDR) time zone
      *
      * @param  string $timeZone
-     * @return boolean
+     * @return bool
      */
     public function isValidWindowsTimeZoneId($timeZone)
     {
@@ -2494,26 +2482,26 @@ class ICal
      * Provides a polyfill for PHP 7.2's `mb_chr()`, which is a multibyte safe version of `chr()`.
      * Multibyte safe.
      *
-     * @param  integer $code
+     * @param  int $code
      * @return string
      */
     protected function mb_chr($code) // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
     {
         if (function_exists('mb_chr')) {
             return mb_chr($code);
-        } else {
-            if (($code %= 0x200000) < 0x80) {
-                $s = chr($code);
-            } elseif ($code < 0x800) {
-                $s = chr(0xc0 | $code >> 6) . chr(0x80 | $code & 0x3f);
-            } elseif ($code < 0x10000) {
-                $s = chr(0xe0 | $code >> 12) . chr(0x80 | $code >> 6 & 0x3f) . chr(0x80 | $code & 0x3f);
-            } else {
-                $s = chr(0xf0 | $code >> 18) . chr(0x80 | $code >> 12 & 0x3f) . chr(0x80 | $code >> 6 & 0x3f) . chr(0x80 | $code & 0x3f);
-            }
-
-            return $s;
         }
+        if (($code %= 0x200000) < 0x80) {
+            $s = chr($code);
+        } elseif ($code < 0x800) {
+            $s = chr(0xc0 | $code >> 6) . chr(0x80 | $code & 0x3f);
+        } elseif ($code < 0x10000) {
+            $s = chr(0xe0 | $code >> 12) . chr(0x80 | $code >> 6 & 0x3f) . chr(0x80 | $code & 0x3f);
+        } else {
+            $s = chr(0xf0 | $code >> 18) . chr(0x80 | $code >> 12 & 0x3f) . chr(0x80 | $code >> 6 & 0x3f) . chr(0x80 | $code & 0x3f);
+        }
+
+        return $s;
+
     }
 
     /**
@@ -2543,7 +2531,7 @@ class ICal
     {
         return strtr(
             $input,
-            array(
+            [
                 "\xe2\x80\x98"     => "'",   // ‘
                 "\xe2\x80\x99"     => "'",   // ’
                 "\xe2\x80\x9a"     => "'",   // ‚
@@ -2562,7 +2550,7 @@ class ICal
                 $this->mb_chr(150) => '-',   // –
                 $this->mb_chr(151) => '--',  // —
                 $this->mb_chr(133) => '...', // …
-            )
+            ]
         );
     }
 
@@ -2576,12 +2564,11 @@ class ICal
     public function parseExdates(array $event)
     {
         if (empty($event['EXDATE_array'])) {
-            return array();
-        } else {
-            $exdates = $event['EXDATE_array'];
+            return [];
         }
+        $exdates = $event['EXDATE_array'];
 
-        $output          = array();
+        $output          = [];
         $currentTimeZone = new \DateTimeZone($this->getDefaultTimeZone());
 
         foreach ($exdates as $subArray) {
@@ -2615,7 +2602,7 @@ class ICal
      * Checks if a date string is a valid date
      *
      * @param  string $value
-     * @return boolean
+     * @return bool
      * @throws \Exception
      */
     public function isValidDate($value)
@@ -2637,7 +2624,7 @@ class ICal
      * Checks if a filename exists as a file or URL
      *
      * @param  string $filename
-     * @return boolean
+     * @return bool
      */
     protected function isFileOrUrl($filename)
     {
@@ -2653,12 +2640,12 @@ class ICal
      */
     protected function fileOrUrl($filename)
     {
-        $options                   = array();
-        $options['http']           = array();
-        $options['http']['header'] = array();
+        $options                   = [];
+        $options['http']           = [];
+        $options['http']['header'] = [];
 
-        if ($this->httpBasicAuth !== array() || !empty($this->httpUserAgent) || !empty($this->httpAcceptLanguage)) {
-            if ($this->httpBasicAuth !== array()) {
+        if ($this->httpBasicAuth !== [] || !empty($this->httpUserAgent) || !empty($this->httpAcceptLanguage)) {
+            if ($this->httpBasicAuth !== []) {
                 $username  = $this->httpBasicAuth['username'];
                 $password  = $this->httpBasicAuth['password'];
                 $basicAuth = base64_encode("{$username}:{$password}");

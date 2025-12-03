@@ -17,7 +17,6 @@ class Import
     /**
      * OPML file content
      *
-     * @access private
      * @var string
      */
     private $content = '';
@@ -25,7 +24,6 @@ class Import
     /**
      * Subscriptions
      *
-     * @access private
      * @var array
      */
     private $items = [];
@@ -33,7 +31,6 @@ class Import
     /**
      * Constructor
      *
-     * @access public
      * @param  string  $content   OPML file content
      */
     public function __construct($content)
@@ -44,7 +41,6 @@ class Import
     /**
      * Parse the OPML file
      *
-     * @access public
      * @return array|false
      */
     public function execute()
@@ -67,7 +63,6 @@ class Import
     /**
      * Parse each entries of the subscription list
      *
-     * @access public
      * @param  SimpleXMLElement   $tree   XML node
      */
     public function parseEntries($tree)
@@ -77,7 +72,7 @@ class Import
                 if (isset($item->outline)) {
                     $this->parseEntries($item);
                 } elseif ((isset($item['text']) || isset($item['title'])) && isset($item['xmlUrl'])) {
-                    $entry = new StdClass;
+                    $entry = new StdClass();
                     $entry->category = $this->findCategory($tree);
                     $entry->title = $this->findTitle($item);
                     $entry->feed_url = $this->findFeedUrl($item);
@@ -93,74 +88,68 @@ class Import
     /**
      * Find category
      *
-     * @access public
      * @param  SimpleXmlElement    $tree    XML tree
      * @return string
      */
     public function findCategory(SimpleXmlElement $tree)
     {
-        return isset($tree['title']) ? (string) $tree['title'] : (string) $tree['text'];
+        return isset($tree['title']) ? (string)$tree['title'] : (string)$tree['text'];
     }
 
     /**
      * Find title
      *
-     * @access public
      * @param  SimpleXmlElement    $item    XML tree
      * @return string
      */
     public function findTitle(SimpleXmlElement $item)
     {
-        return isset($item['title']) ? (string) $item['title'] : (string) $item['text'];
+        return isset($item['title']) ? (string)$item['title'] : (string)$item['text'];
     }
 
     /**
      * Find feed url
      *
-     * @access public
      * @param  SimpleXmlElement    $item    XML tree
      * @return string
      */
     public function findFeedUrl(SimpleXmlElement $item)
     {
-        return (string) $item['xmlUrl'];
+        return (string)$item['xmlUrl'];
     }
 
     /**
      * Find site url
      *
-     * @access public
      * @param  SimpleXmlElement    $item    XML tree
      * @param  StdClass            $entry   Feed entry
      * @return string
      */
     public function findSiteUrl(SimpleXmlElement $item, StdClass $entry)
     {
-        return isset($item['htmlUrl']) ? (string) $item['htmlUrl'] : $entry->feed_url;
+        return isset($item['htmlUrl']) ? (string)$item['htmlUrl'] : $entry->feed_url;
     }
 
     /**
      * Find type
      *
-     * @access public
      * @param  SimpleXmlElement    $item    XML tree
      * @return string
      */
     public function findType(SimpleXmlElement $item)
     {
-        return isset($item['version']) ? (string) $item['version'] : isset($item['type']) ? (string) $item['type'] : 'rss';
+        return isset($item['version']) ? (string)$item['version'] : (isset($item['type']) ? (string)$item['type'] : 'rss');
     }
 
     /**
      * Find description
      *
-     * @access public
      * @param  SimpleXmlElement    $item    XML tree
      * @param  StdClass            $entry   Feed entry
      * @return string
      */
     public function findDescription(SimpleXmlElement $item, StdClass $entry)
     {
-        return isset($item['description']) ? (string) $item['description'] : $entry->title;
+        return isset($item['description']) ? (string)$item['description'] : $entry->title;
     }
 }

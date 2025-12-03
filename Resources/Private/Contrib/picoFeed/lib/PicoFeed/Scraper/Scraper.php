@@ -21,7 +21,6 @@ class Scraper
     /**
      * URL
      *
-     * @access private
      * @var string
      */
     private $url = '';
@@ -29,7 +28,6 @@ class Scraper
     /**
      * Relevant content
      *
-     * @access private
      * @var string
      */
     private $content = '';
@@ -37,7 +35,6 @@ class Scraper
     /**
      * HTML content
      *
-     * @access private
      * @var string
      */
     private $html = '';
@@ -45,7 +42,6 @@ class Scraper
     /**
      * HTML content encoding
      *
-     * @access private
      * @var string
      */
     private $encoding = '';
@@ -53,7 +49,6 @@ class Scraper
     /**
      * Flag to enable candidates parsing
      *
-     * @access private
      * @var bool
      */
     private $enableCandidateParser = true;
@@ -61,7 +56,6 @@ class Scraper
     /**
      * Config object
      *
-     * @access private
      * @var \PicoFeed\Config\Config
      */
     private $config;
@@ -69,7 +63,6 @@ class Scraper
     /**
      * Constructor
      *
-     * @access public
      * @param  \PicoFeed\Config\Config   $config   Config class instance
      */
     public function __construct(Config $config)
@@ -81,7 +74,6 @@ class Scraper
     /**
      * Disable candidates parsing
      *
-     * @access  public
      * @return  Scraper
      */
     public function disableCandidateParser()
@@ -93,7 +85,6 @@ class Scraper
     /**
      * Get encoding
      *
-     * @access  public
      * @return  string
      */
     public function getEncoding()
@@ -104,7 +95,6 @@ class Scraper
     /**
      * Set encoding
      *
-     * @access  public
      * @param   string   $encoding
      * @return  Scraper
      */
@@ -117,7 +107,6 @@ class Scraper
     /**
      * Get URL to download
      *
-     * @access  public
      * @return  string
      */
     public function getUrl()
@@ -128,7 +117,6 @@ class Scraper
     /**
      * Set URL to download
      *
-     * @access  public
      * @param   string  $url    URL
      * @return  Scraper
      */
@@ -141,7 +129,6 @@ class Scraper
     /**
      * Return true if the scraper found relevant content
      *
-     * @access public
      * @return bool
      */
     public function hasRelevantContent()
@@ -152,7 +139,6 @@ class Scraper
     /**
      * Get relevant content
      *
-     * @access public
      * @return string
      */
     public function getRelevantContent()
@@ -163,7 +149,6 @@ class Scraper
     /**
      * Get raw content (unfiltered)
      *
-     * @access public
      * @return string
      */
     public function getRawContent()
@@ -174,7 +159,6 @@ class Scraper
     /**
      * Set raw content (unfiltered)
      *
-     * @access public
      * @param  string   $html
      * @return Scraper
      */
@@ -187,7 +171,6 @@ class Scraper
     /**
      * Get filtered relevant content
      *
-     * @access public
      * @return string
      */
     public function getFilteredContent()
@@ -200,7 +183,6 @@ class Scraper
     /**
      * Download the HTML content
      *
-     * @access public
      * @return bool
      */
     public function download()
@@ -234,8 +216,6 @@ class Scraper
 
     /**
      * Execute the scraper
-     *
-     * @access public
      */
     public function execute()
     {
@@ -256,7 +236,6 @@ class Scraper
     /**
      * Returns true if the parsing must be skipped
      *
-     * @access public
      * @return bool
      */
     public function skipProcessing()
@@ -283,7 +262,6 @@ class Scraper
     /**
      * Get the parser
      *
-     * @access public
      * @return ParserInterface
      */
     public function getParser()
@@ -313,8 +291,6 @@ class Scraper
 
     /**
      * Normalize encoding and strip head tag
-     *
-     * @access public
      */
     public function prepareHtml()
     {
@@ -329,7 +305,6 @@ class Scraper
     /**
      * Return the Youtube embed player and skip processing
      *
-     * @access public
      * @return bool
      */
     public function detectStreamingVideos()
@@ -345,7 +320,6 @@ class Scraper
     /**
      * Skip processing for PDF documents
      *
-     * @access public
      * @return bool
      */
     public function detectPdfFiles()

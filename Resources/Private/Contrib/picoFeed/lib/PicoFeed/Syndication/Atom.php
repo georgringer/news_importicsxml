@@ -16,7 +16,6 @@ class Atom extends Writer
     /**
      * List of required properties for each feed
      *
-     * @access private
      * @var array
      */
     private $required_feed_properties = [
@@ -28,7 +27,6 @@ class Atom extends Writer
     /**
      * List of required properties for each item
      *
-     * @access private
      * @var array
      */
     private $required_item_properties = [
@@ -39,7 +37,6 @@ class Atom extends Writer
     /**
      * Get the Atom document
      *
-     * @access public
      * @param  string   $filename   Optional filename
      * @return string
      */
@@ -101,7 +98,6 @@ class Atom extends Writer
     /**
      * Create item entry
      *
-     * @access public
      * @param  arrray    $item    Item properties
      * @return DomElement
      */
@@ -156,7 +152,6 @@ class Atom extends Writer
     /**
      * Add Link
      *
-     * @access public
      * @param  DomElement   $xml     XML node
      * @param  string       $url     URL
      * @param  string       $rel     Link rel attribute
@@ -174,7 +169,6 @@ class Atom extends Writer
     /**
      * Add publication date
      *
-     * @access public
      * @param  DomElement   $xml     XML node
      * @param  int      $value   Timestamp
      */
@@ -189,7 +183,6 @@ class Atom extends Writer
     /**
      * Add author
      *
-     * @access public
      * @param  DomElement   $xml     XML node
      * @param  array        $values  Author name and email
      */

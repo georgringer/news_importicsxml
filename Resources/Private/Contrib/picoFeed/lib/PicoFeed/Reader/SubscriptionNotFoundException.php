@@ -7,6 +7,4 @@ namespace PicoFeed\Reader;
  *
  * @author  Frederic Guillot
  */
-class SubscriptionNotFoundException extends ReaderException
-{
-}
+class SubscriptionNotFoundException extends ReaderException {}

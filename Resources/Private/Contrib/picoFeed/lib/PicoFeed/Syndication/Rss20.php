@@ -16,7 +16,6 @@ class Rss20 extends Writer
     /**
      * List of required properties for each feed
      *
-     * @access private
      * @var array
      */
     private $required_feed_properties = [
@@ -28,7 +27,6 @@ class Rss20 extends Writer
     /**
      * List of required properties for each item
      *
-     * @access private
      * @var array
      */
     private $required_item_properties = [
@@ -39,7 +37,6 @@ class Rss20 extends Writer
     /**
      * Get the Rss 2.0 document
      *
-     * @access public
      * @param  string   $filename   Optional filename
      * @return string
      */
@@ -111,7 +108,6 @@ class Rss20 extends Writer
     /**
      * Create item entry
      *
-     * @access public
      * @param  arrray    $item    Item properties
      * @return DomElement
      */
@@ -170,7 +166,6 @@ class Rss20 extends Writer
     /**
      * Add publication date
      *
-     * @access public
      * @param  DomElement   $xml     XML node
      * @param  int      $value   Timestamp
      */
@@ -185,7 +180,6 @@ class Rss20 extends Writer
     /**
      * Add author
      *
-     * @access public
      * @param  DomElement   $xml     XML node
      * @param  string       $tag     Tag name
      * @param  array        $values  Author name and email

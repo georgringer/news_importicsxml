@@ -1,4 +1,5 @@
 <?php
+
 return [
     'grabber' => [
         '%.*%' => [
@@ -14,6 +15,6 @@ return [
                 '//*[contains(@class, "cartouche")]',
                 '//*[contains(@class, "noprint")]',
             ],
-        ]
-    ]
+        ],
+    ],
 ];

@@ -20,7 +20,6 @@ class XmlParser
      * Get a SimpleXmlElement instance or return false
      *
      * @static
-     * @access public
      * @param  string   $input   XML content
      * @return mixed
      */
@@ -90,7 +89,6 @@ class XmlParser
      * Get a DomDocument instance or return false
      *
      * @static
-     * @access public
      * @param  string   $input   XML content
      * @return \DOMNDocument
      */
@@ -101,7 +99,7 @@ class XmlParser
         }
 
         $dom = self::scanInput($input, function ($in) {
-            $dom = new DomDocument;
+            $dom = new DomDocument();
             $dom->loadXml($in, LIBXML_NONET);
             return $dom;
         });
@@ -118,25 +116,24 @@ class XmlParser
      * Load HTML document by using a DomDocument instance or return false on failure
      *
      * @static
-     * @access public
      * @param  string   $input   XML content
      * @return \DOMDocument
      */
     public static function getHtmlDocument($input)
     {
         if (empty($input)) {
-            return new DomDocument;
+            return new DomDocument();
         }
 
         if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
             $callback = function ($in) {
-                $dom = new DomDocument;
+                $dom = new DomDocument();
                 $dom->loadHTML($in, LIBXML_NONET);
                 return $dom;
             };
         } else {
             $callback = function ($in) {
-                $dom = new DomDocument;
+                $dom = new DomDocument();
                 $dom->loadHTML($in);
                 return $dom;
             };
@@ -149,7 +146,6 @@ class XmlParser
      * Convert a HTML document to XML
      *
      * @static
-     * @access public
      * @param  string   $html   HTML document
      * @return string
      */
@@ -163,7 +159,6 @@ class XmlParser
      * Get XML parser errors
      *
      * @static
-     * @access public
      * @return string
      */
     public static function getErrors()
@@ -171,7 +166,8 @@ class XmlParser
         $errors = [];
 
         foreach (libxml_get_errors() as $error) {
-            $errors[] = sprintf('XML error: %s (Line: %d - Column: %d - Code: %d)',
+            $errors[] = sprintf(
+                'XML error: %s (Line: %d - Column: %d - Code: %d)',
                 $error->message,
                 $error->line,
                 $error->column,
@@ -186,7 +182,6 @@ class XmlParser
      * Get the encoding from a xml tag
      *
      * @static
-     * @access public
      * @param  string  $data  Input data
      * @return string
      */
@@ -214,7 +209,6 @@ class XmlParser
      * Get the charset from a meta tag
      *
      * @static
-     * @access public
      * @param  string  $data  Input data
      * @return string
      */
@@ -233,7 +227,6 @@ class XmlParser
      * Get xml:lang value
      *
      * @static
-     * @access public
      * @param  string  $xml  XML string
      * @return string        Language
      */
@@ -253,7 +246,6 @@ class XmlParser
      * Get a value from a XML namespace
      *
      * @static
-     * @access public
      * @param  \SimpleXMLElement    $xml           XML element
      * @param  array                $namespaces    XML namespaces
      * @param  string               $property      XML tag name
@@ -269,12 +261,12 @@ class XmlParser
                 if ($attribute) {
                     foreach ($namespace->$property->attributes() as $xml_attribute => $xml_value) {
                         if ($xml_attribute === $attribute && $xml_value) {
-                            return (string) $xml_value;
+                            return (string)$xml_value;
                         }
                     }
                 }
 
-                return (string) $namespace->$property;
+                return (string)$namespace->$property;
             }
         }
 
