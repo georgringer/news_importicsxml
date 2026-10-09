@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace GeorgRinger\NewsImporticsxml\Mapper;
 
 use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
+use GeorgRinger\NewsImporticsxml\Utility\ProxyUtility;
+use GuzzleHttp\Exception\TransferException;
 use PicoFeed\Config\Config;
 use PicoFeed\Parser\Item;
 use PicoFeed\Reader\Reader;
+use Psr\Http\Message\ResponseInterface;
 use SimpleXMLElement;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -20,6 +24,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class XmlMapper extends AbstractMapper implements MapperInterface
 {
+    protected const DOWNLOAD_ATTEMPTS = 3;
+
     public function map(TaskConfiguration $configuration): array
     {
         if ($configuration->getCleanBeforeImport()) {
@@ -30,6 +36,7 @@ class XmlMapper extends AbstractMapper implements MapperInterface
 
         $readerConfig = new Config();
         $readerConfig->setContentFiltering(false);
+        $this->applyProxy($readerConfig, $configuration->getPath());
         $reader = new Reader($readerConfig);
         $resource = $reader->discover($configuration->getPath());
 
@@ -228,12 +235,50 @@ class XmlMapper extends AbstractMapper implements MapperInterface
         return is_file($absoluteFile);
     }
 
+    protected function applyProxy(Config $config, string $url): void
+    {
+        $proxy = ProxyUtility::resolve($GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy'] ?? null, $url);
+        if ($proxy === null) {
+            return;
+        }
+        $config->setProxyHostname($proxy['hostname']);
+        $config->setProxyPort($proxy['port']);
+        if ($proxy['username'] !== '') {
+            $config->setProxyUsername($proxy['username']);
+            $config->setProxyPassword($proxy['password']);
+        }
+    }
+
     /**
+     * Downloads the URL and retries if the body is shorter than the announced Content-Length
+     *
      * @return string|false
      */
     protected function fetchUrl(string $url)
     {
-        return GeneralUtility::getUrl($url);
+        for ($attempt = 1; $attempt <= self::DOWNLOAD_ATTEMPTS; $attempt++) {
+            $response = $this->request($url);
+            if ($response === null) {
+                continue;
+            }
+            $content = $response->getBody()->getContents();
+            $expectedLength = $response->getHeaderLine('Content-Length');
+            // The length of a compressed transfer does not match the length of the decoded body
+            if ($expectedLength === '' || $response->getHeaderLine('Content-Encoding') !== '' || (int)$expectedLength === strlen($content)) {
+                return $content;
+            }
+            $this->logger->warning('Download incomplete, trying again', ['url' => $url, 'attempt' => $attempt, 'expected' => $expectedLength, 'received' => strlen($content)]);
+        }
+        return false;
+    }
+
+    protected function request(string $url): ?ResponseInterface
+    {
+        try {
+            return GeneralUtility::makeInstance(RequestFactory::class)->request($url);
+        } catch (TransferException $e) {
+            return null;
+        }
     }
 
     protected function writeFile(string $absoluteFile, string $content): bool
