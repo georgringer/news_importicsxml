@@ -60,6 +60,9 @@
 		}
 	},
 	"extra": {
+		"branch-alias": {
+			"dev-main": "14.x-dev"
+		},
 		"typo3/cms": {
 			"extension-key": "news_importicsxml"
 		}
