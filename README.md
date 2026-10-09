@@ -40,12 +40,15 @@ Download and install the extension with the extension manager module.
 
 ## Configuration
 
-After installing the extension, switch to the module **scheduler** and create a new task **Import news**.
-These additional fields are available:
+After installing the extension, switch to the module **scheduler** and create a new task **Execute console commands**.
+Select the command `news:importicsxml` and fill the arguments:
 
-- Format: Select either *XML* or *ICS* to import an ICS file or an XML file.
-- Path: Define a local path like `fileadmin/data.xml` or any URL like `https://typo3.org/xml-feeds/rss.xml`.
-- Page ID: Define a page id where the new records will be saved.
+- `path`: Define a local path like `fileadmin/data.xml` or any URL like `https://typo3.org/xml-feeds/rss.xml`.
+- `pid`: Define a page id where the new records will be saved.
+- `format`: Either `xml` or `ics`.
+- `slug`, `cleanBeforeImport`, `persistAsExternalUrl`, `email`, `mapping`: Optional, see below.
+
+The same import can be started on the command line: `vendor/bin/typo3 news:importicsxml fileadmin/data.xml 42 xml`.
 
 ### Category mapping
 
@@ -124,6 +127,43 @@ Add an email address which will get notified after each run.
 If set, the news article is saved with the type "External Url".
 
 ## Further information
+
+### Clear the cache after an import
+
+The import writes the records without the DataHandler, therefore `TCEMAIN.clearCacheCmd` is not evaluated.
+EXT:news dispatches the event `GeorgRinger\News\Event\NewsPostImportEvent` once an import has been done.
+Use it to flush the caches of the pages which show the news, the cache tags of EXT:news are `tx_news_pid_<pid>` and `tx_news_uid_<uid>`:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Vendor\MyExtension\EventListener;
+
+use GeorgRinger\News\Event\NewsPostImportEvent;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
+use TYPO3\CMS\Core\Cache\CacheManager;
+
+#[AsEventListener]
+final class FlushNewsCacheAfterImport
+{
+    public function __construct(private readonly CacheManager $cacheManager) {}
+
+    public function __invoke(NewsPostImportEvent $event): void
+    {
+        $pids = array_unique(array_column($event->getImportData(), 'pid'));
+        $this->cacheManager->flushCachesInGroupByTags(
+            'pages',
+            array_map(static fn ($pid): string => 'tx_news_pid_' . $pid, $pids)
+        );
+    }
+}
+```
+
+### Proxy
+
+Feeds and enclosures are fetched with the HTTP settings of TYPO3, `$GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy']` (including `no`) is respected for XML and ICS.
 
 ### Debugging
 This extension uses the logging API of TYPO3 CMS. You can find some basic information in the log files (default `typo3temp/var/logs/typo3_****.log`).
