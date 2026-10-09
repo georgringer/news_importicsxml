@@ -38,7 +38,7 @@ class IcsMapper extends AbstractMapper implements MapperInterface
         $events = $iCalService->events();
 
         foreach ($events as $event) {
-            $id = strlen($event->uid) < 90 ? $event->uid : md5($event > uid);
+            $id = $this->getImportId((string)$event->uid);
             if (!isset($idCount[$id])) {
                 $idCount[$id] = 1;
             } else {
@@ -151,6 +151,11 @@ class IcsMapper extends AbstractMapper implements MapperInterface
         }
 
         return $temporaryCopyPath;
+    }
+
+    protected function getImportId(string $uid): string
+    {
+        return strlen($uid) < 90 ? $uid : md5($uid);
     }
 
     protected function getContentOfFile(string $url)
