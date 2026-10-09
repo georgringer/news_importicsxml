@@ -25,8 +25,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class XmlMapper extends AbstractMapper implements MapperInterface
 {
-    protected const DOWNLOAD_ATTEMPTS = 3;
-
     public function map(TaskConfiguration $configuration): array
     {
         if ($configuration->getCleanBeforeImport()) {
@@ -239,7 +237,7 @@ class XmlMapper extends AbstractMapper implements MapperInterface
     protected function loadFeed(Reader $reader, string $path): array
     {
         $url = $reader->prependScheme($path);
-        $response = $this->fetchResponse($url);
+        $response = $this->request($url);
         if ($response === null) {
             throw new RuntimeException(sprintf('The feed "%s" could not be downloaded', $url), 1760026001);
         }
@@ -251,7 +249,7 @@ class XmlMapper extends AbstractMapper implements MapperInterface
                 throw new SubscriptionNotFoundException('Unable to find a subscription');
             }
             $url = $links[0];
-            $response = $this->fetchResponse($url);
+            $response = $this->request($url);
             if ($response === null) {
                 throw new RuntimeException(sprintf('The feed "%s" could not be downloaded', $url), 1760026002);
             }
@@ -268,30 +266,9 @@ class XmlMapper extends AbstractMapper implements MapperInterface
      */
     protected function fetchUrl(string $url)
     {
-        $response = $this->fetchResponse($url);
+        $response = $this->request($url);
 
         return $response === null ? false : (string)$response->getBody();
-    }
-
-    /**
-     * Downloads the URL and retries if the body is shorter than the announced Content-Length
-     */
-    protected function fetchResponse(string $url): ?ResponseInterface
-    {
-        for ($attempt = 1; $attempt <= self::DOWNLOAD_ATTEMPTS; $attempt++) {
-            $response = $this->request($url);
-            if ($response === null) {
-                continue;
-            }
-            $receivedLength = strlen((string)$response->getBody());
-            $expectedLength = $response->getHeaderLine('Content-Length');
-            // The length of a compressed transfer does not match the length of the decoded body
-            if ($expectedLength === '' || $response->getHeaderLine('Content-Encoding') !== '' || (int)$expectedLength === $receivedLength) {
-                return $response;
-            }
-            $this->logger->warning('Download incomplete, trying again', ['url' => $url, 'attempt' => $attempt, 'expected' => $expectedLength, 'received' => $receivedLength]);
-        }
-        return null;
     }
 
     protected function request(string $url): ?ResponseInterface
