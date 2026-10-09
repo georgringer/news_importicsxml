@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace GeorgRinger\NewsImporticsxml\Mapper;
 
 use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
-use GeorgRinger\NewsImporticsxml\Utility\ProxyUtility;
 use GuzzleHttp\Exception\TransferException;
 use PicoFeed\Config\Config;
 use PicoFeed\Parser\Item;
 use PicoFeed\Reader\Reader;
+use PicoFeed\Reader\SubscriptionNotFoundException;
 use Psr\Http\Message\ResponseInterface;
+use RuntimeException;
 use SimpleXMLElement;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Http\RequestFactory;
@@ -36,15 +37,10 @@ class XmlMapper extends AbstractMapper implements MapperInterface
 
         $readerConfig = new Config();
         $readerConfig->setContentFiltering(false);
-        $this->applyProxy($readerConfig, $configuration->getPath());
         $reader = new Reader($readerConfig);
-        $resource = $reader->discover($configuration->getPath());
+        [$url, $content, $encoding] = $this->loadFeed($reader, $configuration->getPath());
 
-        $parser = $reader->getParser(
-            $resource->getUrl(),
-            $resource->getContent(),
-            $resource->getEncoding()
-        );
+        $parser = $reader->getParser($url, $content, $encoding);
 
         $items = $parser->execute()->getItems();
 
@@ -235,41 +231,67 @@ class XmlMapper extends AbstractMapper implements MapperInterface
         return is_file($absoluteFile);
     }
 
-    protected function applyProxy(Config $config, string $url): void
+    /**
+     * Downloads the feed with the HTTP client of TYPO3 and follows the feed link if the url points to a HTML page
+     *
+     * @return array{0: string, 1: string, 2: string} url, content and encoding of the feed
+     */
+    protected function loadFeed(Reader $reader, string $path): array
     {
-        $proxy = ProxyUtility::resolve($GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy'] ?? null, $url);
-        if ($proxy === null) {
-            return;
+        $url = $reader->prependScheme($path);
+        $response = $this->fetchResponse($url);
+        if ($response === null) {
+            throw new RuntimeException(sprintf('The feed "%s" could not be downloaded', $url), 1760026001);
         }
-        $config->setProxyHostname($proxy['hostname']);
-        $config->setProxyPort($proxy['port']);
-        if ($proxy['username'] !== '') {
-            $config->setProxyUsername($proxy['username']);
-            $config->setProxyPassword($proxy['password']);
+        $content = (string)$response->getBody();
+
+        if (!$reader->detectFormat($content)) {
+            $links = $reader->find($url, $content);
+            if (empty($links)) {
+                throw new SubscriptionNotFoundException('Unable to find a subscription');
+            }
+            $url = $links[0];
+            $response = $this->fetchResponse($url);
+            if ($response === null) {
+                throw new RuntimeException(sprintf('The feed "%s" could not be downloaded', $url), 1760026002);
+            }
+            $content = (string)$response->getBody();
         }
+
+        $encoding = preg_match('/charset=["\']?([\w-]+)/i', $response->getHeaderLine('Content-Type'), $matches) ? $matches[1] : '';
+
+        return [$url, $content, $encoding];
+    }
+
+    /**
+     * @return string|false
+     */
+    protected function fetchUrl(string $url)
+    {
+        $response = $this->fetchResponse($url);
+
+        return $response === null ? false : (string)$response->getBody();
     }
 
     /**
      * Downloads the URL and retries if the body is shorter than the announced Content-Length
-     *
-     * @return string|false
      */
-    protected function fetchUrl(string $url)
+    protected function fetchResponse(string $url): ?ResponseInterface
     {
         for ($attempt = 1; $attempt <= self::DOWNLOAD_ATTEMPTS; $attempt++) {
             $response = $this->request($url);
             if ($response === null) {
                 continue;
             }
-            $content = $response->getBody()->getContents();
+            $receivedLength = strlen((string)$response->getBody());
             $expectedLength = $response->getHeaderLine('Content-Length');
             // The length of a compressed transfer does not match the length of the decoded body
-            if ($expectedLength === '' || $response->getHeaderLine('Content-Encoding') !== '' || (int)$expectedLength === strlen($content)) {
-                return $content;
+            if ($expectedLength === '' || $response->getHeaderLine('Content-Encoding') !== '' || (int)$expectedLength === $receivedLength) {
+                return $response;
             }
-            $this->logger->warning('Download incomplete, trying again', ['url' => $url, 'attempt' => $attempt, 'expected' => $expectedLength, 'received' => strlen($content)]);
+            $this->logger->warning('Download incomplete, trying again', ['url' => $url, 'attempt' => $attempt, 'expected' => $expectedLength, 'received' => $receivedLength]);
         }
-        return false;
+        return null;
     }
 
     protected function request(string $url): ?ResponseInterface

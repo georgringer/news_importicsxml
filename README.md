@@ -163,7 +163,7 @@ final class FlushNewsCacheAfterImport
 
 ### Proxy
 
-Feeds and enclosures are fetched with the HTTP settings of TYPO3, `$GLOBALS['TYPO3_CONF_VARS']['HTTP']['proxy']` (including `no`) is respected for XML and ICS.
+XML feeds, ICS files and enclosures are fetched with the HTTP client of TYPO3. All settings of `$GLOBALS['TYPO3_CONF_VARS']['HTTP']`, like `proxy` (including `no`), are respected.
 
 ### Debugging
 This extension uses the logging API of TYPO3 CMS. You can find some basic information in the log files (default `typo3temp/var/logs/typo3_****.log`).
