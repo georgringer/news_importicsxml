@@ -19,6 +19,7 @@ use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
 use GeorgRinger\NewsImporticsxml\Jobs\ImportJob;
 use GeorgRinger\NewsImporticsxml\Mapper\IcsMapper;
 use GeorgRinger\NewsImporticsxml\Mapper\XmlMapper;
+use PHPUnit\Framework\Attributes\Test;
 use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\TestingFramework\Core\BaseTestCase;
@@ -52,9 +53,7 @@ class ImportJobTest extends BaseTestCase
         parent::setUp();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function xmlMapperIsCalledWithXmlConfiguration()
     {
         $configuration = new TaskConfiguration();
@@ -70,9 +69,7 @@ class ImportJobTest extends BaseTestCase
         $this->mockedJob->_call('run');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function icsMapperIsCalledWithXmlConfiguration()
     {
         $configuration = new TaskConfiguration();
@@ -88,9 +85,7 @@ class ImportJobTest extends BaseTestCase
         $this->mockedJob->_call('run');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function nonSupportedMapperThrowsException()
     {
         $this->expectException(\UnexpectedValueException::class);

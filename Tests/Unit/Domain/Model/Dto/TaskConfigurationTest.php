@@ -16,6 +16,7 @@ namespace GeorgRinger\NewsImporticsxml\Tests\Unit\Domain\Model\Dto;
  */
 
 use GeorgRinger\NewsImporticsxml\Domain\Model\Dto\TaskConfiguration;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\BaseTestCase;
 
 class TaskConfigurationTest extends BaseTestCase
@@ -31,9 +32,7 @@ class TaskConfigurationTest extends BaseTestCase
         parent::setUp();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function emailCanBeSet()
     {
         $value = 'fo@bar.com';
@@ -41,9 +40,7 @@ class TaskConfigurationTest extends BaseTestCase
         self::assertEquals($value, $this->instance->getEmail());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function pathCanBeSet()
     {
         $value = 'fileadmin/123.xml';
@@ -51,9 +48,7 @@ class TaskConfigurationTest extends BaseTestCase
         self::assertEquals($value, $this->instance->getPath());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function formatCanBeSet()
     {
         $value = 'xml';
@@ -61,9 +56,7 @@ class TaskConfigurationTest extends BaseTestCase
         self::assertEquals($value, $this->instance->getFormat());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function pidCanBeSet()
     {
         $value = '456';
@@ -71,9 +64,7 @@ class TaskConfigurationTest extends BaseTestCase
         self::assertEquals($value, $this->instance->getPid());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function mappingCanBeSet()
     {
         $value = 'fo:bar';
